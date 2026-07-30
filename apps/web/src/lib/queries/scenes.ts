@@ -10,6 +10,7 @@ import type {
   CreateAssetDto,
   CreateSceneDto,
   Scene,
+  SetActiveAssetDto,
   UpdateSceneDto,
 } from "@foundry/shared-types";
 import { isAssetPending } from "@foundry/shared-types";
@@ -43,6 +44,15 @@ export function useUpdateScene(projectId: string) {
   return useMutation({
     mutationFn: ({ id, dto }: { id: string; dto: UpdateSceneDto }) =>
       api.patch<Scene>(`/scenes/${id}`, dto),
+    onSuccess: () => invalidateProject(qc, projectId),
+  });
+}
+
+export function useSetActiveAsset(projectId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ sceneId, dto }: { sceneId: string; dto: SetActiveAssetDto }) =>
+      api.patch<Scene>(`/scenes/${sceneId}/active-asset`, dto),
     onSuccess: () => invalidateProject(qc, projectId),
   });
 }

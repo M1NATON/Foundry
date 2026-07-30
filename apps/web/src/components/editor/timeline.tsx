@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { Scene, Script } from "@foundry/shared-types";
 import {
+  activeAssetOf,
   countWords,
   estimateSeconds,
   formatDuration,
@@ -160,12 +161,11 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
             const sceneWidth = Math.max(durations[i] * timelineZoom, MIN_SCENE_WIDTH_PX);
             const selected = scene.id === selectedSceneId;
             const dragging = dragId.current === scene.id;
-            const thumb = scene.assets.find(
-              (a) =>
-                a.status === "READY" &&
-                a.url &&
-                (a.type === "IMAGE" || a.type === "VIDEO"),
-            );
+            const activeVideo = activeAssetOf(scene, "VIDEO");
+            const activeFrame = activeAssetOf(scene, "IMAGE");
+            const thumb =
+              (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
+              (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
             return (
               <motion.div
                 key={scene.id}

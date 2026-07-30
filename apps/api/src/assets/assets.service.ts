@@ -3,7 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import type { AssetType, CreateAssetDto } from "@foundry/shared-types";
+import {
+  ACTIVE_ASSET_FIELD_BY_TYPE,
+  type AssetType,
+  type CreateAssetDto,
+} from "@foundry/shared-types";
 import { PrismaService } from "../prisma/prisma.service";
 import { ProjectsService } from "../projects/projects.service";
 import { AssetsQueue } from "./assets.queue";
@@ -49,9 +53,14 @@ export class AssetsService {
       },
     });
 
+    // Новый ассет сразу становится активным — без этого пользователю пришлось
+    // бы вручную выбирать вариант, даже если он единственный.
     await this.prisma.scene.update({
       where: { id: sceneId },
-      data: { status: "GENERATING" },
+      data: {
+        status: "GENERATING",
+        [ACTIVE_ASSET_FIELD_BY_TYPE[dto.type]]: asset.id,
+      },
     });
     await this.projects.advanceStatus(scene.projectId, "PRODUCING");
     await this.queue.enqueue(asset.id);
@@ -82,6 +91,10 @@ export class AssetsService {
         status: "READY",
         url: `/api/${UPLOAD_DIR}/${filename}`,
       },
+    });
+    await this.prisma.scene.update({
+      where: { id: sceneId },
+      data: { [ACTIVE_ASSET_FIELD_BY_TYPE[type]]: asset.id },
     });
     await this.settleScene(sceneId);
     return asset;
@@ -123,12 +136,27 @@ export class AssetsService {
   async remove(userId: string, assetId: string) {
     const asset = await this.prisma.asset.findUnique({
       where: { id: assetId },
-      include: { scene: { select: { projectId: true } } },
+      include: { scene: true },
     });
     if (!asset) throw new NotFoundException("Asset not found");
     await this.projects.assertOwned(userId, asset.scene.projectId);
 
     await this.prisma.asset.delete({ where: { id: assetId } });
+
+    // Удалённый ассет был активным — переносим активность на другой READY-вариант
+    // того же типа (самый новый), иначе сбрасываем ссылку.
+    const field = ACTIVE_ASSET_FIELD_BY_TYPE[asset.type];
+    if (asset.scene[field] === assetId) {
+      const next = await this.prisma.asset.findFirst({
+        where: { sceneId: asset.sceneId, type: asset.type, status: "READY" },
+        orderBy: { createdAt: "desc" },
+      });
+      await this.prisma.scene.update({
+        where: { id: asset.sceneId },
+        data: { [field]: next?.id ?? null },
+      });
+    }
+
     return { id: assetId };
   }
 }

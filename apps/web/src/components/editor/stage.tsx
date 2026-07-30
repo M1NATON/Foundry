@@ -3,7 +3,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
-import { countWords, estimateSeconds, formatDuration } from "@foundry/shared-types";
+import {
+  activeAssetOf,
+  countWords,
+  estimateSeconds,
+  formatDuration,
+} from "@foundry/shared-types";
 import { SPRING } from "@/components/ui/primitives";
 
 interface StageProps {
@@ -13,13 +18,16 @@ interface StageProps {
 }
 
 /**
- * Холст: показывает key-art активной сцены. Пока сцен нет — пустой стапель
- * с приглашением написать скрипт. Никаких документных заглушек.
+ * Холст: показывает key-art активной сцены — явно выбранный кадр/клип
+ * (scene.activeFrameId / activeVideoId), а не «последний сгенерированный».
+ * Пока сцен нет — пустой стапель с приглашением написать скрипт.
  */
 export function Stage({ scene, script, onOpenScript }: StageProps) {
-  const keyArt = scene?.assets.find(
-    (a) => a.status === "READY" && a.url && (a.type === "IMAGE" || a.type === "VIDEO"),
-  );
+  const activeVideo = scene && activeAssetOf(scene, "VIDEO");
+  const activeFrame = scene && activeAssetOf(scene, "IMAGE");
+  const keyArt =
+    (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
+    (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
 
   const scriptSeconds = script ? estimateSeconds(script.wordCount) : 0;
 

@@ -50,18 +50,22 @@ model Script {
 }
 
 model Scene {
-  id          String      @id @default(cuid())
-  projectId   String
-  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  order       Int
-  title       String
-  voiceText   String      @db.Text
-  imagePrompt String?     @db.Text
-  videoPrompt String?     @db.Text
-  durationSec Int?
-  status      SceneStatus @default(PENDING)
-  assets      Asset[]
-  createdAt   DateTime    @default(now())
+  id            String      @id @default(cuid())
+  projectId     String
+  project       Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  order         Int
+  title         String
+  voiceText     String      @db.Text
+  imagePrompt   String?     @db.Text
+  videoPrompt   String?     @db.Text
+  durationSec   Int?
+  status        SceneStatus @default(PENDING)
+  assets        Asset[]
+  activeFrameId String?
+  activeVideoId String?
+  activeVoiceId String?
+  activeMusicId String?
+  createdAt     DateTime    @default(now())
 
   @@index([projectId, order])
 }

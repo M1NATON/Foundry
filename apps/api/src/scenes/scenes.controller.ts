@@ -12,10 +12,12 @@ import {
   CreateSceneSchema,
   ImportStoryboardSchema,
   ReorderScenesSchema,
+  SetActiveAssetSchema,
   UpdateSceneSchema,
   type CreateSceneDto,
   type ImportStoryboardDto,
   type ReorderScenesDto,
+  type SetActiveAssetDto,
   type UpdateSceneDto,
 } from "@foundry/shared-types";
 import { AuthGuard } from "../common/auth.guard";
@@ -74,6 +76,15 @@ export class ScenesController {
     @Body(new ZodValidationPipe(UpdateSceneSchema)) dto: UpdateSceneDto,
   ) {
     return this.scenes.update(userId, id, dto);
+  }
+
+  @Patch(":id/active-asset")
+  setActiveAsset(
+    @UserId() userId: string,
+    @Param("id") id: string,
+    @Body(new ZodValidationPipe(SetActiveAssetSchema)) dto: SetActiveAssetDto,
+  ) {
+    return this.scenes.setActiveAsset(userId, id, dto);
   }
 
   @Delete(":id")

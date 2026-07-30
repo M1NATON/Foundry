@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SceneStatus } from "./enums";
+import { AssetType, SceneStatus } from "./enums";
 import { AssetSchema } from "./asset";
 
 export const CreateSceneSchema = z.object({
@@ -46,5 +46,32 @@ export const SceneSchema = z.object({
   status: SceneStatus,
   createdAt: z.string(),
   assets: z.array(AssetSchema),
+  activeFrameId: z.string().nullable(),
+  activeVideoId: z.string().nullable(),
+  activeVoiceId: z.string().nullable(),
+  activeMusicId: z.string().nullable(),
 });
 export type Scene = z.infer<typeof SceneSchema>;
+
+/** AssetType -> поле сцены со ссылкой на активный ассет этого типа. */
+export const ACTIVE_ASSET_FIELD_BY_TYPE = {
+  IMAGE: "activeFrameId",
+  VIDEO: "activeVideoId",
+  VOICE: "activeVoiceId",
+  MUSIC: "activeMusicId",
+} as const satisfies Record<
+  z.infer<typeof AssetType>,
+  "activeFrameId" | "activeVideoId" | "activeVoiceId" | "activeMusicId"
+>;
+
+export const SetActiveAssetSchema = z.object({
+  type: AssetType,
+  assetId: z.string(),
+});
+export type SetActiveAssetDto = z.infer<typeof SetActiveAssetSchema>;
+
+/** Активный ассет заданного типа для сцены, если он выбран и существует. */
+export function activeAssetOf(scene: Scene, type: z.infer<typeof AssetType>) {
+  const activeId = scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]];
+  return scene.assets.find((a) => a.id === activeId) ?? null;
+}

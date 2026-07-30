@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import {
+  ACTIVE_ASSET_FIELD_BY_TYPE,
   MIN_SCENE_SECONDS,
   StoryboardImportSchema,
   countWords,
@@ -15,6 +16,7 @@ import {
   type CreateSceneDto,
   type ImportStoryboardDto,
   type ReorderScenesDto,
+  type SetActiveAssetDto,
   type StoryboardImport,
   type UpdateSceneDto,
 } from "@foundry/shared-types";
@@ -89,6 +91,29 @@ export class ScenesService {
         ...(durationSec !== undefined ? { durationSec } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
       },
+      include: WITH_ASSETS,
+    });
+  }
+
+  /** Какой из вариантов ассета (кадр/клип/голос/музыка) показывать в canvas и на таймлайне. */
+  async setActiveAsset(
+    userId: string,
+    sceneId: string,
+    dto: SetActiveAssetDto,
+  ) {
+    await this.assertSceneOwned(userId, sceneId);
+    const field = ACTIVE_ASSET_FIELD_BY_TYPE[dto.type];
+
+    const asset = await this.prisma.asset.findUnique({
+      where: { id: dto.assetId },
+    });
+    if (!asset || asset.sceneId !== sceneId || asset.type !== dto.type) {
+      throw new BadRequestException("Asset does not belong to this scene/type");
+    }
+
+    return this.prisma.scene.update({
+      where: { id: sceneId },
+      data: { [field]: dto.assetId },
       include: WITH_ASSETS,
     });
   }

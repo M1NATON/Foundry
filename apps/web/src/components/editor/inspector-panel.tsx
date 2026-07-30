@@ -14,7 +14,7 @@ import {
   Wand2,
   X,
 } from "lucide-react";
-import type { AssetType, Scene } from "@foundry/shared-types";
+import { ACTIVE_ASSET_FIELD_BY_TYPE, type AssetType, type Scene } from "@foundry/shared-types";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -357,7 +357,13 @@ function SceneInspector({
           ) : (
             <div className="space-y-3">
               {relevantAssets.map((asset) => (
-                <AssetPreview key={asset.id} asset={asset} projectId={projectId} />
+                <AssetPreview
+                  key={asset.id}
+                  asset={asset}
+                  projectId={projectId}
+                  sceneId={scene.id}
+                  isActive={scene[ACTIVE_ASSET_FIELD_BY_TYPE[asset.type]] === asset.id}
+                />
               ))}
             </div>
           )}
