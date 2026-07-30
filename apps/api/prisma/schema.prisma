@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id        String        @id @default(cuid())
+  userId    String
+  title     String
+  coverUrl  String?
+  status    ProjectStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  research  Research?
+  script    Script?
+  scenes    Scene[]
+
+  @@index([userId, updatedAt])
+}
+
+enum ProjectStatus {
+  DRAFT
+  RESEARCH
+  SCRIPTING
+  STORYBOARDING
+  PRODUCING
+  READY
+}
+
+model Research {
+  id        String  @id @default(cuid())
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sources   Json    @default("[]")
+  notes     String? @db.Text
+}
+
+model Script {
+  id         String   @id @default(cuid())
+  projectId  String   @unique
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  content    String   @db.Text
+  wordCount  Int      @default(0)
+  estSeconds Int      @default(0)
+  updatedAt  DateTime @updatedAt
+}
+
+model Scene {
+  id          String      @id @default(cuid())
+  projectId   String
+  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  order       Int
+  title       String
+  voiceText   String      @db.Text
+  imagePrompt String?     @db.Text
+  videoPrompt String?     @db.Text
+  durationSec Int?
+  status      SceneStatus @default(PENDING)
+  assets      Asset[]
+  createdAt   DateTime    @default(now())
+
+  @@index([projectId, order])
+}
+
+enum SceneStatus {
+  PENDING
+  GENERATING
+  READY
+  FAILED
+}
+
+model Asset {
+  id        String      @id @default(cuid())
+  sceneId   String
+  scene     Scene       @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  type      AssetType
+  provider  String
+  prompt    String      @db.Text
+  status    AssetStatus @default(QUEUED)
+  url       String?
+  errorMsg  String?
+  createdAt DateTime    @default(now())
+
+  @@index([sceneId, createdAt])
+}
+
+enum AssetType {
+  IMAGE
+  VIDEO
+  VOICE
+  MUSIC
+}
+
+enum AssetStatus {
+  QUEUED
+  GENERATING
+  READY
+  FAILED
+}

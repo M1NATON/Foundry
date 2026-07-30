@@ -1,0 +1,30 @@
+{
+  "name": "foundry",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.15.1",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:watch": "pnpm --filter @foundry/shared-types build && vitest",
+    "test:coverage": "pnpm --filter @foundry/shared-types build && vitest run --coverage",
+    "typecheck": "turbo run typecheck",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "pnpm --filter @foundry/api exec prisma migrate dev",
+    "db:generate": "pnpm --filter @foundry/api exec prisma generate",
+    "db:studio": "pnpm --filter @foundry/api exec prisma studio"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.6",
+    "prettier": "3.6.2",
+    "turbo": "2.5.6",
+    "typescript": "5.9.2",
+    "vitest": "4.1.6"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

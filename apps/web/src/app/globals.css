@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #f4f1eb;
+    --surface: #fbf9f5;
+    --border: #e2dcd2;
+    --primary: #292524;
+    --secondary: #6b6259;
+    --accent: #a05a1f;
+    --accent-soft: #ebdcc8;
+    --error: #9f3a2d;
+  }
+
+  .dark {
+    --bg: #1c1917;
+    --surface: #262220;
+    --border: #3a352f;
+    --primary: #f4f1eb;
+    --secondary: #a39a8f;
+    --accent: #d08a4a;
+    --accent-soft: #3f2f1f;
+    --error: #e0685a;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-bg text-primary font-sans text-base;
+  }
+
+  ::selection {
+    background: #f3e4d3;
+    color: #1c1917;
+  }
+
+  /* Fraunces — переменный шрифт: высокая оптическая ось для крупных заголовков,
+     низкая вариативность веса ради спокойного ритма. */
+  .font-display {
+    font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 120;
+    @apply tracking-tight;
+  }
+
+  /* Тонкий скроллбар — не перебивает hairline-эстетику. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #eae5dd transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #eae5dd;
+    border-radius: 9999px;
+    border: 3px solid #faf8f5;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b5651d;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  textarea,
+  input {
+    @apply bg-transparent;
+  }
+
+  textarea::placeholder,
+  input::placeholder {
+    @apply text-secondary;
+    opacity: 0.55;
+  }
+}
+
+@layer utilities {
+  /* Диагональная штриховка для пустых слотов ассетов — вместо серых заглушек. */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #eae5dd,
+      #eae5dd 1px,
+      transparent 1px,
+      transparent 7px
+    );
+  }
+}
