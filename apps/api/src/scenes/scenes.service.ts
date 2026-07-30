@@ -5,7 +5,10 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import {
+  MIN_SCENE_SECONDS,
   StoryboardImportSchema,
+  countWords,
+  estimateSeconds,
   extractJson,
   hasDefaultTitle,
   sceneSeconds,
@@ -63,6 +66,15 @@ export class ScenesService {
   async update(userId: string, sceneId: string, dto: UpdateSceneDto) {
     await this.assertSceneOwned(userId, sceneId);
 
+    // Voiceover меняется — длительность пересчитывается по новому тексту,
+    // если только вызывающий не передал durationSec явно сам.
+    const durationSec =
+      dto.durationSec !== undefined
+        ? dto.durationSec
+        : dto.voiceText !== undefined
+          ? Math.max(MIN_SCENE_SECONDS, estimateSeconds(countWords(dto.voiceText)))
+          : undefined;
+
     return this.prisma.scene.update({
       where: { id: sceneId },
       data: {
@@ -74,9 +86,7 @@ export class ScenesService {
         ...(dto.videoPrompt !== undefined
           ? { videoPrompt: dto.videoPrompt }
           : {}),
-        ...(dto.durationSec !== undefined
-          ? { durationSec: dto.durationSec }
-          : {}),
+        ...(durationSec !== undefined ? { durationSec } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
       },
       include: WITH_ASSETS,
