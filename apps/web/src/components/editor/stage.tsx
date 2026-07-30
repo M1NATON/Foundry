@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
@@ -10,24 +11,38 @@ import {
   formatDuration,
 } from "@foundry/shared-types";
 import { SPRING } from "@/components/ui/primitives";
+import { useUpdateSceneField } from "@/lib/queries/scenes";
 
 interface StageProps {
   scene: Scene | null;
   script: Script | null;
+  projectId: string;
   onOpenScript: () => void;
 }
 
 /**
  * Холст: показывает key-art активной сцены — явно выбранный кадр/клип
  * (scene.activeFrameId / activeVideoId), а не «последний сгенерированный».
- * Пока сцен нет — пустой стапель с приглашением написать скрипт.
+ * Voiceover слева редактируется прямо на холсте — тот же источник данных,
+ * что и поле в инспекторе (общий React Query кеш, debounce).
  */
-export function Stage({ scene, script, onOpenScript }: StageProps) {
+export function Stage({ scene, script, projectId, onOpenScript }: StageProps) {
   const activeVideo = scene && activeAssetOf(scene, "VIDEO");
   const activeFrame = scene && activeAssetOf(scene, "IMAGE");
   const keyArt =
     (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
     (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
+
+  const updateField = useUpdateSceneField(projectId);
+  const voiceRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-resize textarea по контенту — без фиксированных rows.
+  useEffect(() => {
+    const el = voiceRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [scene?.id, scene?.voiceText]);
 
   const scriptSeconds = script ? estimateSeconds(script.wordCount) : 0;
 
@@ -47,15 +62,19 @@ export function Stage({ scene, script, onOpenScript }: StageProps) {
               <p className="mb-2 text-xs uppercase tracking-wide text-secondary">
                 Voiceover
               </p>
-              {scene.voiceText ? (
-                <p className="whitespace-pre-wrap font-display text-lg leading-relaxed tracking-tight">
-                  {scene.voiceText}
-                </p>
-              ) : (
-                <p className="text-sm text-secondary">
-                  This scene has no voiceover text yet.
-                </p>
-              )}
+              <textarea
+                ref={voiceRef}
+                key={scene.id}
+                defaultValue={scene.voiceText}
+                onChange={(e) =>
+                  updateField(scene.id, "voiceText", e.target.value)
+                }
+                placeholder="Write the voiceover for this scene…"
+                spellCheck={false}
+                className="w-full resize-none overflow-hidden bg-transparent
+                           font-display text-lg leading-relaxed tracking-tight
+                           outline-none placeholder:text-secondary/70"
+              />
             </div>
 
             <div className="relative flex flex-1 items-center justify-center bg-bg">

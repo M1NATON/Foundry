@@ -26,6 +26,7 @@ import {
   useGenerateAsset,
   useSplitIntoScenes,
   useUpdateScene,
+  useUpdateSceneField,
   useUploadAsset,
 } from "@/lib/queries/scenes";
 import type { EditorTool } from "@/lib/editor-store";
@@ -223,6 +224,7 @@ function SceneInspector({
   tool: EditorTool;
 }) {
   const updateScene = useUpdateScene(projectId);
+  const updateField = useUpdateSceneField(projectId);
   const generate = useGenerateAsset(projectId);
   const upload = useUploadAsset(projectId);
   const deleteScene = useDeleteScene(projectId);
@@ -279,14 +281,23 @@ function SceneInspector({
       </div>
 
       <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4">
-        <Field
-          label="Voiceover"
-          value={scene.voiceText}
-          serif
-          onCommit={(voiceText) =>
-            updateScene.mutate({ id: scene.id, dto: { voiceText } })
-          }
-        />
+        <label className="block">
+          <span className="mb-1.5 block text-xs uppercase tracking-tight text-secondary">
+            Voiceover
+          </span>
+          <textarea
+            key={scene.id}
+            defaultValue={scene.voiceText}
+            onChange={(e) => updateField(scene.id, "voiceText", e.target.value)}
+            rows={4}
+            spellCheck={false}
+            className={cn(
+              "w-full resize-none rounded-md border border-border bg-surface px-3 py-2",
+              "text-sm leading-relaxed outline-none transition-colors",
+              "focus:border-secondary/40 font-display tracking-tight",
+            )}
+          />
+        </label>
         <Field
           label="Image prompt"
           value={scene.imagePrompt ?? ""}

@@ -65,6 +65,7 @@ export default function EditorPage() {
           <Stage
             scene={selectedScene}
             script={script ?? null}
+            projectId={projectId}
             onOpenScript={() => setTool("script")}
           />
 
