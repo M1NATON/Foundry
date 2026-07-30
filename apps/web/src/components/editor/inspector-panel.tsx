@@ -162,6 +162,57 @@ function StoryboardBody({ projectId, sceneCount }: { projectId: string; sceneCou
   );
 }
 
+function SceneTitle({
+  title,
+  onRename,
+}: {
+  title: string;
+  onRename: (title: string) => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(title);
+
+  if (!editing && draft !== title) setDraft(title);
+
+  function commit() {
+    setEditing(false);
+    const trimmed = draft.trim();
+    if (trimmed && trimmed !== title) onRename(trimmed);
+    else setDraft(title);
+  }
+
+  if (editing) {
+    return (
+      <input
+        autoFocus
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.currentTarget.blur();
+          if (e.key === "Escape") {
+            setDraft(title);
+            setEditing(false);
+          }
+        }}
+        className="min-w-0 flex-1 border-b border-secondary/40 bg-transparent font-display
+                   text-base tracking-tight outline-none"
+      />
+    );
+  }
+
+  return (
+    <h2
+      onClick={() => setEditing(true)}
+      title={title}
+      className="min-w-0 flex-1 cursor-text truncate rounded-sm font-display text-base
+                 tracking-tight hover:bg-border/30"
+    >
+      {title}
+    </h2>
+  );
+}
+
 function SceneInspector({
   projectId,
   scene,
@@ -207,9 +258,10 @@ function SceneInspector({
           className="hidden"
           onChange={onFileChosen}
         />
-        <h2 className="min-w-0 flex-1 truncate font-display text-base tracking-tight">
-          {scene.title}
-        </h2>
+        <SceneTitle
+          title={scene.title}
+          onRename={(title) => updateScene.mutate({ id: scene.id, dto: { title } })}
+        />
         <span className="shrink-0 text-xs text-secondary">
           Scene {String(scene.order + 1).padStart(2, "0")}
         </span>

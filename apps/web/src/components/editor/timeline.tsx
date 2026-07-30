@@ -214,7 +214,10 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
 
                 <div className="flex shrink-0 items-center gap-2 border-t border-border bg-surface px-2.5 py-2">
                   <StatusDot tone={STATUS_TONE[scene.status]} />
-                  <span className="min-w-0 flex-1 truncate text-xs font-medium text-primary">
+                  <span
+                    title={scene.title}
+                    className="min-w-0 flex-1 truncate text-xs font-medium text-primary"
+                  >
                     {scene.title}
                   </span>
                   <span className="shrink-0 text-xs tabular-nums text-secondary">
