@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Mic, Music, Trash2 } from "lucide-react";
 import type { Asset } from "@foundry/shared-types";
 import { isAssetPending } from "@foundry/shared-types";
 import { AssetMedia } from "@/components/scenes/asset-media";
@@ -41,6 +41,8 @@ export function AssetPreview({
   const isPending = isAssetPending(current.status);
   const failed = current.status === "FAILED";
   const selectable = current.status === "READY" && !isActive;
+  const isAudio = current.type === "VOICE" || current.type === "MUSIC";
+  const AudioIcon = current.type === "MUSIC" ? Music : Mic;
 
   return (
     <motion.figure
@@ -60,16 +62,30 @@ export function AssetPreview({
         selectable && "cursor-pointer hover:border-secondary/40",
       )}
     >
-      <div className="relative aspect-video">
+      <div
+        className={cn(
+          "relative",
+          // Звуку кадр 16:9 не нужен — он занимает одну строку.
+          isAudio ? "flex items-center gap-2.5 px-3 py-2.5" : "aspect-video",
+        )}
+      >
+        {isAudio && (
+          <AudioIcon className="h-4 w-4 shrink-0 text-secondary" strokeWidth={1.75} />
+        )}
+
         {current.url && !isPending ? (
           // Клик по плееру не должен заодно менять активный ассет — для
           // этого в подписи есть отдельная кнопка «Use».
           <div
-            className="h-full w-full"
+            className={cn(isAudio ? "min-w-0 flex-1" : "h-full w-full")}
             onClick={(e) => current.type !== "IMAGE" && e.stopPropagation()}
           >
             <AssetMedia asset={current} />
           </div>
+        ) : isAudio ? (
+          <span className="flex-1 text-xs text-secondary">
+            {isPending ? "Generating…" : "No file"}
+          </span>
         ) : (
           <div className="relative h-full w-full">
             <div
@@ -81,7 +97,7 @@ export function AssetPreview({
           </div>
         )}
 
-        {isActive && (
+        {isActive && !isAudio && (
           <div className="absolute right-2 top-2 rounded-full bg-accent p-1">
             <Check className="h-3 w-3 text-bg" strokeWidth={2} />
           </div>
@@ -100,6 +116,9 @@ export function AssetPreview({
                   : "idle"
           }
         />
+        {isActive && isAudio && (
+          <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2} />
+        )}
         <span className="text-xs text-secondary">
           {failed
             ? (current.errorMsg ?? "Failed")

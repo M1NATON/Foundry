@@ -35,11 +35,11 @@ export function AssetMedia({
     );
   }
 
-  return (
-    <MediaPlayer
-      src={asset.url}
-      kind={asset.type === "VIDEO" ? "video" : "audio"}
-      controls={controls}
-    />
-  );
+  if (asset.type === "VIDEO") {
+    return <MediaPlayer src={asset.url} kind="video" controls={controls} />;
+  }
+
+  // Звук — строкой: растянутый на 16:9 пустой прямоугольник ничего не
+  // показывал и занимал место четырёх строк списка.
+  return <MediaPlayer src={asset.url} kind="audio" variant="inline" />;
 }

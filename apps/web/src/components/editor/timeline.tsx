@@ -9,7 +9,7 @@ import {
   formatDuration,
   sceneDurationSec,
 } from "@foundry/shared-types";
-import { Minus, Plus } from "lucide-react";
+import { ImageIcon, Minus, Plus } from "lucide-react";
 import { PreviewPlayer } from "@/components/editor/preview-player";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
@@ -26,6 +26,8 @@ interface TimelineProps {
 }
 
 const MIN_SCENE_WIDTH_PX = 60;
+/** Уже этой ширины название всё равно превращается в «A…» — не показываем. */
+const NARROW_SCENE_PX = 130;
 const MIN_ZOOM = 10;
 const MAX_ZOOM = 200;
 const ZOOM_STEP = 10;
@@ -189,48 +191,54 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
                 {...dragProps(scene.id)}
                 onClick={() => setSelectedSceneId(selected ? null : scene.id)}
                 className={cn(
-                  "group relative flex h-full shrink-0 cursor-grab flex-col overflow-hidden rounded-md border text-left transition-colors active:cursor-grabbing",
+                  "group relative flex h-full shrink-0 cursor-grab flex-col overflow-hidden rounded-md border bg-surface text-left transition-all active:cursor-grabbing",
                   selected
-                    ? "border-accent ring-2 ring-accent/40"
-                    : "border-border hover:border-secondary/40",
+                    ? "border-accent shadow-subtle ring-2 ring-accent/30"
+                    : "border-border hover:border-secondary/40 hover:shadow-subtle",
                   dragging && "opacity-50",
                 )}
                 style={{ width: `${sceneWidth}px` }}
                 role="button"
                 aria-label={`Scene ${scene.order + 1}: ${scene.title}`}
               >
-                <div className="relative min-h-0 flex-1">
+                <div className="relative min-h-0 flex-1 bg-bg">
                   {thumb ? (
                     <div className="pointer-events-none absolute inset-0">
                       <AssetMedia asset={thumb} controls={false} />
                     </div>
                   ) : (
-                    <div className="hatch absolute inset-0 opacity-30" />
+                    <>
+                      <div className="hatch absolute inset-0 opacity-30" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <ImageIcon
+                          className="h-4 w-4 text-secondary/40"
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                    </>
                   )}
-                  <span
-                    className={cn(
-                      "absolute left-2 top-2 rounded-sm px-1.5 py-0.5 font-display text-sm tabular-nums leading-none",
-                      thumb?.url
-                        ? "bg-surface/85 text-primary backdrop-blur-[2px]"
-                        : "text-secondary",
-                    )}
-                  >
+
+                  {/* Номер и длительность — на кадре: в подписи снизу они
+                      отнимали место у названия и на узких сценах его съедали. */}
+                  <span className="absolute left-1.5 top-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 font-display text-sm leading-none tabular-nums text-primary backdrop-blur-[2px]">
                     {String(scene.order + 1).padStart(2, "0")}
+                  </span>
+                  <span className="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 text-xs leading-none tabular-nums text-secondary backdrop-blur-[2px]">
+                    {formatDuration(durations[i])}
                   </span>
                 </div>
 
-                <div className="flex shrink-0 items-center gap-2 border-t border-border bg-surface px-2.5 py-2">
+                <div className="flex shrink-0 items-center gap-1.5 border-t border-border px-2 py-1.5">
                   <StatusDot tone={STATUS_TONE[scene.status]} />
-                  <span
-                    title={scene.title}
-                    className="min-w-0 flex-1 truncate text-xs font-medium text-primary"
-                  >
-                    {scene.title}
-                  </span>
-                  <ReadinessBadge scene={scene} />
-                  <span className="shrink-0 text-xs tabular-nums text-secondary">
-                    {formatDuration(durations[i])}
-                  </span>
+                  {sceneWidth >= NARROW_SCENE_PX && (
+                    <span
+                      title={scene.title}
+                      className="min-w-0 flex-1 truncate text-xs font-medium text-primary"
+                    >
+                      {scene.title}
+                    </span>
+                  )}
+                  <ReadinessBadge scene={scene} className="ml-auto" />
                 </div>
               </motion.div>
             );

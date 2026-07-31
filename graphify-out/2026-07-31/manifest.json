@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785513118.3668964,
-    "ast_hash": "6151cb39643056ff2fbfef37211adffd",
+    "mtime": 1785513548.3627338,
+    "ast_hash": "b3971a601b10484d0fdcff38947ab125",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785513106.691992,
-    "ast_hash": "70858875ba48a3548d2696abbe16b1a0",
+    "mtime": 1785513633.9034648,
+    "ast_hash": "c57648f4387c0c65efda9020c4430097",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {

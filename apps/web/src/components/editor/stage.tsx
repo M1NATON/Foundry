@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, FileText } from "lucide-react";
+import { Eye, EyeOff, FileText, Mic, Music } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
 import {
   activeAssetOf,
@@ -11,6 +11,7 @@ import {
   formatDuration,
 } from "@foundry/shared-types";
 import { AssetMedia } from "@/components/scenes/asset-media";
+import { MediaPlayer } from "@/components/scenes/media-player";
 import { SPRING } from "@/components/ui/primitives";
 import { useSceneField } from "@/lib/use-scene-field";
 import { cn } from "@/lib/utils";
@@ -54,6 +55,9 @@ export function Stage({
   const showFrame = preferred === "frame" || (preferred === null && !clip);
   const keyArt = showFrame ? (frame ?? clip) : (clip ?? frame);
 
+  const voiceTrack = readyTrack(scene, "VOICE");
+  const musicTrack = readyTrack(scene, "MUSIC");
+
   const voiceRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea по контенту — без фиксированных rows.
@@ -91,6 +95,27 @@ export function Stage({
                            font-display text-lg leading-relaxed tracking-tight
                            outline-none placeholder:text-secondary/70"
               />
+
+              {/* Звук сцены слушается рядом с её текстом — раньше ради
+                  этого приходилось открывать инспектор. */}
+              {(voiceTrack || musicTrack) && (
+                <div className="mt-6 space-y-3 border-t border-border pt-4">
+                  {voiceTrack && (
+                    <SceneTrack
+                      label="Voice"
+                      icon={Mic}
+                      url={voiceTrack.url!}
+                    />
+                  )}
+                  {musicTrack && (
+                    <SceneTrack
+                      label="Music"
+                      icon={Music}
+                      url={musicTrack.url!}
+                    />
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="relative flex min-w-0 flex-1 items-center justify-center bg-bg p-4">
@@ -177,11 +202,18 @@ export function Stage({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 12 }}
                     transition={SPRING}
-                    className="absolute inset-x-0 bottom-0 space-y-3 border-t border-border
-                               bg-surface/90 p-4 backdrop-blur"
+                    // Непрозрачная плашка: поверх кадра полупрозрачный фон
+                    // съедал подписи полей — их не было видно на видео.
+                    className="absolute inset-x-0 bottom-0 max-h-[70%] overflow-y-auto
+                               border-t border-border bg-surface p-4 shadow-subtle"
                   >
-                    <PromptField label="Image prompt" field={imagePrompt} />
-                    <PromptField label="Video prompt" field={videoPrompt} />
+                    <p className="mb-3 text-xs uppercase tracking-tight text-secondary">
+                      Prompts
+                    </p>
+                    <div className="grid gap-3 lg:grid-cols-2">
+                      <PromptField label="Image prompt" field={imagePrompt} />
+                      <PromptField label="Video prompt" field={videoPrompt} />
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -231,18 +263,46 @@ function PromptField({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs uppercase tracking-wide text-secondary">
+      <span className="mb-1.5 block text-xs uppercase tracking-tight text-secondary">
         {label}
       </span>
       <textarea
         {...field.fieldProps}
-        rows={2}
+        rows={3}
         spellCheck={false}
         placeholder={`Describe the ${label.toLowerCase()}…`}
-        className="w-full resize-none rounded-md border border-border bg-surface px-3 py-2
+        className="w-full resize-none rounded-md border border-border bg-bg px-3 py-2
                    text-sm leading-relaxed outline-none transition-colors
                    focus:border-secondary/40 placeholder:text-secondary/60"
       />
     </label>
+  );
+}
+
+/** Готовая звуковая дорожка сцены выбранного типа, если она есть. */
+function readyTrack(scene: Scene | null, type: "VOICE" | "MUSIC") {
+  if (!scene) return null;
+  const asset = activeAssetOf(scene, type);
+  return asset?.status === "READY" && asset.url ? asset : null;
+}
+
+/** Дорожка сцены рядом с её текстом: подпись плюс компактный плеер. */
+function SceneTrack({
+  label,
+  icon: Icon,
+  url,
+}: {
+  label: string;
+  icon: typeof Mic;
+  url: string;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="flex w-16 shrink-0 items-center gap-1.5 text-xs uppercase tracking-tight text-secondary">
+        <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+        {label}
+      </span>
+      <MediaPlayer src={url} kind="audio" variant="inline" />
+    </div>
   );
 }

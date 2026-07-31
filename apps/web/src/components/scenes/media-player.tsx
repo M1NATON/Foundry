@@ -10,6 +10,11 @@ interface MediaPlayerProps {
   kind: "video" | "audio";
   /** Без контролов — немой кадр для миниатюр. */
   controls?: boolean;
+  /**
+   * overlay — панель лежит на кадре (видео), inline — строкой в потоке
+   * (звук: у него нечего показывать, кроме самой панели).
+   */
+  variant?: "overlay" | "inline";
   className?: string;
 }
 
@@ -23,6 +28,7 @@ export function MediaPlayer({
   src,
   kind,
   controls = true,
+  variant = "overlay",
   className,
 }: MediaPlayerProps) {
   const mediaRef = useRef<HTMLVideoElement & HTMLAudioElement>(null);
@@ -74,6 +80,81 @@ export function MediaPlayer({
     onEnded: () => setPlaying(false),
   };
 
+  const bar = controls && (
+    <div
+      className={cn(
+        "flex items-center gap-2.5",
+        variant === "overlay"
+          ? [
+              "absolute inset-x-0 bottom-0 px-3 py-2",
+              "border-t border-border bg-surface/90 backdrop-blur transition-opacity",
+              playing && "opacity-0 group-hover/player:opacity-100",
+            ]
+          : "w-full min-w-0",
+      )}
+    >
+      <button
+        onClick={toggle}
+        aria-label={playing ? "Pause" : "Play"}
+        className="shrink-0 text-secondary transition-colors hover:text-primary"
+      >
+        {playing ? (
+          <Pause className="h-4 w-4" strokeWidth={1.75} />
+        ) : (
+          <Play className="h-4 w-4" strokeWidth={1.75} />
+        )}
+      </button>
+
+      <Scrubber progress={progress} onSeek={seekToRatio} />
+
+      <span className="shrink-0 text-xs tabular-nums text-secondary">
+        {formatDuration(current)} / {formatDuration(duration)}
+      </span>
+
+      <button
+        onClick={() => {
+          const next = !muted;
+          setMuted(next);
+          if (mediaRef.current) mediaRef.current.muted = next;
+        }}
+        aria-label={muted ? "Unmute" : "Mute"}
+        className="shrink-0 text-secondary transition-colors hover:text-primary"
+      >
+        {muted ? (
+          <VolumeX className="h-3.5 w-3.5" strokeWidth={1.75} />
+        ) : (
+          <Volume2 className="h-3.5 w-3.5" strokeWidth={1.75} />
+        )}
+      </button>
+
+      {kind === "video" && (
+        <button
+          onClick={() => {
+            if (document.fullscreenElement) void document.exitFullscreen();
+            else void wrapperRef.current?.requestFullscreen().catch(() => undefined);
+          }}
+          aria-label={fullscreen ? "Exit fullscreen" : "Fullscreen"}
+          className="shrink-0 text-secondary transition-colors hover:text-primary"
+        >
+          {fullscreen ? (
+            <Minimize2 className="h-3.5 w-3.5" strokeWidth={1.75} />
+          ) : (
+            <Maximize2 className="h-3.5 w-3.5" strokeWidth={1.75} />
+          )}
+        </button>
+      )}
+    </div>
+  );
+
+  if (variant === "inline") {
+    return (
+      <div className={cn("flex w-full min-w-0 items-center", className)}>
+        <audio {...mediaProps} muted={muted} className="hidden" />
+        {bar}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={wrapperRef}
@@ -101,66 +182,7 @@ export function MediaPlayer({
         </>
       )}
 
-      {controls && (
-        <div
-          className={cn(
-            "absolute inset-x-0 bottom-0 flex items-center gap-2.5 px-3 py-2",
-            "border-t border-border bg-surface/90 backdrop-blur transition-opacity",
-            playing && "opacity-0 group-hover/player:opacity-100",
-          )}
-        >
-          <button
-            onClick={toggle}
-            aria-label={playing ? "Pause" : "Play"}
-            className="shrink-0 text-secondary transition-colors hover:text-primary"
-          >
-            {playing ? (
-              <Pause className="h-4 w-4" strokeWidth={1.75} />
-            ) : (
-              <Play className="h-4 w-4" strokeWidth={1.75} />
-            )}
-          </button>
-
-          <Scrubber progress={progress} onSeek={seekToRatio} />
-
-          <span className="shrink-0 text-xs tabular-nums text-secondary">
-            {formatDuration(current)} / {formatDuration(duration)}
-          </span>
-
-          <button
-            onClick={() => {
-              const next = !muted;
-              setMuted(next);
-              if (mediaRef.current) mediaRef.current.muted = next;
-            }}
-            aria-label={muted ? "Unmute" : "Mute"}
-            className="shrink-0 text-secondary transition-colors hover:text-primary"
-          >
-            {muted ? (
-              <VolumeX className="h-3.5 w-3.5" strokeWidth={1.75} />
-            ) : (
-              <Volume2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-            )}
-          </button>
-
-          {kind === "video" && (
-            <button
-              onClick={() => {
-                if (document.fullscreenElement) void document.exitFullscreen();
-                else void wrapperRef.current?.requestFullscreen().catch(() => undefined);
-              }}
-              aria-label={fullscreen ? "Exit fullscreen" : "Fullscreen"}
-              className="shrink-0 text-secondary transition-colors hover:text-primary"
-            >
-              {fullscreen ? (
-                <Minimize2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-              ) : (
-                <Maximize2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-              )}
-            </button>
-          )}
-        </div>
-      )}
+      {bar}
     </div>
   );
 }
