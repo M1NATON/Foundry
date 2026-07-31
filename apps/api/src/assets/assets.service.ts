@@ -32,14 +32,7 @@ export class AssetsService {
     await this.projects.assertOwned(userId, scene.projectId);
 
     // Промпт по умолчанию берётся из соответствующего поля сцены.
-    const fallback =
-      dto.type === "IMAGE"
-        ? scene.imagePrompt
-        : dto.type === "VIDEO"
-          ? scene.videoPrompt
-          : scene.voiceText;
-
-    const prompt = (dto.prompt ?? fallback ?? "").trim();
+    const prompt = (dto.prompt ?? promptFor(scene, dto.type)).trim();
     if (!prompt) {
       throw new BadRequestException(
         `Scene has no prompt for ${dto.type} generation`,
@@ -69,6 +62,70 @@ export class AssetsService {
     await this.queue.enqueue(asset.id);
 
     return asset;
+  }
+
+  /**
+   * Догенерировать недостающее по всему проекту: для каждой сцены ставим в
+   * очередь только те типы, у которых ещё нет активного ассета. Уже готовое
+   * (и уже генерирующееся) не трогаем — иначе кнопка перезаписывала бы
+   * выбранные вручную варианты.
+   */
+  async generateMissing(
+    userId: string,
+    projectId: string,
+    types: AssetType[],
+  ): Promise<{ queued: number; skipped: number }> {
+    await this.projects.assertOwned(userId, projectId);
+
+    const scenes = await this.prisma.scene.findMany({
+      where: { projectId },
+      orderBy: { order: "asc" },
+      include: { assets: { select: { id: true, type: true, status: true } } },
+    });
+
+    let queued = 0;
+    let skipped = 0;
+
+    for (const scene of scenes) {
+      for (const type of types) {
+        if (scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]]) continue;
+
+        const busy = scene.assets.some(
+          (a) => a.type === type && (a.status === "QUEUED" || a.status === "GENERATING"),
+        );
+        if (busy) continue;
+
+        const prompt = promptFor(scene, type);
+        // Без промпта генерировать нечего — считаем сцену пропущенной,
+        // а не роняем весь пакет из-за одной пустой.
+        if (!prompt) {
+          skipped++;
+          continue;
+        }
+
+        const asset = await this.prisma.asset.create({
+          data: {
+            sceneId: scene.id,
+            type,
+            provider: "gemini",
+            prompt,
+            status: "QUEUED",
+          },
+        });
+        await this.prisma.scene.update({
+          where: { id: scene.id },
+          data: {
+            status: "GENERATING",
+            [ACTIVE_ASSET_FIELD_BY_TYPE[type]]: asset.id,
+          },
+        });
+        await this.queue.enqueue(asset.id);
+        queued++;
+      }
+    }
+
+    if (queued > 0) await this.projects.advanceStatus(projectId, "PRODUCING");
+    return { queued, skipped };
   }
 
   /** Готовый файл, загруженный пользователем: генерация не нужна, статус сразу READY. */
@@ -184,4 +241,18 @@ export class AssetsService {
  */
 export function sceneSecondsFromVoice(voiceDurationSec: number): number {
   return Math.max(MIN_SCENE_SECONDS, Math.ceil(voiceDurationSec));
+}
+
+/** Поле сцены, из которого берётся промпт для генерации ассета этого типа. */
+function promptFor(
+  scene: { imagePrompt: string | null; videoPrompt: string | null; voiceText: string },
+  type: AssetType,
+): string {
+  const source =
+    type === "IMAGE"
+      ? scene.imagePrompt
+      : type === "VIDEO"
+        ? scene.videoPrompt
+        : scene.voiceText;
+  return (source ?? "").trim();
 }

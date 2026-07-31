@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProject } from "@/lib/queries/projects";
 import { useScenes } from "@/lib/queries/scenes";
+import { projectGaps } from "@foundry/shared-types";
 import { EditorChrome } from "@/components/editor/editor-chrome";
 import { EditorWorkspace } from "@/components/editor/editor-workspace";
 import { LeftRail } from "@/components/editor/left-rail";
+import { ReadinessPanel } from "@/components/editor/readiness-panel";
 import { ImportStoryboardDialog } from "@/components/scenes/import-storyboard-dialog";
 import { ExportPanel } from "@/components/export/export-panel";
 
@@ -17,6 +19,7 @@ export default function EditorPage() {
   const { data: scenes } = useScenes(projectId);
   const [exportOpen, setExportOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
+  const [readinessOpen, setReadinessOpen] = useState(false);
 
   if (isError) {
     return (
@@ -49,6 +52,8 @@ export default function EditorPage() {
         status={project.status}
         onImport={() => setImportOpen(true)}
         onExport={() => setExportOpen(true)}
+        onReadiness={() => setReadinessOpen(true)}
+        gapCount={projectGaps(scenes ?? []).length}
       />
 
       <div className="flex min-h-0 flex-1">
@@ -61,6 +66,13 @@ export default function EditorPage() {
         sceneCount={scenes?.length ?? 0}
         open={importOpen}
         onClose={() => setImportOpen(false)}
+      />
+
+      <ReadinessPanel
+        projectId={projectId}
+        scenes={scenes ?? []}
+        open={readinessOpen}
+        onClose={() => setReadinessOpen(false)}
       />
 
       <ExportPanel

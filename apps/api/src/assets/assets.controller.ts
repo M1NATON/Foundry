@@ -15,7 +15,9 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import {
   AssetType,
   CreateAssetSchema,
+  GenerateMissingSchema,
   type CreateAssetDto,
+  type GenerateMissingDto,
 } from "@foundry/shared-types";
 import { AuthGuard } from "../common/auth.guard";
 import { UserId } from "../common/user-id.decorator";
@@ -26,6 +28,22 @@ import {
   UPLOAD_MAX_BYTES,
   assertAllowedFile,
 } from "./upload";
+
+@Controller("projects/:projectId/assets")
+@UseGuards(AuthGuard)
+export class ProjectAssetsController {
+  constructor(private readonly assets: AssetsService) {}
+
+  /** Догенерировать недостающие слоты по всем сценам проекта разом. */
+  @Post("generate-missing")
+  generateMissing(
+    @UserId() userId: string,
+    @Param("projectId") projectId: string,
+    @Body(new ZodValidationPipe(GenerateMissingSchema)) dto: GenerateMissingDto,
+  ) {
+    return this.assets.generateMissing(userId, projectId, dto.types);
+  }
+}
 
 @Controller("scenes/:sceneId/assets")
 @UseGuards(AuthGuard)

@@ -5,6 +5,7 @@ import {
   Clapperboard,
   Download,
   FileText,
+  ListChecks,
   ListOrdered,
   Upload,
 } from "lucide-react";
@@ -15,6 +16,9 @@ import { cn } from "@/lib/utils";
 interface PipelineStepperProps {
   onImport: () => void;
   onExport: () => void;
+  onReadiness: () => void;
+  /** Сколько пробелов осталось до экспорта — бейдж на кнопке. */
+  gapCount: number;
 }
 
 /**
@@ -39,7 +43,12 @@ const STEPS = [
  * таскалась мышью — она закрывала превью и её положение приходилось
  * подбирать заново на каждом этапе.
  */
-export function PipelineStepper({ onImport, onExport }: PipelineStepperProps) {
+export function PipelineStepper({
+  onImport,
+  onExport,
+  onReadiness,
+  gapCount,
+}: PipelineStepperProps) {
   const { step, setStep } = useEditor();
 
   return (
@@ -79,6 +88,22 @@ export function PipelineStepper({ onImport, onExport }: PipelineStepperProps) {
           как ещё один шаг пайплайна. */}
       <span className="mx-1 h-4 w-px bg-border" aria-hidden />
 
+      <button
+        onClick={onReadiness}
+        aria-label="Readiness check"
+        title={
+          gapCount > 0
+            ? `${gapCount} things to fix before export`
+            : "Everything is ready to export"
+        }
+        className="flex h-8 items-center gap-1.5 rounded-md px-2 text-secondary
+                   transition-colors hover:bg-border/40 hover:text-primary"
+      >
+        <ListChecks className="h-4 w-4" strokeWidth={1.75} />
+        {gapCount > 0 && (
+          <span className="text-xs tabular-nums text-accent">{gapCount}</span>
+        )}
+      </button>
       <button
         onClick={onImport}
         aria-label="Import storyboard"

@@ -104,3 +104,79 @@ export function activeAssetOf(scene: Scene, type: z.infer<typeof AssetType>) {
   const activeId = scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]];
   return scene.assets.find((a) => a.id === activeId) ?? null;
 }
+
+/** Что мешает отдать проект в монтаж. */
+export interface ProjectGap {
+  kind:
+    | "no-frame"
+    | "no-clip"
+    | "no-voice"
+    | "no-image-prompt"
+    | "no-video-prompt"
+    | "empty-voiceover"
+    | "voice-shorter-than-scene";
+  sceneId: string;
+  sceneOrder: number;
+  sceneTitle: string;
+  detail: string;
+}
+
+const GAP_LABEL: Record<ProjectGap["kind"], string> = {
+  "no-frame": "No frame chosen",
+  "no-clip": "No clip chosen",
+  "no-voice": "No voiceover audio",
+  "no-image-prompt": "Image prompt is empty",
+  "no-video-prompt": "Video prompt is empty",
+  "empty-voiceover": "Voiceover text is empty",
+  "voice-shorter-than-scene": "Voice is shorter than the scene",
+};
+
+export function gapLabel(kind: ProjectGap["kind"]): string {
+  return GAP_LABEL[kind];
+}
+
+/**
+ * Пробелы проекта перед экспортом. Считается по активным ассетам, а не по
+ * «что-нибудь сгенерировано»: в монтаж уходит именно выбранный вариант.
+ */
+export function projectGaps(scenes: Scene[]): ProjectGap[] {
+  const gaps: ProjectGap[] = [];
+
+  for (const scene of scenes) {
+    const at = (kind: ProjectGap["kind"], detail = "") =>
+      gaps.push({
+        kind,
+        sceneId: scene.id,
+        sceneOrder: scene.order,
+        sceneTitle: scene.title,
+        detail,
+      });
+
+    if (!scene.voiceText.trim()) at("empty-voiceover");
+    if (!scene.imagePrompt?.trim()) at("no-image-prompt");
+    if (!scene.videoPrompt?.trim()) at("no-video-prompt");
+
+    const frame = activeAssetOf(scene, "IMAGE");
+    const clip = activeAssetOf(scene, "VIDEO");
+    const voice = activeAssetOf(scene, "VOICE");
+
+    if (frame?.status !== "READY") at("no-frame");
+    if (clip?.status !== "READY") at("no-clip");
+
+    if (voice?.status !== "READY") {
+      at("no-voice");
+      continue;
+    }
+
+    // Голос короче сцены — в монтаже останется тишина в хвосте.
+    const sceneSec = sceneDurationSec(scene);
+    if (voice.durationSec != null && voice.durationSec + 1 < sceneSec) {
+      at(
+        "voice-shorter-than-scene",
+        `${Math.round(voice.durationSec)}s of ${sceneSec}s`,
+      );
+    }
+  }
+
+  return gaps;
+}

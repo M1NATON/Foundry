@@ -31,3 +31,9 @@ export const ASSET_PENDING_STATUSES: Array<z.infer<typeof AssetStatus>> = [
 export function isAssetPending(status: z.infer<typeof AssetStatus>): boolean {
   return ASSET_PENDING_STATUSES.includes(status);
 }
+
+/** Пакетная догенерация: какие типы слотов заполнять по всему проекту. */
+export const GenerateMissingSchema = z.object({
+  types: z.array(AssetType).min(1),
+});
+export type GenerateMissingDto = z.infer<typeof GenerateMissingSchema>;

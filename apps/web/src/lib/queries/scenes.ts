@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import type {
   Asset,
+  AssetType,
   CreateAssetDto,
   CreateSceneDto,
   Scene,
@@ -129,6 +130,22 @@ export function useImportStoryboard(projectId: string) {
   return useMutation({
     mutationFn: (raw: string) =>
       api.post<Scene[]>(`/projects/${projectId}/scenes/import`, { raw }),
+    onSuccess: () => invalidateProject(qc, projectId),
+  });
+}
+
+/**
+ * Пакетная догенерация недостающих слотов по всем сценам. Возвращает,
+ * сколько задач поставлено и сколько сцен пропущено из-за пустых промптов.
+ */
+export function useGenerateMissing(projectId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (types: AssetType[]) =>
+      api.post<{ queued: number; skipped: number }>(
+        `/projects/${projectId}/assets/generate-missing`,
+        { types },
+      ),
     onSuccess: () => invalidateProject(qc, projectId),
   });
 }

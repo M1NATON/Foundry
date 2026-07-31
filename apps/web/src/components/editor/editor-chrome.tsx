@@ -13,6 +13,8 @@ interface EditorChromeProps {
   status: ProjectStatus;
   onImport: () => void;
   onExport: () => void;
+  onReadiness: () => void;
+  gapCount: number;
 }
 
 export function EditorChrome({
@@ -20,6 +22,8 @@ export function EditorChrome({
   status,
   onImport,
   onExport,
+  onReadiness,
+  gapCount,
 }: EditorChromeProps) {
   const { theme, setTheme } = useEditor();
   return (
@@ -43,7 +47,12 @@ export function EditorChrome({
         </h1>
       </div>
 
-      <PipelineStepper onImport={onImport} onExport={onExport} />
+      <PipelineStepper
+        onImport={onImport}
+        onExport={onExport}
+        onReadiness={onReadiness}
+        gapCount={gapCount}
+      />
 
       <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
         <span className="truncate text-xs text-secondary">
