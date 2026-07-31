@@ -62,29 +62,37 @@ function render(qc: QueryClient, step: EditorStep): string {
 }
 
 describe("EditorWorkspace", () => {
-  it("renders Storyboard without the script editor", () => {
-    const markup = render(seed("Original voiceover"), "storyboard");
+  it("renders Producing without the script editor", () => {
+    const markup = render(seed("Original voiceover"), "producing");
 
     expect(markup).toContain(SCENE_TITLE);
     expect(markup).toContain("Original voiceover");
     expect(markup).not.toContain(SCRIPT_PLACEHOLDER);
   });
 
-  it("replaces Storyboard with Script instead of layering over it", () => {
+  it("replaces the canvas with Script instead of layering over it", () => {
     const markup = render(seed("Original voiceover"), "script");
 
     expect(markup).toContain(SCRIPT_PLACEHOLDER);
     expect(markup).toContain(script.content);
     // Канвас и таймлайн не должны просвечивать сквозь Script — именно это
-    // ломалось, когда Script был оверлеем поверх смонтированного Storyboard.
+    // ломалось, когда Script был оверлеем поверх смонтированного канваса.
     expect(markup).not.toContain(SCENE_TITLE);
     expect(markup).not.toContain("Original voiceover");
   });
 
-  it("keeps scene edits across Storyboard → Script → Storyboard", () => {
+  it("lists scenes on Storyboard without the per-scene production fields", () => {
+    const markup = render(seed("Original voiceover"), "storyboard");
+
+    expect(markup).toContain(SCENE_TITLE);
+    expect(markup).not.toContain("Original voiceover");
+    expect(markup).not.toContain(SCRIPT_PLACEHOLDER);
+  });
+
+  it("keeps scene edits across Producing → Script → Producing", () => {
     const qc = seed("Original voiceover");
 
-    expect(render(qc, "storyboard")).toContain("Original voiceover");
+    expect(render(qc, "producing")).toContain("Original voiceover");
 
     // Правка поля сцены — ровно то, что делает useUpdateSceneField:
     // оптимистичная запись в кеш списка сцен.
@@ -94,9 +102,9 @@ describe("EditorWorkspace", () => {
 
     render(qc, "script");
 
-    // Storyboard размонтировался и смонтировался заново — правка на месте,
+    // Канвас размонтировался и смонтировался заново — правка на месте,
     // потому что она живёт в кеше, а не в локальном стейте вида.
-    const back = render(qc, "storyboard");
+    const back = render(qc, "producing");
     expect(back).toContain("Edited on the canvas");
     expect(back).not.toContain("Original voiceover");
   });

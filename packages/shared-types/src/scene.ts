@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { AssetType, SceneStatus } from "./enums";
 import { AssetSchema } from "./asset";
+import { countWords, estimateSeconds } from "./script";
+import { MIN_SCENE_SECONDS } from "./storyboard";
 
 export const CreateSceneSchema = z.object({
   title: z.string().trim().min(1).max(200),
@@ -52,6 +54,18 @@ export const SceneSchema = z.object({
   activeMusicId: z.string().nullable(),
 });
 export type Scene = z.infer<typeof SceneSchema>;
+
+/**
+ * Длительность сцены для таймлайна и списка раскадровки: явная, если её
+ * посчитал бэкенд, иначе оценка по темпу начитки. Один источник правды,
+ * чтобы ширина блока на таймлайне и подпись в списке не разъезжались.
+ */
+export function sceneDurationSec(
+  scene: Pick<Scene, "durationSec" | "voiceText">,
+): number {
+  const fallback = estimateSeconds(countWords(scene.voiceText));
+  return Math.max(MIN_SCENE_SECONDS, scene.durationSec ?? fallback);
+}
 
 /** AssetType -> поле сцены со ссылкой на активный ассет этого типа. */
 export const ACTIVE_ASSET_FIELD_BY_TYPE = {

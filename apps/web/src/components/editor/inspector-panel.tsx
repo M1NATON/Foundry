@@ -2,18 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ClipboardPaste,
-  ImageIcon,
-  Mic,
-  Music,
-  Plus,
-  Trash2,
-  Upload,
-  Video,
-  Wand2,
-  X,
-} from "lucide-react";
+import { ImageIcon, Mic, Music, Trash2, Upload, Video, X } from "lucide-react";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
   type AssetType,
@@ -23,12 +12,9 @@ import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AssetPreview } from "@/components/scenes/asset-preview";
-import { ImportStoryboardDialog } from "@/components/scenes/import-storyboard-dialog";
 import {
-  useCreateScene,
   useDeleteScene,
   useGenerateAsset,
-  useSplitIntoScenes,
   useUpdateScene,
   useUploadAsset,
 } from "@/lib/queries/scenes";
@@ -41,7 +27,6 @@ interface InspectorPanelProps {
   projectId: string;
   scene: Scene | null;
   scenes: Scene[];
-  sceneCount: number;
   tool: EditorTool;
   onUpdateSceneField: SceneFieldUpdater;
   onClose: () => void;
@@ -59,7 +44,7 @@ const GENERATE_TOOLS: Array<{
   { tool: "music", type: "MUSIC", label: "Music", icon: Music },
 ];
 
-const OPEN_TOOLS = new Set<EditorTool>(["storyboard", "frames", "clip", "voice", "music"]);
+const OPEN_TOOLS = new Set<EditorTool>(["frames", "clip", "voice", "music"]);
 
 const ACCEPT_FOR: Record<AssetType, string> = {
   IMAGE: "image/*",
@@ -72,7 +57,6 @@ export function InspectorPanel({
   projectId,
   scene,
   scenes,
-  sceneCount,
   tool,
   onUpdateSceneField,
   onClose,
@@ -108,14 +92,13 @@ export function InspectorPanel({
                      border-l border-border bg-surface"
           aria-label="Inspector"
         >
-          {tool === "storyboard" ? (
-            <StoryboardBody projectId={projectId} sceneCount={sceneCount} />
-          ) : scene ? (
+          {scene ? (
             <SceneInspector
               projectId={projectId}
               scene={scene}
               tool={tool}
               onUpdateSceneField={onUpdateSceneField}
+              onClose={onClose}
             />
           ) : (
             <EmptySelection />
@@ -133,62 +116,6 @@ function EmptySelection() {
         Select a scene on the timeline to work on it.
       </p>
     </div>
-  );
-}
-
-function StoryboardBody({ projectId, sceneCount }: { projectId: string; sceneCount: number }) {
-  const split = useSplitIntoScenes(projectId);
-  const createScene = useCreateScene(projectId);
-  const [importOpen, setImportOpen] = useState(false);
-
-  return (
-    <>
-      <div className="flex shrink-0 items-center justify-between border-b border-border px-5 py-3">
-        <h2 className="font-display text-base tracking-tight">Storyboard</h2>
-      </div>
-      <div className="flex-1 space-y-3 overflow-y-auto px-5 py-4">
-        <p className="text-xs text-secondary">
-          Turn the script into scenes on the timeline.
-        </p>
-        <Button
-          size="sm"
-          variant="secondary"
-          className="w-full justify-start"
-          onClick={() => split.mutate()}
-          disabled={split.isPending}
-        >
-          <Wand2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-          {split.isPending ? "Splitting…" : "Split from script"}
-        </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          className="w-full justify-start"
-          onClick={() => setImportOpen(true)}
-        >
-          <ClipboardPaste className="h-3.5 w-3.5" strokeWidth={1.75} />
-          Import storyboard
-        </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          className="w-full justify-start"
-          onClick={() =>
-            createScene.mutate({ title: "New scene", voiceText: "" })
-          }
-          disabled={createScene.isPending}
-        >
-          <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
-          Add scene
-        </Button>
-      </div>
-      <ImportStoryboardDialog
-        projectId={projectId}
-        sceneCount={sceneCount}
-        open={importOpen}
-        onClose={() => setImportOpen(false)}
-      />
-    </>
   );
 }
 
@@ -248,11 +175,13 @@ function SceneInspector({
   scene,
   tool,
   onUpdateSceneField,
+  onClose,
 }: {
   projectId: string;
   scene: Scene;
   tool: EditorTool;
   onUpdateSceneField: SceneFieldUpdater;
+  onClose: () => void;
 }) {
   const updateScene = useUpdateScene(projectId);
   const generate = useGenerateAsset(projectId);
@@ -311,6 +240,13 @@ function SceneInspector({
           className="shrink-0 rounded-sm p-1 text-secondary transition-colors hover:bg-border/40 hover:text-error"
         >
           <Trash2 className="h-4 w-4" strokeWidth={1.75} />
+        </button>
+        <button
+          onClick={onClose}
+          aria-label="Close inspector"
+          className="shrink-0 rounded-sm p-1 text-secondary transition-colors hover:bg-border/40 hover:text-primary"
+        >
+          <X className="h-4 w-4" strokeWidth={1.75} />
         </button>
       </div>
 

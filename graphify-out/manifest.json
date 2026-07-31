@@ -215,8 +215,8 @@
     "semantic_hash": "6b712523aa7717311dac5ca0022625e2"
   },
   "packages/shared-types/src/scene.ts": {
-    "mtime": 1785426939.646788,
-    "ast_hash": "9453be2922351e148d2b14d9a02d9a5c",
+    "mtime": 1785506221.7214296,
+    "ast_hash": "8502bca4131650be5bf5f38379951660",
     "semantic_hash": ""
   },
   "packages/shared-types/src/script.ts": {
@@ -395,13 +395,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/floating-toolbar.tsx": {
-    "mtime": 1785505820.0412714,
-    "ast_hash": "f66e0219b1d0f64158a46c23b2e95ed4",
+    "mtime": 1785506349.7478423,
+    "ast_hash": "a74bd1109284650bc481612d53221c2e",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785432887.273112,
-    "ast_hash": "64fbdfa23746f648ab213f610235120c",
+    "mtime": 1785506459.3943396,
+    "ast_hash": "6b921f1b5d48d08b5956a2eb3c205e89",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785427216.283524,
-    "ast_hash": "f810110154b7d18cffa4da952861cf61",
+    "mtime": 1785506533.5709994,
+    "ast_hash": "c28df2b1d2eb7a615aeea0d30f1228cc",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/editor-store.tsx": {
-    "mtime": 1785506020.4953523,
-    "ast_hash": "e3c13dad6fb52cbbad53abd499afb273",
+    "mtime": 1785506312.112015,
+    "ast_hash": "97f60318863dc6499c053eab920ee5a6",
     "semantic_hash": ""
   },
   "packages/shared-types/src/storyboard.ts": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/editor-workspace.tsx": {
-    "mtime": 1785505786.0534272,
-    "ast_hash": "9e89cdeb905e5e05b48b683200a4379a",
+    "mtime": 1785506298.2170787,
+    "ast_hash": "e623f7a6d68933a462006e78b576e65f",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/script-view.tsx": {
@@ -570,8 +570,23 @@
     "semantic_hash": ""
   },
   "apps/web/test/editor-workspace.test.tsx": {
-    "mtime": 1785506040.825259,
-    "ast_hash": "021f9270b09d955198de2a4665d02b28",
+    "mtime": 1785506602.607683,
+    "ast_hash": "376863fc417763891cc4ddf8ed15b033",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/editor/producing-view.tsx": {
+    "mtime": 1785506474.6752696,
+    "ast_hash": "8bbb09404f271e5256c5b8416489d426",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/editor/storyboard-list-view.tsx": {
+    "mtime": 1785506271.6312006,
+    "ast_hash": "1f7d1bede092fe0a3dffeaa97f957277",
+    "semantic_hash": ""
+  },
+  "apps/web/src/lib/use-drag-reorder.ts": {
+    "mtime": 1785506236.5083616,
+    "ast_hash": "1fcbd69cd06719d07827a58e8a8da86d",
     "semantic_hash": ""
   }
 }

@@ -2,7 +2,12 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Clapperboard, FileText, GripHorizontal } from "lucide-react";
+import {
+  Clapperboard,
+  FileText,
+  GripHorizontal,
+  ListOrdered,
+} from "lucide-react";
 import { SPRING } from "@/components/ui/primitives";
 import type { EditorStep } from "@/lib/editor-store";
 import { cn } from "@/lib/utils";
@@ -13,13 +18,15 @@ interface FloatingToolbarProps {
 }
 
 /**
- * Степпер пайплайна: Script — сплошной текст начитки, Storyboard — канвас
- * с таймлайном и инспектором сцены. Frames/Clip/Voice/Music убраны отсюда —
- * те же действия уже доступны в InspectorPanel при выбранной сцене.
+ * Степпер пайплайна: Script — сплошной текст начитки, Storyboard — состав
+ * и порядок сцен, Producing — канвас с таймлайном и инспектором сцены.
+ * Frames/Clip/Voice/Music убраны отсюда — те же действия уже доступны
+ * в InspectorPanel при выбранной сцене.
  */
 const STEPS = [
   { key: "script", label: "Script", icon: FileText },
-  { key: "storyboard", label: "Storyboard", icon: Clapperboard },
+  { key: "storyboard", label: "Storyboard", icon: ListOrdered },
+  { key: "producing", label: "Producing", icon: Clapperboard },
 ] as const satisfies ReadonlyArray<{
   key: EditorStep;
   label: string;
@@ -54,8 +61,12 @@ export function FloatingToolbar({ step, onStepChange }: FloatingToolbarProps) {
         animate={{ opacity: 1, y: 0, x: position.x }}
         style={{ y: position.y }}
         transition={SPRING}
-        className="absolute bottom-[200px] left-1/2 z-30 flex -translate-x-1/2 items-center gap-1
-                   rounded-xl border border-border bg-surface p-1.5 shadow-subtle"
+        className={cn(
+          `absolute left-1/2 z-30 flex -translate-x-1/2 items-center gap-1
+           rounded-xl border border-border bg-surface p-1.5 shadow-subtle`,
+          // На Producing внизу стоит таймлайн — панель поднимается над ним.
+          step === "producing" ? "bottom-[200px]" : "bottom-8",
+        )}
         role="toolbar"
         aria-label="Editor tools"
       >

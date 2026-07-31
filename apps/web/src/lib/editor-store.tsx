@@ -13,16 +13,10 @@ import {
  * один из них. Всё состояние сцен и скрипта живёт в кеше React Query,
  * поэтому размонтирование вида ничего не теряет.
  */
-export type EditorStep = "script" | "storyboard";
+export type EditorStep = "script" | "storyboard" | "producing";
 
-/** Фокус инспектора внутри Storyboard — какой тип ассета показывать. */
-export type EditorTool =
-  | "storyboard"
-  | "frames"
-  | "clip"
-  | "voice"
-  | "music"
-  | null;
+/** Фокус инспектора внутри Producing — какой тип ассета показывать. */
+export type EditorTool = "frames" | "clip" | "voice" | "music" | null;
 
 export type Theme = "light" | "dark";
 
@@ -53,7 +47,7 @@ const EditorContext = createContext<EditorState | null>(null);
 
 export function EditorProvider({
   children,
-  initialStep = "storyboard",
+  initialStep = "producing",
   initialSelectedSceneId = null,
 }: {
   children: React.ReactNode;
