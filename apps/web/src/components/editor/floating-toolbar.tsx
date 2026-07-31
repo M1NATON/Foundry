@@ -74,7 +74,7 @@ export function FloatingToolbar({
           `absolute left-1/2 z-30 flex -translate-x-1/2 items-center gap-1
            rounded-xl border border-border bg-surface p-1.5 shadow-subtle`,
           // На Producing внизу стоит таймлайн — панель поднимается над ним.
-          step === "producing" ? "bottom-[200px]" : "bottom-8",
+          step === "producing" ? "bottom-[248px]" : "bottom-8",
         )}
         role="toolbar"
         aria-label="Editor tools"

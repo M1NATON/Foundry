@@ -9,8 +9,9 @@ import {
   formatDuration,
   sceneDurationSec,
 } from "@foundry/shared-types";
+import { Minus, Plus } from "lucide-react";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
-import { useEditor } from "@/lib/editor-store";
+import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
 import { useReorderScenes } from "@/lib/queries/scenes";
 import { useDragReorder } from "@/lib/use-drag-reorder";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,11 @@ interface TimelineProps {
 const MIN_SCENE_WIDTH_PX = 60;
 const MIN_ZOOM = 10;
 const MAX_ZOOM = 200;
+const ZOOM_STEP = 10;
+
+function clampZoom(zoom: number): number {
+  return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
+}
 
 const STATUS_TONE: Record<
   Scene["status"],
@@ -46,6 +52,7 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
   const { selectedSceneId, setSelectedSceneId, timelineZoom, setTimelineZoom } = useEditor();
   const reorder = useReorderScenes(projectId);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sceneRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const { ordered, draggingId, dragProps } = useDragReorder(scenes, (items) =>
     reorder.mutate(items),
@@ -67,16 +74,55 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
     function handler(e: WheelEvent) {
       if (!e.ctrlKey) return;
       e.preventDefault();
-      setTimelineZoom((z) =>
-        Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z + e.deltaY * -0.1)),
-      );
+      setTimelineZoom((z) => clampZoom(z + e.deltaY * -0.1));
     }
     el.addEventListener("wheel", handler, { passive: false });
     return () => el.removeEventListener("wheel", handler);
   }, [setTimelineZoom]);
 
+  // Выбранная сцена может оказаться далеко за краем видимой области —
+  // особенно после Alt+←/→ или клика по сцене в списке раскадровки.
+  useEffect(() => {
+    if (!selectedSceneId) return;
+    sceneRefs.current[selectedSceneId]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [selectedSceneId, timelineZoom]);
+
   return (
     <section className="shrink-0 border-t border-border bg-surface">
+      <div className="flex items-center gap-2 border-b border-border px-3 py-1.5">
+        <button
+          onClick={() => setTimelineZoom((z) => clampZoom(z - ZOOM_STEP))}
+          disabled={timelineZoom <= MIN_ZOOM}
+          aria-label="Zoom out"
+          className="rounded-sm p-1 text-secondary transition-colors hover:bg-border/40
+                     hover:text-primary disabled:opacity-40"
+        >
+          <Minus className="h-3.5 w-3.5" strokeWidth={1.75} />
+        </button>
+        <span className="w-10 text-center text-xs tabular-nums text-secondary">
+          {Math.round((timelineZoom / DEFAULT_TIMELINE_ZOOM) * 100)}%
+        </span>
+        <button
+          onClick={() => setTimelineZoom((z) => clampZoom(z + ZOOM_STEP))}
+          disabled={timelineZoom >= MAX_ZOOM}
+          aria-label="Zoom in"
+          className="rounded-sm p-1 text-secondary transition-colors hover:bg-border/40
+                     hover:text-primary disabled:opacity-40"
+        >
+          <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
+        </button>
+        <button
+          onClick={() => setTimelineZoom(() => DEFAULT_TIMELINE_ZOOM)}
+          className="text-xs text-secondary transition-colors hover:text-primary"
+        >
+          Reset
+        </button>
+      </div>
+
       <div ref={scrollRef} className="overflow-x-auto">
         <div className="relative h-7 border-b border-border" style={{ width: `${trackWidth}px` }}>
           {Array.from({ length: tickCount + 1 }).map((_, i) => {
@@ -122,6 +168,9 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
             return (
               <motion.div
                 key={scene.id}
+                ref={(el) => {
+                  sceneRefs.current[scene.id] = el;
+                }}
                 layout
                 transition={SPRING}
                 {...dragProps(scene.id)}
