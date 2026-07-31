@@ -4,36 +4,33 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Clapperboard, FileText, GripHorizontal } from "lucide-react";
 import { SPRING } from "@/components/ui/primitives";
-import type { EditorTool } from "@/lib/editor-store";
+import type { EditorStep } from "@/lib/editor-store";
 import { cn } from "@/lib/utils";
 
 interface FloatingToolbarProps {
-  active: EditorTool;
-  onSelect: (tool: Exclude<EditorTool, null>) => void;
-  projectId: string;
-  sceneCount: number;
+  step: EditorStep;
+  onStepChange: (step: EditorStep) => void;
 }
 
 /**
- * Степпер пайплайна: Script — шаг ДО разбиения на сцены (полноэкранный
- * редактор начитки), Storyboard — канвас + таймлайн + инспектор сцены.
- * Frames/Clip/Voice/Music убраны отсюда — те же действия уже доступны
- * в InspectorPanel при выбранной сцене, дублировать их здесь незачем.
+ * Степпер пайплайна: Script — сплошной текст начитки, Storyboard — канвас
+ * с таймлайном и инспектором сцены. Frames/Clip/Voice/Music убраны отсюда —
+ * те же действия уже доступны в InspectorPanel при выбранной сцене.
  */
-const TOOLS = [
+const STEPS = [
   { key: "script", label: "Script", icon: FileText },
   { key: "storyboard", label: "Storyboard", icon: Clapperboard },
-] as const;
+] as const satisfies ReadonlyArray<{
+  key: EditorStep;
+  label: string;
+  icon: typeof FileText;
+}>;
 
 /**
  * Плавающая панель инструментов. Перетаскивается за ручку (GripHorizontal)
  * и запоминает позицию в пределах сессии — пользователь ставит её, где удобно.
  */
-export function FloatingToolbar({ active, onSelect }: FloatingToolbarProps) {
-  // Любой инструмент, кроме script (в т.ч. null, storyboard, frames, clip,
-  // voice, music), относится к этапу Storyboard — script открывает
-  // полноэкранный редактор поверх всего этого.
-  const step: "script" | "storyboard" = active === "script" ? "script" : "storyboard";
+export function FloatingToolbar({ step, onStepChange }: FloatingToolbarProps) {
   const constraintsRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -68,7 +65,7 @@ export function FloatingToolbar({ active, onSelect }: FloatingToolbarProps) {
         >
           <GripHorizontal className="h-4 w-4" strokeWidth={1.75} />
         </span>
-        {TOOLS.map(({ key, label, icon: Icon }, index) => {
+        {STEPS.map(({ key, label, icon: Icon }, index) => {
           const isActive = step === key;
           return (
             <div key={key} className="flex items-center gap-1">
@@ -78,7 +75,7 @@ export function FloatingToolbar({ active, onSelect }: FloatingToolbarProps) {
                 </span>
               )}
               <button
-                onClick={() => onSelect(key)}
+                onClick={() => onStepChange(key)}
                 aria-pressed={isActive}
                 aria-current={isActive ? "step" : undefined}
                 className={cn(

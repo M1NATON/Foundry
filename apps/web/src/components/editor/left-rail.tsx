@@ -13,7 +13,7 @@ interface LeftRailProps {
 export function LeftRail({ onExport }: LeftRailProps) {
   const pathname = usePathname();
   const { id: projectId } = useParams<{ id: string }>();
-  const { tool, setTool } = useEditor();
+  const { step, setStep, tool, setTool } = useEditor();
 
   const items = [
     {
@@ -30,15 +30,18 @@ export function LeftRail({ onExport }: LeftRailProps) {
       key: "script",
       label: "Script",
       icon: FileText,
-      onClick: () => setTool(tool === "script" ? null : "script"),
-      active: tool === "script",
+      onClick: () => setStep("script"),
+      active: step === "script",
     },
     {
       key: "assets",
       label: "Assets",
       icon: Layers,
-      onClick: () => setTool(tool === "frames" ? null : "frames"),
-      active: tool === "frames",
+      onClick: () => {
+        setStep("storyboard");
+        setTool(tool === "frames" ? null : "frames");
+      },
+      active: step === "storyboard" && tool === "frames",
     },
   ];
 

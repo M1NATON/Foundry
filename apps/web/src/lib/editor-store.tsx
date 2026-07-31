@@ -8,8 +8,15 @@ import {
   useState,
 } from "react";
 
+/**
+ * Этап пайплайна — это ВИД, а не оверлей: одновременно смонтирован ровно
+ * один из них. Всё состояние сцен и скрипта живёт в кеше React Query,
+ * поэтому размонтирование вида ничего не теряет.
+ */
+export type EditorStep = "script" | "storyboard";
+
+/** Фокус инспектора внутри Storyboard — какой тип ассета показывать. */
 export type EditorTool =
-  | "script"
   | "storyboard"
   | "frames"
   | "clip"
@@ -30,6 +37,8 @@ function readStoredTheme(): Theme {
 }
 
 interface EditorState {
+  step: EditorStep;
+  setStep: (step: EditorStep) => void;
   tool: EditorTool;
   setTool: (tool: EditorTool) => void;
   selectedSceneId: string | null;
@@ -42,9 +51,21 @@ interface EditorState {
 
 const EditorContext = createContext<EditorState | null>(null);
 
-export function EditorProvider({ children }: { children: React.ReactNode }) {
+export function EditorProvider({
+  children,
+  initialStep = "storyboard",
+  initialSelectedSceneId = null,
+}: {
+  children: React.ReactNode;
+  /** Стартовый вид — задаётся из тестов и потенциально из ссылки на этап. */
+  initialStep?: EditorStep;
+  initialSelectedSceneId?: string | null;
+}) {
+  const [step, setStep] = useState<EditorStep>(initialStep);
   const [tool, setTool] = useState<EditorTool>(null);
-  const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
+  const [selectedSceneId, setSelectedSceneId] = useState<string | null>(
+    initialSelectedSceneId,
+  );
   const [timelineZoom, setTimelineZoom] = useState(DEFAULT_TIMELINE_ZOOM);
   const [theme, setTheme] = useState<Theme>("light");
 
@@ -61,6 +82,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<EditorState>(
     () => ({
+      step,
+      setStep,
       tool,
       setTool,
       selectedSceneId,
@@ -70,7 +93,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       theme,
       setTheme,
     }),
-    [tool, selectedSceneId, timelineZoom, theme],
+    [step, tool, selectedSceneId, timelineZoom, theme],
   );
 
   return (

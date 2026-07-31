@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/app/projects/[id]/editor/page.tsx": {
-    "mtime": 1785505832.6642134,
-    "ast_hash": "84d3206045bc3597d096b122778e8310",
+    "mtime": 1785432628.1744277,
+    "ast_hash": "6af152ed23bb951a5b722b7ec7f5d358",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/editor-chrome.tsx": {
@@ -395,18 +395,23 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/floating-toolbar.tsx": {
-    "mtime": 1785505820.0412714,
-    "ast_hash": "f66e0219b1d0f64158a46c23b2e95ed4",
+    "mtime": 1785420731.9315927,
+    "ast_hash": "a397240c43de4829c4ae3ed43d1627a5",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785432887.273112,
-    "ast_hash": "64fbdfa23746f648ab213f610235120c",
+    "mtime": 1785432711.8995473,
+    "ast_hash": "819b2cca77ed6cf6b468aaf696bb75fe",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
-    "mtime": 1785505850.4571319,
-    "ast_hash": "bbd15da1f95f329cd807b147d9d2f6a4",
+    "mtime": 1785416253.5562441,
+    "ast_hash": "bf3fd87b0a9cd3e9a3e21c49758ab33f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/editor/script-overlay.tsx": {
+    "mtime": 1785422499.6081257,
+    "ast_hash": "1b95fa593fb062ee38ef098a9f236b5b",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
@@ -425,8 +430,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/editor-store.tsx": {
-    "mtime": 1785506020.4953523,
-    "ast_hash": "e3c13dad6fb52cbbad53abd499afb273",
+    "mtime": 1785422159.3819103,
+    "ast_hash": "3ab5557bc4423af68edd6f77eadd0146",
     "semantic_hash": ""
   },
   "packages/shared-types/src/storyboard.ts": {
@@ -475,8 +480,8 @@
     "semantic_hash": ""
   },
   "vitest.config.ts": {
-    "mtime": 1785506061.6364632,
-    "ast_hash": "82f90ceaadccce0d75f9664113b469df",
+    "mtime": 1785258095.9620292,
+    "ast_hash": "7bcef82c1399e60f7153c54a391cd143",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -557,21 +562,6 @@
   "apps/api/prisma/migrations/20260730154542_scene_active_assets/migration.sql": {
     "mtime": 1785426342.9436789,
     "ast_hash": "b801513badb843034576d812dadd4bdb",
-    "semantic_hash": ""
-  },
-  "apps/web/src/components/editor/editor-workspace.tsx": {
-    "mtime": 1785505786.0534272,
-    "ast_hash": "9e89cdeb905e5e05b48b683200a4379a",
-    "semantic_hash": ""
-  },
-  "apps/web/src/components/editor/script-view.tsx": {
-    "mtime": 1785505763.3015316,
-    "ast_hash": "7493bea050a308c6775e0aa1644866b3",
-    "semantic_hash": ""
-  },
-  "apps/web/test/editor-workspace.test.tsx": {
-    "mtime": 1785506040.825259,
-    "ast_hash": "021f9270b09d955198de2a4665d02b28",
     "semantic_hash": ""
   }
 }
