@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { Scene, Script } from "@foundry/shared-types";
 import {
@@ -9,7 +9,7 @@ import {
   formatDuration,
   sceneDurationSec,
 } from "@foundry/shared-types";
-import { ImageIcon, Minus, Plus } from "lucide-react";
+import { ImageIcon, Minus, Plus, Upload } from "lucide-react";
 import { PreviewPlayer } from "@/components/editor/preview-player";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
@@ -17,6 +17,7 @@ import { SPRING, StatusDot } from "@/components/ui/primitives";
 import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
 import { useReorderScenes } from "@/lib/queries/scenes";
 import { useDragReorder } from "@/lib/use-drag-reorder";
+import { useSceneDrop } from "@/lib/use-scene-drop";
 import { cn } from "@/lib/utils";
 
 interface TimelineProps {
@@ -169,82 +170,135 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
               </p>
             </div>
           )}
-          {ordered.map((scene, i) => {
-            const sceneWidth = Math.max(durations[i] * timelineZoom, MIN_SCENE_WIDTH_PX);
-            const selected = scene.id === selectedSceneId;
-            const dragging = draggingId === scene.id;
-            const activeVideo = activeAssetOf(scene, "VIDEO");
-            const activeFrame = activeAssetOf(scene, "IMAGE");
-            // Для миниатюры кадр предпочтительнее клипа: картинка рисуется
-            // сразу, видео сначала тянет метаданные ради первого кадра.
-            const thumb =
-              (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null) ??
-              (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null);
-            return (
-              <motion.div
-                key={scene.id}
-                ref={(el) => {
-                  sceneRefs.current[scene.id] = el;
-                }}
-                layout
-                transition={SPRING}
-                {...dragProps(scene.id)}
-                onClick={() => setSelectedSceneId(selected ? null : scene.id)}
-                className={cn(
-                  "group relative flex h-full shrink-0 cursor-grab flex-col overflow-hidden rounded-md border bg-surface text-left transition-all active:cursor-grabbing",
-                  selected
-                    ? "border-accent shadow-subtle ring-2 ring-accent/30"
-                    : "border-border hover:border-secondary/40 hover:shadow-subtle",
-                  dragging && "opacity-50",
-                )}
-                style={{ width: `${sceneWidth}px` }}
-                role="button"
-                aria-label={`Scene ${scene.order + 1}: ${scene.title}`}
-              >
-                <div className="relative min-h-0 flex-1 bg-bg">
-                  {thumb ? (
-                    <div className="pointer-events-none absolute inset-0">
-                      <AssetMedia asset={thumb} controls={false} />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="hatch absolute inset-0 opacity-30" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <ImageIcon
-                          className="h-4 w-4 text-secondary/40"
-                          strokeWidth={1.5}
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  {/* Номер и длительность — на кадре: в подписи снизу они
-                      отнимали место у названия и на узких сценах его съедали. */}
-                  <span className="absolute left-1.5 top-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 font-display text-sm leading-none tabular-nums text-primary backdrop-blur-[2px]">
-                    {String(scene.order + 1).padStart(2, "0")}
-                  </span>
-                  <span className="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 text-xs leading-none tabular-nums text-secondary backdrop-blur-[2px]">
-                    {formatDuration(durations[i])}
-                  </span>
-                </div>
-
-                <div className="flex shrink-0 items-center gap-1.5 border-t border-border px-2 py-1.5">
-                  <StatusDot tone={STATUS_TONE[scene.status]} />
-                  {sceneWidth >= NARROW_SCENE_PX && (
-                    <span
-                      title={scene.title}
-                      className="min-w-0 flex-1 truncate text-xs font-medium text-primary"
-                    >
-                      {scene.title}
-                    </span>
-                  )}
-                  <ReadinessBadge scene={scene} className="ml-auto" />
-                </div>
-              </motion.div>
-            );
-          })}
+          {ordered.map((scene, i) => (
+            <SceneCard
+              key={scene.id}
+              ref={(el) => {
+                sceneRefs.current[scene.id] = el;
+              }}
+              projectId={projectId}
+              scene={scene}
+              durationSec={durations[i]}
+              width={Math.max(durations[i] * timelineZoom, MIN_SCENE_WIDTH_PX)}
+              selected={scene.id === selectedSceneId}
+              dragging={draggingId === scene.id}
+              dragProps={dragProps(scene.id)}
+              onSelect={() =>
+                setSelectedSceneId(
+                  scene.id === selectedSceneId ? null : scene.id,
+                )
+              }
+            />
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+interface SceneCardProps {
+  projectId: string;
+  scene: Scene;
+  durationSec: number;
+  width: number;
+  selected: boolean;
+  dragging: boolean;
+  dragProps: ReturnType<ReturnType<typeof useDragReorder>["dragProps"]>;
+  onSelect: () => void;
+}
+
+/**
+ * Блок сцены на таймлайне. Принимает файл прямо на себя: перетащить mp4 на
+ * сцену быстрее, чем открывать инспектор и искать там вкладку Upload.
+ */
+const SceneCard = forwardRef<HTMLDivElement, SceneCardProps>(function SceneCard(
+  {
+    projectId,
+    scene,
+    durationSec,
+    width,
+    selected,
+    dragging,
+    dragProps,
+    onSelect,
+  },
+  ref,
+) {
+  const drop = useSceneDrop(projectId, scene.id);
+
+  const activeVideo = activeAssetOf(scene, "VIDEO");
+  const activeFrame = activeAssetOf(scene, "IMAGE");
+  // Для миниатюры кадр предпочтительнее клипа: картинка рисуется сразу,
+  // видео сначала тянет метаданные ради первого кадра.
+  const thumb =
+    (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null) ??
+    (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null);
+
+  return (
+    <motion.div
+      ref={ref}
+      layout
+      transition={SPRING}
+      {...dragProps}
+      {...drop.dropProps}
+      onClick={onSelect}
+      className={cn(
+        "group relative flex h-full shrink-0 cursor-grab flex-col overflow-hidden rounded-md border bg-surface text-left transition-all active:cursor-grabbing",
+        selected
+          ? "border-accent shadow-subtle ring-2 ring-accent/30"
+          : "border-border hover:border-secondary/40 hover:shadow-subtle",
+        dragging && "opacity-50",
+        drop.over && "border-accent ring-2 ring-accent/40",
+      )}
+      style={{ width: `${width}px` }}
+      role="button"
+      aria-label={`Scene ${scene.order + 1}: ${scene.title}`}
+    >
+      <div className="relative min-h-0 flex-1 bg-bg">
+        {thumb ? (
+          <div className="pointer-events-none absolute inset-0">
+            <AssetMedia asset={thumb} controls={false} />
+          </div>
+        ) : (
+          <>
+            <div className="hatch absolute inset-0 opacity-30" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ImageIcon className="h-4 w-4 text-secondary/40" strokeWidth={1.5} />
+            </div>
+          </>
+        )}
+
+        {/* Номер и длительность — на кадре: в подписи снизу они отнимали
+            место у названия и на узких сценах его съедали. */}
+        <span className="absolute left-1.5 top-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 font-display text-sm leading-none tabular-nums text-primary backdrop-blur-[2px]">
+          {String(scene.order + 1).padStart(2, "0")}
+        </span>
+        <span className="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 text-xs leading-none tabular-nums text-secondary backdrop-blur-[2px]">
+          {formatDuration(durationSec)}
+        </span>
+
+        {(drop.over || drop.uploading) && (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-surface/85 backdrop-blur-[2px]">
+            <span className="flex items-center gap-1.5 text-xs text-accent">
+              <Upload className="h-3.5 w-3.5" strokeWidth={1.75} />
+              {drop.uploading ? "Uploading…" : "Drop to add"}
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex shrink-0 items-center gap-1.5 border-t border-border px-2 py-1.5">
+        <StatusDot tone={STATUS_TONE[scene.status]} />
+        {width >= NARROW_SCENE_PX && (
+          <span
+            title={scene.title}
+            className="min-w-0 flex-1 truncate text-xs font-medium text-primary"
+          >
+            {drop.rejected ? "Unsupported file" : scene.title}
+          </span>
+        )}
+        <ReadinessBadge scene={scene} className="ml-auto" />
+      </div>
+    </motion.div>
+  );
+});
