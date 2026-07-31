@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { Asset, Scene } from "../src";
 import {
+  SCRIPT_LANGUAGES,
   StoryboardImportSchema,
   buildScriptFromTopicPrompt,
   buildStoryboardPrompt,
   countWords,
+  detectScriptLanguage,
   estimateSeconds,
   estimateSpeechSeconds,
   extractJson,
@@ -19,6 +21,7 @@ import {
   sceneReadiness,
   sceneSeconds,
   scriptFromScenes,
+  scriptLanguageName,
   storyboardPromptMode,
 } from "../src";
 
@@ -214,6 +217,52 @@ describe("storyboard helpers", () => {
     const prompt = buildScriptFromTopicPrompt("Deep sea", "   ");
 
     expect(prompt).toContain("TOPIC\nDeep sea\n");
+  });
+
+  it("detects the language of what is already written", () => {
+    expect(detectScriptLanguage("Дно океана почти не изучено.")).toBe("ru");
+    expect(detectScriptLanguage("The ocean floor is unmapped.")).toBe("en");
+    // Латиница в русском тексте не должна его перебивать.
+    expect(detectScriptLanguage("Протокол MCP меняет всё.")).toBe("ru");
+    // Пустому тексту язык взять неоткуда — остаётся значение по умолчанию.
+    expect(detectScriptLanguage("", "en")).toBe("en");
+    expect(detectScriptLanguage("12 :: 34", "en")).toBe("en");
+  });
+
+  it("states the content language while keeping instructions in English", () => {
+    const prompt = buildScriptFromTopicPrompt("Deep sea", null, "short", "ru");
+
+    expect(prompt).toContain("in Russian");
+    // Инструкции остаются английскими — язык меняет только содержимое.
+    expect(prompt).toContain("Every instruction in this prompt stays in English");
+    expect(prompt).toContain("Follow a clear narrative arc");
+    // Ключи JSON не переводятся — иначе импорт перестанет их находить.
+    expect(prompt).toContain("Do not translate or rename the JSON keys");
+    expect(prompt).toContain('"voiceText": "string"');
+  });
+
+  it("keeps image prompts in English whatever the narration language is", () => {
+    for (const prompt of [
+      buildStoryboardPrompt("Дно океана.", "ru"),
+      buildScriptFromTopicPrompt("Глубина", null, "short", "ru"),
+    ]) {
+      expect(prompt).toContain("imagePrompt and videoPrompt stay in English");
+    }
+  });
+
+  it("does not promise to translate a script it must copy verbatim", () => {
+    const prompt = buildStoryboardPrompt("The ocean floor is unmapped.", "ru");
+
+    expect(prompt).toContain("keeps the language of the source");
+    expect(prompt).toContain("do not translate it");
+    // Язык применяется к заголовкам, а не к начитке.
+    expect(prompt).toContain("Write each scene's title in Russian");
+  });
+
+  it("names every language it offers", () => {
+    for (const option of SCRIPT_LANGUAGES) {
+      expect(scriptLanguageName(option.key)).toBe(option.promptName);
+    }
   });
 
   it("accepts a storyboard with fullScript and one without", () => {

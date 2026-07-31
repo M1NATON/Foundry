@@ -1,27 +1,27 @@
-# Graph Report - Foundry-opus-5  (2026-07-31)
+# Graph Report - Foundry-opus-5  (2026-08-01)
 
 ## Corpus Check
-- 132 files · ~104,767 words
+- 133 files · ~106,610 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1063 nodes · 1879 edges · 81 communities (67 shown, 14 thin omitted)
+- 1070 nodes · 1901 edges · 69 communities (55 shown, 14 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `73078cd1`
+- Built from commit: `eba9302d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- ScenesService
+- .assertOwned
 - scripts
 - asset.ts
 - dependencies
 - devDependencies
 - Инструменты (MCP-серверы и хуки)
-- assets.service.ts
+- useUploadAsset
 - compilerOptions
 - compilerOptions
 - dependencies
@@ -30,13 +30,11 @@
 - scripts
 - AssetsProcessor
 - UserId
-- cn
 - ExportService
-- ScriptsController
+- ScriptsService
 - shared-types/package.json
 - app.module.ts
-- editor-workspace.tsx
-- research-view.tsx
+- useEditor
 - compilerOptions
 - scenes.ts
 - foundry_design_prompt.md
@@ -48,12 +46,9 @@
 - Foundry
 - next-env.d.ts
 - tailwind.config.ts
-- editor-workspace.test.tsx
 - timeline.tsx
 - scene.ts
-- editor-store.tsx
 - storyboard.ts
-- ResearchService
 - ProjectsService
 - Memory Maintenance
 - api/core.md
@@ -66,7 +61,7 @@
 - web/core.md
 - @foundry/shared-types
 - duration-drift.test.ts
-- primitives.tsx
+- cn
 - inspector-panel.tsx
 - helpers.test.ts
 - 5. Карта всех кнопок и элементов управления
@@ -82,26 +77,19 @@
 - reflect-metadata
 - ProjectsController
 - stage.tsx
-- .assertOwned
-- preview-player.tsx
 - scenes.controller.ts
 - music-track.tsx
-- assets.controller.ts
-- projects.ts
-- button.tsx
-- export-panel.tsx
+- readiness-panel.tsx
 - src/research.ts
-- upload.ts
-- PrismaModule
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 43 edges
+1. `cn()` - 45 edges
 2. `UserId` - 36 edges
 3. `useEditor()` - 26 edges
 4. `ProjectsService` - 24 edges
 5. `ExportService` - 21 edges
-6. `PrismaService` - 20 edges
-7. `ScenesService` - 20 edges
+6. `ScenesService` - 21 edges
+7. `PrismaService` - 20 edges
 8. `compilerOptions` - 20 edges
 9. `Foundry: полное описание проекта для нейросети` - 20 edges
 10. `AssetsService` - 19 edges
@@ -113,19 +101,19 @@
   apps/api/src/research/research.service.ts → packages/shared-types/src/research.ts
 - `parseStoryboard()` --references--> `StoryboardImportSchema`  [EXTRACTED]
   apps/api/src/scenes/scenes.service.ts → packages/shared-types/src/storyboard.ts
-- `SceneTextarea()` --calls--> `cn()`  [EXTRACTED]
-  apps/web/src/components/editor/inspector-panel.tsx → apps/web/src/lib/utils.ts
-- `TakeChip()` --calls--> `cn()`  [EXTRACTED]
-  apps/web/src/components/editor/music-track.tsx → apps/web/src/lib/utils.ts
+- `ProjectMusicNote()` --calls--> `useProjectMusic()`  [EXTRACTED]
+  apps/web/src/components/editor/readiness-panel.tsx → apps/web/src/lib/queries/music.ts
+- `clip()` --calls--> `secondsToFrames()`  [EXTRACTED]
+  apps/api/test/timeline.test.ts → apps/api/src/export/timeline.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (81 total, 14 thin omitted)
+## Communities (69 total, 14 thin omitted)
 
-### Community 0 - "ScenesService"
-Cohesion: 0.12
-Nodes (12): ProjectScenesController, ScenesController, Body, Controller, Delete, Get, Param, Patch (+4 more)
+### Community 0 - ".assertOwned"
+Cohesion: 0.07
+Nodes (21): ResearchController, Body, Controller, Get, Param, Put, UseGuards, parseSources() (+13 more)
 
 ### Community 1 - "scripts"
 Cohesion: 0.25
@@ -147,9 +135,9 @@ Nodes (19): devDependencies, @nestjs/cli, @nestjs/schematics, prisma, ts-node, t
 Cohesion: 0.22
 Nodes (8): context7 (MCP) — актуальная документация библиотек, graphify (MCP + хуки) — граф знаний кодовой базы, rtk (хук, если установлен) — сжатие вывода команд, Serena (MCP) — семантическая навигация по коду, Инструменты (MCP-серверы и хуки), Общие правила, Оркестрация задач (если CLI поддерживает делегирование подагентам), Приоритет при исследовании кода (обязательный порядок)
 
-### Community 6 - "assets.service.ts"
-Cohesion: 0.26
-Nodes (7): AssetsQueue, Injectable, sceneSecondsFromVoice(), logger, parseProbeDuration(), probeDurationSec(), run
+### Community 6 - "useUploadAsset"
+Cohesion: 0.53
+Nodes (4): useUploadAsset(), assetTypeOfFile(), TYPE_BY_EXT, useSceneDrop()
 
 ### Community 7 - "compilerOptions"
 Cohesion: 0.07
@@ -180,20 +168,16 @@ Cohesion: 0.20
 Nodes (9): AssetsProcessor, Injectable, AssetJobData, redisConnection(), escapeXml(), placeholderAsset(), toDataUrl(), truncate() (+1 more)
 
 ### Community 14 - "UserId"
-Cohesion: 0.22
-Nodes (11): ProjectMusicController, Body, Delete, Get, Param, Patch, Post, assertAllowedFile() (+3 more)
-
-### Community 15 - "cn"
-Cohesion: 0.21
-Nodes (13): EditorChrome(), EditorChromeProps, LeftRail(), PipelineStepper(), PipelineStepperProps, ReadinessBadge(), BATCH, FillTheGaps() (+5 more)
+Cohesion: 0.08
+Nodes (31): AssetsController, ProjectAssetsController, ProjectMusicController, SceneAssetsController, Body, Controller, Delete, Get (+23 more)
 
 ### Community 16 - "ExportService"
 Cohesion: 0.08
 Nodes (24): ExportController, Body, Controller, Param, Post, UseGuards, ExportResult, ExportService (+16 more)
 
-### Community 17 - "ScriptsController"
+### Community 17 - "ScriptsService"
 Cohesion: 0.15
-Nodes (8): ScriptsController, Body, Controller, Get, Param, Post, Put, UseGuards
+Nodes (10): ScriptsController, Body, Controller, Get, Param, Post, Put, UseGuards (+2 more)
 
 ### Community 18 - "shared-types/package.json"
 Cohesion: 0.10
@@ -203,21 +187,17 @@ Nodes (19): dependencies, zod, devDependencies, typescript, exports, files, dist
 Cohesion: 0.14
 Nodes (16): AppModule, Module, AssetsModule, Module, ExportModule, Module, LlmModule, Module (+8 more)
 
-### Community 20 - "editor-workspace.tsx"
-Cohesion: 0.21
-Nodes (15): EditorPage(), EditorWorkspace(), EditorWorkspaceProps, ScriptView(), ScriptViewProps, ExportPanel(), ImportStoryboardDialog(), ImportStoryboardDialogProps (+7 more)
-
-### Community 21 - "research-view.tsx"
-Cohesion: 0.29
-Nodes (8): nextKey(), ResearchView(), ResearchViewProps, SourceRow, SourceRowItemProps, toRows(), useResearch(), useSaveResearch()
+### Community 20 - "useEditor"
+Cohesion: 0.05
+Nodes (58): LibraryPage(), EditorPage(), EditorChrome(), EditorChromeProps, EditorWorkspace(), EditorWorkspaceProps, LeftRail(), PipelineStepper() (+50 more)
 
 ### Community 22 - "compilerOptions"
 Cohesion: 0.14
 Nodes (13): compilerOptions, declaration, esModuleInterop, lib, module, moduleResolution, noEmit, skipLibCheck (+5 more)
 
 ### Community 23 - "scenes.ts"
-Cohesion: 0.18
-Nodes (22): SceneInspector(), SceneListItem(), SceneListItemProps, StoryboardListView(), StoryboardListViewProps, AssetPreview(), AssetPreviewProps, DriftBadge() (+14 more)
+Cohesion: 0.28
+Nodes (13): SceneListItem(), SceneListItemProps, StoryboardListViewProps, AssetPreview(), AssetPreviewProps, invalidateProject(), useAssetPolling(), useCreateScene() (+5 more)
 
 ### Community 24 - "foundry_design_prompt.md"
 Cohesion: 0.20
@@ -240,40 +220,28 @@ Cohesion: 0.05
 Nodes (40): 10. Авторизация и ownership, 11. Frontend-архитектура, 12. Backend-архитектура, 13. Технологический стек, 14. Основные переменные окружения, 15. Команды разработки, 16. Важные ограничения и незавершённые части, 17. Правила для нейросети, которая будет менять проект (+32 more)
 
 ### Community 29 - "llm.service.ts"
-Cohesion: 0.18
+Cohesion: 0.15
 Nodes (12): firstSentence(), GeminiResponseSchema, LlmScene, LlmSceneSchema, LlmScenesSchema, LlmService, localPrompts(), PROMPTS_PROMPT (+4 more)
 
 ### Community 30 - "Foundry"
 Cohesion: 0.18
 Nodes (10): Foundry, REST API, Дизайн-система, Команды, Локальный запуск, Переменные окружения, Поток данных, Стек (+2 more)
 
-### Community 35 - "editor-workspace.test.tsx"
-Cohesion: 0.25
-Nodes (7): researchKeys, sceneKeys, scriptKeys, research, scene(), script, seed()
-
 ### Community 36 - "timeline.tsx"
-Cohesion: 0.16
-Nodes (14): ProducingView(), ProducingViewProps, clampZoom(), SceneCard, SceneCardProps, STATUS_TONE, tickStep(), Timeline() (+6 more)
+Cohesion: 0.20
+Nodes (12): ReadinessBadge(), StoryboardListView(), clampZoom(), SceneCard, SceneCardProps, STATUS_TONE, tickStep(), Timeline() (+4 more)
 
 ### Community 37 - "scene.ts"
 Cohesion: 0.13
 Nodes (16): activeAssetOf(), CreateSceneDto, CreateSceneSchema, GAP_LABEL, hasMusicOverride(), musicForScene(), ProjectGap, ReorderScenesDto (+8 more)
 
-### Community 38 - "editor-store.tsx"
-Cohesion: 0.28
-Nodes (6): EditorContext, EditorProvider(), EditorState, EditorStep, readStoredTheme(), Theme
-
 ### Community 39 - "storyboard.ts"
-Cohesion: 0.17
-Nodes (10): parseStoryboard(), extractJson(), ImportStoryboardDto, ImportStoryboardSchema, optionalText, StoryboardImport, StoryboardImportSchema, StoryboardObjectSchema (+2 more)
-
-### Community 40 - "ResearchService"
-Cohesion: 0.15
-Nodes (11): ResearchController, Body, Controller, Get, Param, Put, UseGuards, parseSources() (+3 more)
+Cohesion: 0.14
+Nodes (15): parseStoryboard(), buildScriptFromTopicPrompt(), extractJson(), ImportStoryboardDto, ImportStoryboardSchema, optionalText, SCRIPT_LENGTH_PRESETS, scriptFromScenes() (+7 more)
 
 ### Community 42 - "ProjectsService"
-Cohesion: 0.22
-Nodes (7): PrismaService, Injectable, ProjectsService, Injectable, WITH_ASSETS, ScriptsService, Injectable
+Cohesion: 0.18
+Nodes (10): PrismaModule, Module, PrismaService, Injectable, ProjectsService, Injectable, ResearchService, Injectable (+2 more)
 
 ### Community 43 - "Memory Maintenance"
 Cohesion: 0.33
@@ -283,17 +251,17 @@ Nodes (5): Add/update threshold, Discovery Model, Maintenance Actions, Memory Ma
 Cohesion: 0.21
 Nodes (10): Asset, assetDurationDrift(), hasDurationMismatch(), projectGaps(), Scene, sceneDuration(), sceneDurationSec(), asset() (+2 more)
 
-### Community 54 - "primitives.tsx"
-Cohesion: 0.14
-Nodes (17): EmptyLibrary(), EmptyLibraryProps, Cover(), hashTone(), ProjectCard(), ProjectCardProps, Dialog(), DialogProps (+9 more)
+### Community 54 - "cn"
+Cohesion: 0.12
+Nodes (23): SceneTextarea(), TakeChip(), ExportPanel(), ExportPanelProps, ExportResult, GROUPS, Cover(), hashTone() (+15 more)
 
 ### Community 55 - "inspector-panel.tsx"
 Cohesion: 0.12
-Nodes (19): ACCEPT_FOR, ASSET_KINDS, AssetKind, GENERATE_TOOLS, InspectorPanel(), InspectorPanelProps, kindOfTool(), OPEN_TOOLS (+11 more)
+Nodes (22): ACCEPT_FOR, ASSET_KINDS, AssetKind, GENERATE_TOOLS, InspectorPanel(), InspectorPanelProps, kindOfTool(), OPEN_TOOLS (+14 more)
 
 ### Community 56 - "helpers.test.ts"
-Cohesion: 0.17
-Nodes (13): hasDefaultTitle(), SCENE_ASSET_SLOTS, countSpokenWords(), countWords(), estimateSeconds(), estimateSpeechSeconds(), formatDuration(), formatSceneDuration() (+5 more)
+Cohesion: 0.15
+Nodes (15): hasDefaultTitle(), SCENE_ASSET_SLOTS, countSpokenWords(), countWords(), estimateSeconds(), estimateSpeechSeconds(), formatDuration(), formatSceneDuration() (+7 more)
 
 ### Community 57 - "5. Карта всех кнопок и элементов управления"
 Cohesion: 0.17
@@ -328,75 +296,47 @@ Cohesion: 0.50
 Nodes (4): 5.6. Панель Storyboard, `Add scene`, `Import storyboard`, `Split from script`
 
 ### Community 68 - "ProjectsController"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (9): ProjectsController, Body, Controller, Delete, Get, Param, Patch, Post (+1 more)
 
 ### Community 69 - "stage.tsx"
 Cohesion: 0.13
-Nodes (15): readyTrack(), Stage(), StageProps, withUrl(), AssetMedia(), AssetMediaProps, MediaPlayer(), MediaPlayerProps (+7 more)
-
-### Community 70 - ".assertOwned"
-Cohesion: 0.26
-Nodes (4): AssetsService, owningProjectId(), promptFor(), Injectable
-
-### Community 71 - "preview-player.tsx"
-Cohesion: 0.36
-Nodes (7): plan(), PlannedScene, PreviewPlayer(), PreviewPlayerProps, readyUrl(), startAudio(), stopAudio()
+Nodes (16): readyTrack(), Stage(), StageProps, withUrl(), AssetMedia(), AssetMediaProps, MediaPlayer(), MediaPlayerProps (+8 more)
 
 ### Community 72 - "scenes.controller.ts"
 Cohesion: 0.29
 Nodes (5): AuthedRequest, AuthGuard, Injectable, Injectable, ZodValidationPipe
 
 ### Community 73 - "music-track.tsx"
-Cohesion: 0.26
-Nodes (14): BarProps, LaneProps, MusicBar(), MusicLane(), SceneMusicOverride(), TakeChip(), ProjectMusicNote(), invalidateMusic() (+6 more)
+Cohesion: 0.32
+Nodes (12): BarProps, LaneProps, MusicBar(), MusicLane(), SceneMusicOverride(), invalidateMusic(), musicKeys, useDeleteProjectMusic() (+4 more)
 
-### Community 74 - "assets.controller.ts"
-Cohesion: 0.36
-Nodes (5): AssetsController, ProjectAssetsController, SceneAssetsController, Controller, UseGuards
-
-### Community 75 - "projects.ts"
-Cohesion: 0.29
-Nodes (5): LibraryPage(), ProjectDetail, projectKeys, useCreateProject(), useProjects()
-
-### Community 76 - "button.tsx"
-Cohesion: 0.22
-Nodes (8): NewProjectRow(), NewProjectRowProps, Button, ButtonProps, Size, SIZES, Variant, VARIANTS
-
-### Community 77 - "export-panel.tsx"
-Cohesion: 0.25
-Nodes (5): ExportPanelProps, ExportResult, GROUPS, api, ApiError
+### Community 76 - "readiness-panel.tsx"
+Cohesion: 0.13
+Nodes (16): BATCH, FillTheGaps(), ProjectMusicNote(), ReadinessPanel(), ReadinessPanelProps, EmptyLibraryProps, NewProjectRow(), NewProjectRowProps (+8 more)
 
 ### Community 78 - "src/research.ts"
 Cohesion: 0.33
 Nodes (5): Research, ResearchSchema, Source, UpsertResearchDto, UpsertResearchSchema
 
-### Community 79 - "upload.ts"
-Cohesion: 0.40
-Nodes (4): ALLOWED, AUDIO_EXT, IMAGE_EXT, VIDEO_EXT
-
-### Community 80 - "PrismaModule"
-Cohesion: 0.67
-Nodes (3): PrismaModule, Module, Global
-
 ## Knowledge Gaps
-- **410 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+405 more)
+- **411 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+406 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `SCENE_ASSET_SLOTS` connect `helpers.test.ts` to `scene.ts`, `cn`?**
+- **Why does `SCENE_ASSET_SLOTS` connect `helpers.test.ts` to `timeline.tsx`, `scene.ts`?**
   _High betweenness centrality (0.188) - this node is a cross-community bridge._
-- **Why does `ReadinessBadge()` connect `cn` to `helpers.test.ts`, `timeline.tsx`, `scenes.ts`?**
-  _High betweenness centrality (0.187) - this node is a cross-community bridge._
-- **Why does `cn()` connect `cn` to `timeline.tsx`, `stage.tsx`, `music-track.tsx`, `button.tsx`, `export-panel.tsx`, `editor-workspace.tsx`, `inspector-panel.tsx`, `primitives.tsx`, `scenes.ts`?**
-  _High betweenness centrality (0.114) - this node is a cross-community bridge._
+- **Why does `ReadinessBadge()` connect `timeline.tsx` to `helpers.test.ts`, `cn`, `scenes.ts`?**
+  _High betweenness centrality (0.186) - this node is a cross-community bridge._
+- **Why does `cn()` connect `cn` to `timeline.tsx`, `stage.tsx`, `music-track.tsx`, `readiness-panel.tsx`, `useEditor`, `scenes.ts`, `inspector-panel.tsx`?**
+  _High betweenness centrality (0.115) - this node is a cross-community bridge._
 - **What connects `$schema`, `collection`, `sourceRoot` to the rest of the system?**
-  _410 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `ScenesService` be split into smaller, more focused modules?**
-  _Cohesion score 0.12063492063492064 - nodes in this community are weakly interconnected._
+  _411 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `.assertOwned` be split into smaller, more focused modules?**
+  _Cohesion score 0.07205387205387205 - nodes in this community are weakly interconnected._
 - **Should `asset.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.12121212121212122 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**

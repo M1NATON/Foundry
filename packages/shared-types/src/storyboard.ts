@@ -122,6 +122,60 @@ export function scriptLengthTarget(key: ScriptLengthKey): string {
 }
 
 /**
+ * Язык итогового текста. Список расширяемый: чтобы добавить язык, хватает
+ * строки здесь — ни шаблоны, ни интерфейс трогать не нужно.
+ */
+export const SCRIPT_LANGUAGES = [
+  { key: "ru", label: "Русский", promptName: "Russian" },
+  { key: "en", label: "English", promptName: "English" },
+  { key: "uk", label: "Українська", promptName: "Ukrainian" },
+  { key: "es", label: "Español", promptName: "Spanish" },
+  { key: "de", label: "Deutsch", promptName: "German" },
+  { key: "fr", label: "Français", promptName: "French" },
+] as const;
+
+export type ScriptLanguageKey = (typeof SCRIPT_LANGUAGES)[number]["key"];
+
+export const DEFAULT_SCRIPT_LANGUAGE: ScriptLanguageKey = "ru";
+
+export function scriptLanguageName(key: ScriptLanguageKey): string {
+  const found = SCRIPT_LANGUAGES.find((l) => l.key === key);
+  return (found ?? SCRIPT_LANGUAGES[0]).promptName;
+}
+
+/**
+ * Язык уже написанного текста. Родственные языки одной письменности по буквам
+ * надёжно не различить, поэтому определяем только письменность и берём для неё
+ * язык по умолчанию — переключатель рядом остаётся в любом случае.
+ */
+export function detectScriptLanguage(
+  text: string,
+  fallback: ScriptLanguageKey = DEFAULT_SCRIPT_LANGUAGE,
+): ScriptLanguageKey {
+  const letters = text.match(/\p{L}/gu)?.length ?? 0;
+  if (!letters) return fallback;
+
+  const cyrillic = text.match(/\p{Script=Cyrillic}/gu)?.length ?? 0;
+  return cyrillic / letters > 0.3 ? "ru" : "en";
+}
+
+/**
+ * Требование к языку — отдельной явной строкой, а не намёком через язык самой
+ * инструкции. Модель точнее следует английским инструкциям, но контент ролика
+ * нужен на языке автора: это две независимые вещи, и смешивать их нельзя.
+ */
+function outputLanguage(
+  language: ScriptLanguageKey,
+  fields: string,
+): string {
+  return `OUTPUT LANGUAGE
+- Write ${fields} in ${scriptLanguageName(language)}.
+- imagePrompt and videoPrompt stay in English — they are fed to image and video generators, not read by a person.
+- Every instruction in this prompt stays in English; only the generated content follows the language above.
+- Do not translate or rename the JSON keys — field names stay exactly as shown in the output format.`;
+}
+
+/**
  * Общие для обоих шаблонов требования к картинке. Держатся вместе, потому что
  * расходиться им нельзя: сцены из разных режимов попадают в один ролик.
  */
@@ -143,12 +197,18 @@ const DURATION_RULES = `- Estimate duration from actual speaking pace, not a rig
  * Сквозной визуальный мир задаётся до сцен: иначе каждая картинка сочиняется
  * отдельно и получается набор случайных кадров, а не связный ролик.
  */
-export function buildStoryboardPrompt(script: string): string {
-  return `You are a professional YouTube video storyboard writer working in Russian-language content production.
+export function buildStoryboardPrompt(
+  script: string,
+  language: ScriptLanguageKey = DEFAULT_SCRIPT_LANGUAGE,
+): string {
+  return `You are a professional YouTube video storyboard writer.
 
 TASK
 Take the script below and split it into scenes for video production.
 Return ONLY valid JSON, no markdown code fences, no commentary before or after.
+
+${outputLanguage(language, "each scene's title")}
+- voiceText is copied from the script verbatim and therefore keeps the language of the source — do not translate it.
 
 VISUAL CONSISTENCY
 Before writing scene prompts, decide on ONE consistent visual world for this entire script (a single metaphor, setting, or art style — e.g. "deep ocean / bioluminescent tech" or "cyberpunk cityscape at night"). Every imagePrompt and videoPrompt must stay inside that same visual world. Do not switch styles between scenes.
@@ -201,17 +261,20 @@ export function buildScriptFromTopicPrompt(
   topic: string,
   brief: string | null | undefined,
   length: ScriptLengthKey = DEFAULT_SCRIPT_LENGTH,
+  language: ScriptLanguageKey = DEFAULT_SCRIPT_LANGUAGE,
 ): string {
   const trimmedBrief = brief?.trim();
   const topicBlock = trimmedBrief
     ? `${topic.trim()}\n\n${trimmedBrief}`
     : topic.trim();
 
-  return `You are a professional YouTube scriptwriter and storyboard artist working in Russian-language content production.
+  return `You are a professional YouTube scriptwriter and storyboard artist.
 
 TASK
 Write a complete narration script on the topic below, then split it into scenes for video production.
 Return ONLY valid JSON, no markdown code fences, no commentary before or after.
+
+${outputLanguage(language, "fullScript, every voiceText and every scene title")}
 
 TOPIC
 ${topicBlock}

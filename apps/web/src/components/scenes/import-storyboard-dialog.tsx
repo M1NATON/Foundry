@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import {
   DEFAULT_SCRIPT_LENGTH,
+  SCRIPT_LANGUAGES,
   SCRIPT_LENGTH_PRESETS,
   buildScriptFromTopicPrompt,
   buildStoryboardPrompt,
+  detectScriptLanguage,
   hasDefaultTitle,
   storyboardPromptMode,
+  type ScriptLanguageKey,
   type ScriptLengthKey,
 } from "@foundry/shared-types";
 import { cn } from "@/lib/utils";
@@ -48,6 +51,9 @@ export function ImportStoryboardDialog({
   const [copyError, setCopyError] = useState(false);
   const [briefDraft, setBriefDraft] = useState<string | null>(null);
   const [length, setLength] = useState<ScriptLengthKey>(DEFAULT_SCRIPT_LENGTH);
+  const [languageChoice, setLanguageChoice] = useState<ScriptLanguageKey | null>(
+    null,
+  );
 
   const scriptContent = script?.content ?? "";
   // Режим — не выбор пользователя, а состояние проекта: как только в Script
@@ -57,6 +63,10 @@ export function ImportStoryboardDialog({
   const topic = project?.title ?? "";
   const brief = briefDraft ?? project?.brief ?? "";
   const thinTopic = !topic.trim() || hasDefaultTitle(topic);
+
+  // По умолчанию — язык того, что уже написано; ручной выбор его перебивает.
+  const sourceLanguage = detectScriptLanguage(scriptContent || brief);
+  const language = languageChoice ?? sourceLanguage;
 
   function saveBrief() {
     if (briefDraft === null) return;
@@ -86,8 +96,8 @@ export function ImportStoryboardDialog({
 
     const prompt =
       mode === "from-script"
-        ? buildStoryboardPrompt(scriptContent)
-        : buildScriptFromTopicPrompt(topic, brief, length);
+        ? buildStoryboardPrompt(scriptContent, language)
+        : buildScriptFromTopicPrompt(topic, brief, length, language);
 
     const ok = await copyToClipboard(prompt);
     if (ok) setCopied(true);
@@ -186,10 +196,32 @@ export function ImportStoryboardDialog({
           </div>
         )}
 
+        {/* Язык виден в обоих режимах: инструкции промпта остаются
+            английскими, меняется только язык самого текста ролика. */}
         <div className="flex items-center gap-3">
           <Button size="sm" variant="secondary" onClick={copyPrompt}>
             {copied ? "Copied!" : "Copy prompt"}
           </Button>
+
+          <label className="flex shrink-0 items-center gap-1.5 text-xs text-secondary">
+            Language
+            <select
+              value={language}
+              onChange={(e) =>
+                setLanguageChoice(e.target.value as ScriptLanguageKey)
+              }
+              className="rounded-sm border border-border bg-bg px-1.5 py-1 text-xs
+                         text-primary outline-none transition-colors
+                         focus:border-secondary/40"
+            >
+              {SCRIPT_LANGUAGES.map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <span className="min-w-0 flex-1 text-xs text-secondary">
             {mode === "from-script"
               ? "Splits the script you wrote — the model won't rewrite it."
@@ -201,6 +233,15 @@ export function ImportStoryboardDialog({
             </span>
           )}
         </div>
+
+        {/* Разбивка копирует voiceText дословно, поэтому сменить его язык
+            здесь нельзя — это был бы перевод, а не раскадровка. */}
+        {mode === "from-script" && language !== sourceLanguage && (
+          <p className="text-xs text-accent">
+            Scene narration stays in the language you wrote it in — only scene
+            titles switch. Translating a script isn&apos;t supported yet.
+          </p>
+        )}
 
         <textarea
           value={raw}

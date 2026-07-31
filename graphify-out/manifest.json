@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
-    "mtime": 1785536532.516405,
-    "ast_hash": "b0e1922ab0f664f66ae169870a50f3f2",
+    "mtime": 1785537659.2928307,
+    "ast_hash": "d5c5995aafc219bc3e98b6f7e61a3cd1",
     "semantic_hash": ""
   },
   "apps/web/src/lib/editor-store.tsx": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/src/storyboard.ts": {
-    "mtime": 1785536480.6337495,
-    "ast_hash": "5bc8052108290262e9e754d48884b4ed",
+    "mtime": 1785537600.0424285,
+    "ast_hash": "3cd00529ea851b208b65861ce3f01453",
     "semantic_hash": ""
   },
   ".serena/project.yml": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/test/helpers.test.ts": {
-    "mtime": 1785536588.8640375,
-    "ast_hash": "5294c36a232311f5f9404fde73962c97",
+    "mtime": 1785537704.7338378,
+    "ast_hash": "a87d116647f35afb011f53b3b458ae5a",
     "semantic_hash": ""
   },
   "vitest.config.ts": {

@@ -70,8 +70,8 @@
     "semantic_hash": "81614a649ae61514dd72ef32abdea1fd"
   },
   "apps/api/src/projects/projects.service.ts": {
-    "mtime": 1785527526.8582408,
-    "ast_hash": "d288dcf2851f7a67ddacbfd52eb3ae75",
+    "mtime": 1785535641.362013,
+    "ast_hash": "824959be7fb5ff86e4663d83026e4204",
     "semantic_hash": ""
   },
   "apps/api/src/research/research.controller.ts": {
@@ -155,9 +155,9 @@
     "semantic_hash": "b66075f91128d811563927ea10d67062"
   },
   "apps/web/src/lib/queries/projects.ts": {
-    "mtime": 1785142579.4971879,
-    "ast_hash": "ab031d4f6d0ed9b127c1cd5db40c92ac",
-    "semantic_hash": "ab031d4f6d0ed9b127c1cd5db40c92ac"
+    "mtime": 1785535317.036495,
+    "ast_hash": "73389a4315bb8ed84dd624a8eb6a168f",
+    "semantic_hash": ""
   },
   "apps/web/src/lib/utils.ts": {
     "mtime": 1785142448.6321938,
@@ -205,8 +205,8 @@
     "semantic_hash": "5722549ee9981d876bb1e2c911d05313"
   },
   "packages/shared-types/src/project.ts": {
-    "mtime": 1785527272.5262675,
-    "ast_hash": "c3166bbbb317e0b8ac616e04f397e291",
+    "mtime": 1785534892.4416203,
+    "ast_hash": "69a0e5da3f925761958d3b795db6cb3d",
     "semantic_hash": ""
   },
   "packages/shared-types/src/research.ts": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/scenes/scenes.service.ts": {
-    "mtime": 1785527936.6183057,
-    "ast_hash": "a44103d9c7650ad276ce1eae80b9905b",
+    "mtime": 1785536487.7761405,
+    "ast_hash": "37397f73a056329c30f30ac4e7994773",
     "semantic_hash": ""
   },
   "apps/web/next-env.d.ts": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
-    "mtime": 1785522390.702228,
-    "ast_hash": "79a722d20c5e44f165f975e0c2e097f1",
+    "mtime": 1785536532.516405,
+    "ast_hash": "b0e1922ab0f664f66ae169870a50f3f2",
     "semantic_hash": ""
   },
   "apps/web/src/lib/editor-store.tsx": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/src/storyboard.ts": {
-    "mtime": 1785526271.7752023,
-    "ast_hash": "cb2717299e9fd924ae2642785fc9879b",
+    "mtime": 1785536480.6337495,
+    "ast_hash": "5bc8052108290262e9e754d48884b4ed",
     "semantic_hash": ""
   },
   ".serena/project.yml": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/test/helpers.test.ts": {
-    "mtime": 1785527614.056939,
-    "ast_hash": "33f87fb82802d014613a2006f35c9b9d",
+    "mtime": 1785536588.8640375,
+    "ast_hash": "5294c36a232311f5f9404fde73962c97",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -717,6 +717,11 @@
   "apps/api/uploads/1785528847573-long-score.mp3": {
     "mtime": 1785528847.5732758,
     "ast_hash": "83b22707c0ebd22e619c6cc24519ea91",
+    "semantic_hash": ""
+  },
+  "apps/api/prisma/migrations/20260731215717_project_brief/migration.sql": {
+    "mtime": 1785535037.8352325,
+    "ast_hash": "fea0e1b10622602819820dc7c472ce71",
     "semantic_hash": ""
   }
 }
