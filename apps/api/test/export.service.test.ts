@@ -25,13 +25,34 @@ function scene(patch: Record<string, unknown>) {
   };
 }
 
-function serviceFor(scenes: unknown[]) {
+function musicAsset(id: string, file: string, durationSec: number | null) {
+  return {
+    id,
+    sceneId: null,
+    projectId: "p1",
+    type: "MUSIC",
+    provider: "upload",
+    prompt: file,
+    status: "READY",
+    url: `/api/uploads/${file}`,
+    durationSec,
+    errorMsg: null,
+    createdAt: new Date("2026-07-30T10:00:00.000Z"),
+  };
+}
+
+function serviceFor(
+  scenes: unknown[],
+  music: { assets?: unknown[]; activeMusicId?: string | null } = {},
+) {
   const project = {
     id: "p1",
     title: "Deep Sea",
     status: "PRODUCING",
     script: { content: "Narration.", wordCount: 1, estSeconds: 1 },
     scenes,
+    assets: music.assets ?? [],
+    activeMusicId: music.activeMusicId ?? null,
   } as unknown as ProjectPayload;
 
   return new ExportService({
@@ -68,5 +89,82 @@ describe("ExportService prompts format", () => {
 
     expect(result.content).toContain("IMAGE: (none)");
     expect(result.content).toContain("VIDEO: (none)");
+  });
+});
+
+/** Две сцены по 12 секунд — 360 кадров каждая при 30 fps. */
+const SCENE_FRAMES = 360;
+const frames = (n: number) => `${n * 100}/3000s`;
+
+describe("ExportService music track", () => {
+  it("lays the project track across the whole timeline, not per scene", async () => {
+    const track = musicAsset("m1", "score.mp3", 60);
+    const service = serviceFor([scene({}), scene({ id: "s2", order: 1 })], {
+      assets: [track],
+      activeMusicId: "m1",
+    });
+
+    const result = await service.export("u1", "p1", "fcpxml");
+
+    // Один непрерывный кусок на обе сцены, своей дорожкой под голосом.
+    expect(result.content).toContain(
+      `lane="-2" offset="${frames(0)}" duration="${frames(SCENE_FRAMES * 2)}" start="${frames(0)}" audioRole="music"`,
+    );
+  });
+
+  it("stops the project track where the file ends instead of looping it", async () => {
+    // Трек 5 секунд, ролик 24 — хвост остаётся без музыки.
+    const track = musicAsset("m1", "stinger.mp3", 5);
+    const service = serviceFor([scene({}), scene({ id: "s2", order: 1 })], {
+      assets: [track],
+      activeMusicId: "m1",
+    });
+
+    const result = await service.export("u1", "p1", "fcpxml");
+
+    expect(result.content).toContain(
+      `lane="-2" offset="${frames(0)}" duration="${frames(150)}"`,
+    );
+    // Дорожка кончается вместе с файлом, а не тянется на весь ролик.
+    expect(result.content).not.toContain(
+      `lane="-2" offset="${frames(0)}" duration="${frames(SCENE_FRAMES * 2)}"`,
+    );
+  });
+
+  it("cuts the project track out where a scene brings its own", async () => {
+    const track = musicAsset("m1", "score.mp3", 60);
+    const override = { ...musicAsset("m2", "accent.mp3", null), sceneId: "s2" };
+    const service = serviceFor(
+      [
+        scene({}),
+        scene({
+          id: "s2",
+          order: 1,
+          assets: [override],
+          activeMusicId: "m2",
+        }),
+      ],
+      { assets: [track], activeMusicId: "m1" },
+    );
+
+    const result = await service.export("u1", "p1", "fcpxml");
+
+    // Базовый трек звучит только до второй сцены...
+    expect(result.content).toContain(
+      `lane="-2" offset="${frames(0)}" duration="${frames(SCENE_FRAMES)}" start="${frames(0)}"`,
+    );
+    // ...а на её отрезке играет её собственный, с начала файла.
+    expect(result.content).toContain(
+      `lane="-2" offset="${frames(SCENE_FRAMES)}" duration="${frames(SCENE_FRAMES)}" start="${frames(0)}"`,
+    );
+    expect(result.content).toContain("accent.mp3");
+  });
+
+  it("writes nothing to the music lane when no track is chosen", async () => {
+    const service = serviceFor([scene({})]);
+
+    const result = await service.export("u1", "p1", "fcpxml");
+
+    expect(result.content).not.toContain('lane="-2"');
   });
 });

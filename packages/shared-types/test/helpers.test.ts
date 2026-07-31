@@ -9,7 +9,9 @@ import {
   formatDuration,
   formatSceneDuration,
   hasDefaultTitle,
+  SCENE_ASSET_SLOTS,
   isAssetPending,
+  musicForScene,
   projectProgress,
   sceneDurationSec,
   sceneReadiness,
@@ -20,6 +22,7 @@ function asset(id: string, type: Asset["type"], status: Asset["status"]): Asset 
   return {
     id,
     sceneId: "s1",
+    projectId: null,
     type,
     status,
     url: status === "READY" ? `/uploads/${id}` : null,
@@ -180,21 +183,45 @@ describe("scene helpers", () => {
   });
 
   it("counts only active, ready assets as filled slots", () => {
-    expect(sceneReadiness(scene())).toEqual({ filled: 0, total: 4 });
+    expect(sceneReadiness(scene())).toEqual({ filled: 0, total: 3 });
 
     const ready = asset("a1", "IMAGE", "READY");
     const generating = asset("a2", "VOICE", "GENERATING");
-    const orphan = asset("a3", "MUSIC", "READY");
+    const spare = asset("a3", "IMAGE", "READY");
 
     expect(
       sceneReadiness(
         scene({
-          assets: [ready, generating, orphan],
+          assets: [ready, generating, spare],
           activeFrameId: ready.id,
           activeVoiceId: generating.id,
           // a3 готов, но не выбран активным — слот не закрыт.
         }),
       ),
-    ).toEqual({ filled: 1, total: 4 });
+    ).toEqual({ filled: 1, total: 3 });
+  });
+
+  it("does not ask a scene for music", () => {
+    // Музыка живёт на проекте: сцена без неё готова так же, как с ней.
+    const music = asset("m1", "MUSIC", "READY");
+    const withMusic = scene({ assets: [music], activeMusicId: music.id });
+
+    expect(sceneReadiness(withMusic)).toEqual(sceneReadiness(scene()));
+    expect(SCENE_ASSET_SLOTS).not.toContain("MUSIC");
+  });
+
+  it("lets a scene override the project track", () => {
+    const projectTrack = asset("p1", "MUSIC", "READY");
+    const override = asset("m1", "MUSIC", "READY");
+
+    expect(musicForScene(scene(), projectTrack)).toBe(projectTrack);
+    expect(
+      musicForScene(
+        scene({ assets: [override], activeMusicId: override.id }),
+        projectTrack,
+      ),
+    ).toBe(override);
+    // Проектного трека нет и своего тоже — под сценой тишина.
+    expect(musicForScene(scene(), null)).toBeNull();
   });
 });

@@ -3,10 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import type { Scene } from "@foundry/shared-types";
-import { activeAssetOf, sceneDuration } from "@foundry/shared-types";
+import {
+  activeAssetOf,
+  activeProjectMusic,
+  sceneDuration,
+} from "@foundry/shared-types";
 import { useEditor } from "@/lib/editor-store";
+import { useProjectMusic } from "@/lib/queries/music";
 
 interface PreviewPlayerProps {
+  projectId: string;
   scenes: Scene[];
 }
 
@@ -14,7 +20,8 @@ interface PlannedScene {
   id: string;
   durationMs: number;
   voiceUrl: string | null;
-  musicUrl: string | null;
+  /** Своя музыка сцены; когда её нет — звучит базовый трек проекта. */
+  overrideMusicUrl: string | null;
 }
 
 /** Фоновая музыка не должна перекрикивать начитку. */
@@ -25,7 +32,7 @@ function plan(scenes: Scene[]): PlannedScene[] {
     id: scene.id,
     durationMs: sceneDuration(scene).seconds * 1000,
     voiceUrl: readyUrl(scene, "VOICE"),
-    musicUrl: readyUrl(scene, "MUSIC"),
+    overrideMusicUrl: readyUrl(scene, "MUSIC"),
   }));
 }
 
@@ -40,10 +47,14 @@ function readyUrl(scene: Scene, type: "VOICE" | "MUSIC"): string | null {
  * снимается на старте — иначе фоновое обновление кеша (поллинг статусов
  * генерации) перезапускало бы таймер текущей сцены.
  */
-export function PreviewPlayer({ scenes }: PreviewPlayerProps) {
+export function PreviewPlayer({ projectId, scenes }: PreviewPlayerProps) {
   const { setSelectedSceneId } = useEditor();
+  const { data: music } = useProjectMusic(projectId);
   const [index, setIndex] = useState<number | null>(null);
   const planRef = useRef<PlannedScene[]>([]);
+  const baseTrackRef = useRef<HTMLAudioElement | null>(null);
+
+  const projectTrack = music ? activeProjectMusic(music) : null;
 
   useEffect(() => {
     if (index === null) return;
@@ -56,9 +67,16 @@ export function PreviewPlayer({ scenes }: PreviewPlayerProps) {
 
     setSelectedSceneId(scene.id);
 
+    // Базовый трек не перезапускается на каждой сцене — он тянется сквозь
+    // весь ролик. Сцена со своей музыкой глушит его, а не останавливает:
+    // после неё он должен продолжиться там же, где и в экспорте.
+    if (baseTrackRef.current) {
+      baseTrackRef.current.volume = scene.overrideMusicUrl ? 0 : MUSIC_VOLUME;
+    }
+
     const playing = [
       startAudio(scene.voiceUrl, 1),
-      startAudio(scene.musicUrl, MUSIC_VOLUME),
+      startAudio(scene.overrideMusicUrl, MUSIC_VOLUME),
     ].filter((a): a is HTMLAudioElement => a !== null);
     const timer = setTimeout(() => setIndex(index + 1), scene.durationMs);
 
@@ -71,6 +89,15 @@ export function PreviewPlayer({ scenes }: PreviewPlayerProps) {
     };
   }, [index, setSelectedSceneId]);
 
+  // Остановка (в том числе по концу ролика) снимает и базовый трек.
+  useEffect(() => {
+    if (index !== null) return;
+    stopAudio(baseTrackRef.current);
+    baseTrackRef.current = null;
+  }, [index]);
+
+  useEffect(() => () => stopAudio(baseTrackRef.current), []);
+
   const playing = index !== null;
 
   function toggle() {
@@ -80,6 +107,10 @@ export function PreviewPlayer({ scenes }: PreviewPlayerProps) {
     }
     if (scenes.length === 0) return;
     planRef.current = plan(scenes);
+    baseTrackRef.current =
+      projectTrack?.status === "READY"
+        ? startAudio(projectTrack.url, MUSIC_VOLUME)
+        : null;
     setIndex(0);
   }
 
@@ -100,6 +131,12 @@ export function PreviewPlayer({ scenes }: PreviewPlayerProps) {
       {playing ? "Stop" : "Preview"}
     </button>
   );
+}
+
+function stopAudio(audio: HTMLAudioElement | null): void {
+  if (!audio) return;
+  audio.pause();
+  audio.src = "";
 }
 
 function startAudio(url: string | null, volume: number): HTMLAudioElement | null {

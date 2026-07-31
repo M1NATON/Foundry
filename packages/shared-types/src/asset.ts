@@ -11,7 +11,12 @@ export type CreateAssetDto = z.infer<typeof CreateAssetSchema>;
 
 export const AssetSchema = z.object({
   id: z.string(),
-  sceneId: z.string(),
+  /**
+   * Ассет принадлежит либо сцене, либо проекту — базовая музыка висит на
+   * проекте и не привязана ни к одному блоку таймлайна.
+   */
+  sceneId: z.string().nullable(),
+  projectId: z.string().nullable(),
   type: AssetType,
   provider: z.string(),
   prompt: z.string(),

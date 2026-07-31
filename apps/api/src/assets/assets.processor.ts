@@ -44,18 +44,22 @@ export class AssetsProcessor implements OnModuleInit, OnModuleDestroy {
   private async process(assetId: string) {
     const asset = await this.prisma.asset.findUnique({
       where: { id: assetId },
-      include: { scene: { select: { id: true } } },
     });
     if (!asset) return;
+
+    // Музыка проекта не привязана к сцене — двигать там нечего.
+    const sceneId = asset.sceneId;
 
     await this.prisma.asset.update({
       where: { id: assetId },
       data: { status: "GENERATING" },
     });
-    await this.prisma.scene.update({
-      where: { id: asset.sceneId },
-      data: { status: "GENERATING" },
-    });
+    if (sceneId) {
+      await this.prisma.scene.update({
+        where: { id: sceneId },
+        data: { status: "GENERATING" },
+      });
+    }
 
     try {
       const url = await this.generate(asset.type, asset.prompt);
@@ -64,7 +68,7 @@ export class AssetsProcessor implements OnModuleInit, OnModuleDestroy {
         where: { id: assetId },
         data: { status: "READY", url, errorMsg: null },
       });
-      await this.settleScene(asset.sceneId);
+      if (sceneId) await this.settleScene(sceneId);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Generation failed";
@@ -74,10 +78,12 @@ export class AssetsProcessor implements OnModuleInit, OnModuleDestroy {
         where: { id: assetId },
         data: { status: "FAILED", errorMsg: message },
       });
-      await this.prisma.scene.update({
-        where: { id: asset.sceneId },
-        data: { status: "FAILED" },
-      });
+      if (sceneId) {
+        await this.prisma.scene.update({
+          where: { id: sceneId },
+          data: { status: "FAILED" },
+        });
+      }
     }
   }
 

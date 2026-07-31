@@ -201,7 +201,7 @@ export class AssetsService {
       include: { scene: { select: { projectId: true } } },
     });
     if (!asset) throw new NotFoundException("Asset not found");
-    await this.projects.assertOwned(userId, asset.scene.projectId);
+    await this.projects.assertOwned(userId, owningProjectId(asset));
 
     const { scene: _scene, ...rest } = asset;
     return rest;
@@ -210,17 +210,31 @@ export class AssetsService {
   async remove(userId: string, assetId: string) {
     const asset = await this.prisma.asset.findUnique({
       where: { id: assetId },
-      include: { scene: true },
+      include: { scene: true, project: { select: { activeMusicId: true } } },
     });
     if (!asset) throw new NotFoundException("Asset not found");
-    await this.projects.assertOwned(userId, asset.scene.projectId);
+    await this.projects.assertOwned(userId, owningProjectId(asset));
 
     await this.prisma.asset.delete({ where: { id: assetId } });
 
     // Удалённый ассет был активным — переносим активность на другой READY-вариант
     // того же типа (самый новый), иначе сбрасываем ссылку.
+    if (asset.projectId) {
+      if (asset.project?.activeMusicId === assetId) {
+        const next = await this.prisma.asset.findFirst({
+          where: { projectId: asset.projectId, type: "MUSIC", status: "READY" },
+          orderBy: { createdAt: "desc" },
+        });
+        await this.prisma.project.update({
+          where: { id: asset.projectId },
+          data: { activeMusicId: next?.id ?? null },
+        });
+      }
+      return { id: assetId };
+    }
+
     const field = ACTIVE_ASSET_FIELD_BY_TYPE[asset.type];
-    if (asset.scene[field] === assetId) {
+    if (asset.scene && asset.sceneId && asset.scene[field] === assetId) {
       const next = await this.prisma.asset.findFirst({
         where: { sceneId: asset.sceneId, type: asset.type, status: "READY" },
         orderBy: { createdAt: "desc" },
@@ -233,6 +247,115 @@ export class AssetsService {
 
     return { id: assetId };
   }
+
+  /** Музыка проекта: выбранный базовый трек и варианты, что лежат рядом. */
+  async projectMusic(userId: string, projectId: string) {
+    await this.projects.assertOwned(userId, projectId);
+
+    const [project, assets] = await Promise.all([
+      this.prisma.project.findUnique({
+        where: { id: projectId },
+        select: { activeMusicId: true },
+      }),
+      this.prisma.asset.findMany({
+        where: { projectId, type: "MUSIC" },
+        orderBy: { createdAt: "desc" },
+      }),
+    ]);
+
+    return { activeMusicId: project?.activeMusicId ?? null, assets };
+  }
+
+  /**
+   * Сгенерировать базовый трек. Промпт берётся только из запроса: у проекта
+   * нет поля вроде voiceText сцены, из которого его можно было бы вывести.
+   */
+  async createProjectMusic(
+    userId: string,
+    projectId: string,
+    dto: CreateAssetDto,
+  ) {
+    await this.projects.assertOwned(userId, projectId);
+
+    const prompt = dto.prompt?.trim();
+    if (!prompt) throw new BadRequestException("Music prompt is required");
+
+    const asset = await this.prisma.asset.create({
+      data: {
+        projectId,
+        type: "MUSIC",
+        provider: dto.provider,
+        prompt,
+        status: "QUEUED",
+      },
+    });
+
+    // Новый трек сразу становится базовым — как и новый ассет сцены.
+    await this.prisma.project.update({
+      where: { id: projectId },
+      data: { activeMusicId: asset.id },
+    });
+    await this.queue.enqueue(asset.id);
+
+    return asset;
+  }
+
+  /** Готовый трек, загруженный пользователем: генерация не нужна. */
+  async attachProjectMusicUpload(
+    userId: string,
+    projectId: string,
+    filename: string,
+    originalName: string,
+  ) {
+    await this.projects.assertOwned(userId, projectId);
+
+    const durationSec = await probeDurationSec(
+      join(process.cwd(), UPLOAD_DIR, filename),
+    );
+
+    const asset = await this.prisma.asset.create({
+      data: {
+        projectId,
+        type: "MUSIC",
+        provider: "upload",
+        prompt: originalName,
+        status: "READY",
+        url: `/api/${UPLOAD_DIR}/${filename}`,
+        durationSec,
+      },
+    });
+
+    await this.prisma.project.update({
+      where: { id: projectId },
+      data: { activeMusicId: asset.id },
+    });
+
+    return asset;
+  }
+
+  /** Выбрать базовый трек или снять музыку с проекта совсем (null). */
+  async setProjectMusic(
+    userId: string,
+    projectId: string,
+    assetId: string | null,
+  ) {
+    await this.projects.assertOwned(userId, projectId);
+
+    if (assetId) {
+      const exists = await this.prisma.asset.findFirst({
+        where: { id: assetId, projectId, type: "MUSIC" },
+        select: { id: true },
+      });
+      if (!exists) throw new NotFoundException("Music asset not found");
+    }
+
+    await this.prisma.project.update({
+      where: { id: projectId },
+      data: { activeMusicId: assetId },
+    });
+
+    return this.projectMusic(userId, projectId);
+  }
 }
 
 /**
@@ -241,6 +364,21 @@ export class AssetsService {
  */
 export function sceneSecondsFromVoice(voiceDurationSec: number): number {
   return Math.max(MIN_SCENE_SECONDS, Math.ceil(voiceDurationSec));
+}
+
+/**
+ * Проект, которому принадлежит ассет: напрямую (базовая музыка) или через
+ * свою сцену. Ровно одно из двух полей всегда заполнено.
+ */
+function owningProjectId(asset: {
+  projectId: string | null;
+  scene: { projectId: string } | null;
+}): string {
+  const projectId = asset.projectId ?? asset.scene?.projectId;
+  if (!projectId) {
+    throw new NotFoundException("Asset is not attached to a project");
+  }
+  return projectId;
 }
 
 /** Поле сцены, из которого берётся промпт для генерации ассета этого типа. */

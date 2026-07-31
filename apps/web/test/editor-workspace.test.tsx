@@ -120,6 +120,7 @@ describe("EditorWorkspace", () => {
           {
             id: "a1",
             sceneId: s.id,
+            projectId: null,
             type: "VIDEO",
             provider: "upload",
             prompt: "",

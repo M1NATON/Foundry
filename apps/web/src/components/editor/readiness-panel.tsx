@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ImageIcon, Mic, Video, Wand2 } from "lucide-react";
+import { Check, ImageIcon, Mic, Music, Video, Wand2 } from "lucide-react";
 import type { AssetType, ProjectGap, Scene } from "@foundry/shared-types";
-import { gapLabel, projectGaps } from "@foundry/shared-types";
+import {
+  activeProjectMusic,
+  gapLabel,
+  projectGaps,
+} from "@foundry/shared-types";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { useEditor } from "@/lib/editor-store";
+import { useProjectMusic } from "@/lib/queries/music";
 import { useGenerateMissing } from "@/lib/queries/scenes";
 import { cn } from "@/lib/utils";
 
@@ -74,6 +79,8 @@ export function ReadinessPanel({
       footer={<FillTheGaps projectId={projectId} sceneCount={scenes.length} />}
     >
       <div className="px-5 py-4">
+        <ProjectMusicNote projectId={projectId} />
+
         {gaps.length === 0 ? (
           <div className="flex items-center gap-2.5 rounded-md border border-border px-3 py-4">
             <Check className="h-4 w-4 text-accent" strokeWidth={2} />
@@ -132,6 +139,29 @@ export function ReadinessPanel({
         )}
       </div>
     </Dialog>
+  );
+}
+
+/**
+ * Музыка — свойство проекта, а не сцены, поэтому она стоит отдельной строкой
+ * над списком пробелов и ничего не блокирует: ролик без музыки экспортируется.
+ */
+function ProjectMusicNote({ projectId }: { projectId: string }) {
+  const { data } = useProjectMusic(projectId);
+  if (!data) return null;
+
+  const track = activeProjectMusic(data);
+
+  return (
+    <div className="mb-3 flex items-center gap-2.5 rounded-md border border-border px-3 py-2.5">
+      <Music className="h-3.5 w-3.5 shrink-0 text-secondary" strokeWidth={1.75} />
+      <p className="min-w-0 flex-1 truncate text-xs text-secondary">
+        {track ? `Project music: ${track.prompt}` : "No music on this project"}
+      </p>
+      <span className="shrink-0 text-xs text-secondary opacity-70">
+        optional
+      </span>
+    </div>
   );
 }
 

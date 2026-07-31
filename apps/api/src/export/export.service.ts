@@ -14,6 +14,7 @@ import {
   secondsToFrames,
   toEdl,
   toFcpxml,
+  type MusicSegment,
   type TimelineClip,
 } from "./timeline";
 
@@ -53,9 +54,17 @@ export class ExportService {
               : format === "prompts"
                 ? this.toPrompts(project)
                 : format === "fcpxml"
-                  ? toFcpxml(project.title, this.toClips(project))
+                  ? toFcpxml(
+                      project.title,
+                      this.toClips(project),
+                      this.toMusicSegments(project),
+                    )
                   : format === "edl"
-                    ? toEdl(project.title, this.toClips(project))
+                    ? toEdl(
+                        project.title,
+                        this.toClips(project),
+                        this.toMusicSegments(project),
+                      )
                     : this.toSrt(project);
 
     return {
@@ -93,14 +102,88 @@ export class ExportService {
 
   /** Путь к файлу активного ассета сцены заданного типа, если он на диске. */
   private activeFilePath(scene: ScenePayload, type: AssetType): string | null {
+    return this.filePath(this.activeAsset(scene, type));
+  }
+
+  /** Активный ассет сцены заданного типа, каким бы ни был его статус. */
+  private activeAsset(scene: ScenePayload, type: AssetType) {
     const activeId = scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]];
-    const asset = scene.assets.find((a) => a.id === activeId);
+    return scene.assets.find((a) => a.id === activeId) ?? null;
+  }
+
+  /**
+   * Путь к файлу ассета на диске. Сгенерированные заглушки живут в data-URL
+   * и файлом не являются — для монтажки их не существует.
+   */
+  private filePath(
+    asset: { status: string; url: string | null } | null,
+  ): string | null {
     if (!asset || asset.status !== "READY" || !asset.url) return null;
 
     const prefix = `/api/${UPLOAD_DIR}/`;
     if (!asset.url.startsWith(prefix)) return null;
 
     return join(process.cwd(), UPLOAD_DIR, asset.url.slice(prefix.length));
+  }
+
+  /**
+   * Музыкальная дорожка целиком. Базовый трек проекта тянется от нуля на свою
+   * длину — мы его не зацикливаем, поэтому короткий трек честно кончается
+   * раньше ролика. Сцена со своим треком вырезает из него свой отрезок.
+   */
+  private toMusicSegments(project: ProjectPayload): MusicSegment[] {
+    const base = project.assets.find((a) => a.id === project.activeMusicId);
+    const basePath = this.filePath(base ?? null);
+    // Длительность заглушки неизвестна — кладём её на всю длину и пусть
+    // монтажёр подрежет, это честнее, чем не положить вовсе.
+    const baseFrames =
+      base?.durationSec != null
+        ? secondsToFrames(base.durationSec)
+        : Number.POSITIVE_INFINITY;
+
+    const segments: MusicSegment[] = [];
+    const pushBase = (from: number, to: number) => {
+      if (!basePath) return;
+      const end = Math.min(to, baseFrames);
+      if (end <= from) return;
+      segments.push({
+        path: basePath,
+        startFrames: from,
+        durationFrames: end - from,
+        // Базовый трек звучит непрерывно: точка входа совпадает с позицией.
+        sourceStartFrames: from,
+        name: "Project music",
+      });
+    };
+
+    let cursor = 0;
+    let baseFrom = 0;
+
+    for (const scene of project.scenes) {
+      const sceneFrames = secondsToFrames(this.sceneSeconds(scene));
+      const start = cursor;
+      cursor += sceneFrames;
+
+      const override = this.activeAsset(scene, "MUSIC");
+      const overridePath = this.filePath(override);
+      if (!overridePath) continue;
+
+      pushBase(baseFrom, start);
+      segments.push({
+        path: overridePath,
+        startFrames: start,
+        durationFrames:
+          override?.durationSec != null
+            ? Math.min(sceneFrames, secondsToFrames(override.durationSec))
+            : sceneFrames,
+        sourceStartFrames: 0,
+        name: `Scene ${String(scene.order + 1).padStart(2, "0")} music`,
+      });
+      baseFrom = cursor;
+    }
+
+    pushBase(baseFrom, cursor);
+    return segments;
   }
 
   private toMarkdown(project: ProjectPayload): string {

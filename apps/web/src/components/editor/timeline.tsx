@@ -12,6 +12,7 @@ import {
   sceneDuration,
 } from "@foundry/shared-types";
 import { AlertTriangle, ImageIcon, Minus, Plus, Upload } from "lucide-react";
+import { MusicBar, MusicLane } from "@/components/editor/music-track";
 import { PreviewPlayer } from "@/components/editor/preview-player";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
@@ -104,7 +105,7 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
   return (
     <section className="shrink-0 border-t border-border bg-surface">
       <div className="flex items-center gap-2 border-b border-border px-3 py-1.5">
-        <PreviewPlayer scenes={ordered} />
+        <PreviewPlayer projectId={projectId} scenes={ordered} />
 
         <span className="h-4 w-px bg-border" aria-hidden />
 
@@ -195,7 +196,21 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
             />
           ))}
         </div>
+
+        {ordered.length > 0 && (
+          <MusicLane
+            projectId={projectId}
+            scenes={ordered}
+            durations={durations}
+            zoom={timelineZoom}
+            width={trackWidth}
+          />
+        )}
       </div>
+
+      {/* Управление треком вне скролла: это свойство проекта, а не участка
+          таймлайна, и уезжать вместе со сценами оно не должно. */}
+      <MusicBar projectId={projectId} totalSec={totalSec} />
     </section>
   );
 }

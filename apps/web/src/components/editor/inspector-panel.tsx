@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AssetPreview } from "@/components/scenes/asset-preview";
+import { SceneMusicOverride } from "@/components/editor/music-track";
 import {
   useDeleteScene,
   useDuplicateScene,
@@ -45,8 +46,12 @@ interface InspectorPanelProps {
   onClose: () => void;
 }
 
+/**
+ * То, что сцена обязана иметь сама. Музыки здесь нет: она задаётся на проекте,
+ * а на сцене бывает только override — он живёт отдельной секцией ниже.
+ */
 const GENERATE_TOOLS: Array<{
-  tool: "frames" | "clip" | "voice" | "music";
+  tool: "frames" | "clip" | "voice";
   type: AssetType;
   label: string;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
@@ -54,7 +59,6 @@ const GENERATE_TOOLS: Array<{
   { tool: "frames", type: "IMAGE", label: "Frame", icon: ImageIcon },
   { tool: "clip", type: "VIDEO", label: "Clip", icon: Video },
   { tool: "voice", type: "VOICE", label: "Voice", icon: Mic },
-  { tool: "music", type: "MUSIC", label: "Music", icon: Music },
 ];
 
 const OPEN_TOOLS = new Set<EditorTool>(["frames", "clip", "voice", "music"]);
@@ -390,6 +394,8 @@ function SceneInspector({
             ))}
           </TabsContent>
         </Tabs>
+
+        <SceneMusicOverride projectId={projectId} scene={scene} />
 
         <div>
           <div className="mb-3 flex items-center justify-between gap-2">

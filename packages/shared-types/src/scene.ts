@@ -132,8 +132,13 @@ export const ACTIVE_ASSET_FIELD_BY_TYPE = {
   "activeFrameId" | "activeVideoId" | "activeVoiceId" | "activeMusicId"
 >;
 
-/** Слоты сцены в порядке пайплайна: кадр → клип → голос → музыка. */
-export const SCENE_ASSET_SLOTS = ["IMAGE", "VIDEO", "VOICE", "MUSIC"] as const;
+/**
+ * Слоты, из которых складывается готовность сцены: кадр → клип → голос.
+ * Музыки здесь нет — она живёт на проекте и тянется через весь ролик, а на
+ * сцене бывает только точечным override. Требовать её в каждой сцене значило
+ * бы просить заполнить то, что по смыслу заполнять не нужно.
+ */
+export const SCENE_ASSET_SLOTS = ["IMAGE", "VIDEO", "VOICE"] as const;
 
 /**
  * Готовность сцены: сколько слотов уже закрыто выбранным готовым ассетом.
@@ -149,7 +154,8 @@ export function sceneReadiness(scene: Scene): { filled: number; total: number } 
 
 export const SetActiveAssetSchema = z.object({
   type: AssetType,
-  assetId: z.string(),
+  /** null снимает выбор — так со сцены снимается music-override. */
+  assetId: z.string().nullable(),
 });
 export type SetActiveAssetDto = z.infer<typeof SetActiveAssetSchema>;
 
@@ -157,6 +163,25 @@ export type SetActiveAssetDto = z.infer<typeof SetActiveAssetSchema>;
 export function activeAssetOf(scene: Scene, type: z.infer<typeof AssetType>) {
   const activeId = scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]];
   return scene.assets.find((a) => a.id === activeId) ?? null;
+}
+
+/**
+ * Что звучит под этой сценой: её собственный override, если он выбран и готов,
+ * иначе базовый трек проекта. Одно место принимает это решение — им пользуются
+ * и предпросмотр, и экспорт, и дорожка под таймлайном.
+ */
+export function musicForScene(
+  scene: Scene,
+  projectTrack: Asset | null,
+): Asset | null {
+  const override = activeAssetOf(scene, "MUSIC");
+  if (override?.status === "READY") return override;
+  return projectTrack?.status === "READY" ? projectTrack : null;
+}
+
+/** У сцены есть своя музыка вместо проектной. */
+export function hasMusicOverride(scene: Scene): boolean {
+  return activeAssetOf(scene, "MUSIC") != null;
 }
 
 /** Что мешает отдать проект в монтаж. */

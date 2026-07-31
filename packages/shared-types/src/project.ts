@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { ProjectStatus } from "./enums";
+import { AssetSchema, type Asset } from "./asset";
+import { DURATION_MISMATCH_THRESHOLD_SECONDS } from "./scene";
 
 /** Заголовок нового проекта. Импорт раскадровки перезаписывает только его. */
 export const DEFAULT_PROJECT_TITLE = "Untitled project";
@@ -32,6 +34,42 @@ export const ProjectSchema = z.object({
   updatedAt: z.string(),
 });
 export type Project = z.infer<typeof ProjectSchema>;
+
+/**
+ * Музыка проекта: выбранный базовый трек и варианты, что лежат рядом.
+ * Форма та же, что у ассетов сцены, — генерация, загрузка и статусы общие.
+ */
+export const ProjectMusicSchema = z.object({
+  activeMusicId: z.string().nullable(),
+  assets: z.array(AssetSchema),
+});
+export type ProjectMusic = z.infer<typeof ProjectMusicSchema>;
+
+/** Выбор базового трека; null снимает музыку с проекта. */
+export const SetProjectMusicSchema = z.object({
+  assetId: z.string().nullable(),
+});
+export type SetProjectMusicDto = z.infer<typeof SetProjectMusicSchema>;
+
+/** Базовый трек проекта, если он выбран, существует и готов. */
+export function activeProjectMusic(music: ProjectMusic): Asset | null {
+  return music.assets.find((a) => a.id === music.activeMusicId) ?? null;
+}
+
+/**
+ * Насколько базовый трек не дотягивает до конца ролика. В экспорт он идёт
+ * один раз, а не зацикливается, — значит хвост останется без музыки, и об
+ * этом честнее сказать заранее, чем обнаружить это в монтажке.
+ */
+export function projectMusicShortfall(
+  track: Asset | null,
+  totalSeconds: number,
+): number | null {
+  if (track?.status !== "READY" || track.durationSec == null) return null;
+
+  const shortfall = totalSeconds - track.durationSec;
+  return shortfall > DURATION_MISMATCH_THRESHOLD_SECONDS ? shortfall : null;
+}
 
 /** Проект в списке — с агрегатами для карточки библиотеки. */
 export const ProjectListItemSchema = ProjectSchema.extend({

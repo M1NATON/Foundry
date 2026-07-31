@@ -3,15 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Eye, EyeOff, FileText, Mic, Music } from "lucide-react";
-import type { Scene, Script } from "@foundry/shared-types";
+import type { Asset, Scene, Script } from "@foundry/shared-types";
 import {
   activeAssetOf,
+  activeProjectMusic,
   countWords,
   estimateSeconds,
   formatDuration,
   formatSceneDuration,
+  musicForScene,
   sceneDuration,
 } from "@foundry/shared-types";
+import { useProjectMusic } from "@/lib/queries/music";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { MediaPlayer } from "@/components/scenes/media-player";
 import { SPRING } from "@/components/ui/primitives";
@@ -37,6 +40,7 @@ export function Stage({
   script,
   onOpenScript,
 }: StageProps) {
+  const { data: music } = useProjectMusic(projectId);
   const voice = useSceneField(projectId, scene, "voiceText");
   const imagePrompt = useSceneField(projectId, scene, "imagePrompt");
   const videoPrompt = useSceneField(projectId, scene, "videoPrompt");
@@ -58,7 +62,11 @@ export function Stage({
   const keyArt = showFrame ? (frame ?? clip) : (clip ?? frame);
 
   const voiceTrack = readyTrack(scene, "VOICE");
-  const musicTrack = readyTrack(scene, "MUSIC");
+  // Под сценой звучит её собственный трек, а если своего нет — проектный.
+  const projectTrack = music ? activeProjectMusic(music) : null;
+  const musicTrack = scene
+    ? withUrl(musicForScene(scene, projectTrack))
+    : null;
 
   const voiceRef = useRef<HTMLTextAreaElement>(null);
 
@@ -289,7 +297,11 @@ function PromptField({
 /** Готовая звуковая дорожка сцены выбранного типа, если она есть. */
 function readyTrack(scene: Scene | null, type: "VOICE" | "MUSIC") {
   if (!scene) return null;
-  const asset = activeAssetOf(scene, type);
+  return withUrl(activeAssetOf(scene, type));
+}
+
+/** Ассет, у которого действительно есть файл, — иначе играть нечего. */
+function withUrl(asset: Asset | null) {
   return asset?.status === "READY" && asset.url ? asset : null;
 }
 

@@ -18,6 +18,10 @@ model Project {
   research  Research?
   script    Script?
   scenes    Scene[]
+  // Музыка живёт на проекте, а не на сцене: трек тянется через весь ролик
+  // независимо от нарезки. Сцена может перебить его своим (Scene.activeMusicId).
+  assets    Asset[]
+  activeMusicId String?
 
   @@index([userId, updatedAt])
 }
@@ -81,8 +85,12 @@ enum SceneStatus {
 
 model Asset {
   id        String      @id @default(cuid())
-  sceneId   String
-  scene     Scene       @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  // Ассет принадлежит либо сцене, либо проекту (базовая музыка) — ровно одному
+  // из двух. Оба поля nullable, потому что в SQL это не выразить строже.
+  sceneId   String?
+  scene     Scene?      @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  projectId String?
+  project   Project?    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   type      AssetType
   provider  String
   prompt    String      @db.Text
@@ -94,6 +102,7 @@ model Asset {
   createdAt DateTime    @default(now())
 
   @@index([sceneId, createdAt])
+  @@index([projectId, createdAt])
 }
 
 enum AssetType {

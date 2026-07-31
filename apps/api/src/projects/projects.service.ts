@@ -48,6 +48,8 @@ export class ProjectsService {
           orderBy: { order: "asc" },
           include: { assets: { orderBy: { createdAt: "desc" } } },
         },
+        // Ассеты самого проекта — базовая музыка, не привязанная к сценам.
+        assets: { orderBy: { createdAt: "desc" } },
       },
     });
     if (!project) throw new NotFoundException("Project not found");

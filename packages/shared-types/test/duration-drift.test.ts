@@ -11,6 +11,7 @@ function asset(patch: Partial<Asset> = {}): Asset {
   return {
     id: "a1",
     sceneId: "s1",
+    projectId: null,
     type: "VIDEO",
     provider: "upload",
     prompt: "",

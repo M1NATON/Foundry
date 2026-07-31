@@ -22,6 +22,20 @@ export interface TimelineClip {
   audioPath: string | null;
 }
 
+/**
+ * Кусок музыкальной дорожки. Музыка не нарезана по сценам: базовый трек идёт
+ * сквозь весь ролик, а сцена со своим треком вырезает из него свой отрезок —
+ * поэтому у сегмента есть и позиция на таймлайне, и точка входа в файл.
+ */
+export interface MusicSegment {
+  path: string;
+  startFrames: number;
+  durationFrames: number;
+  /** Смещение внутри исходного файла — у базового трека равно позиции. */
+  sourceStartFrames: number;
+  name: string;
+}
+
 export function secondsToFrames(seconds: number): number {
   return Math.max(1, Math.round(seconds * EXPORT_FPS));
 }
@@ -56,6 +70,7 @@ function fileUrl(absolutePath: string): string {
 export function toFcpxml(
   projectTitle: string,
   clips: TimelineClip[],
+  music: MusicSegment[] = [],
 ): string {
   const format = `<format id="r0" name="FFVideoFormat1080p${EXPORT_FPS}" frameDuration="${rational(1)}" width="1920" height="1080" colorSpace="1-1-1 (Rec. 709)"/>`;
 
@@ -97,6 +112,25 @@ export function toFcpxml(
         `<asset-clip ref="${id}" name="${label} voice" lane="-1" offset="${offset}" duration="${duration}" start="0s" audioRole="dialogue"/>`,
       );
     }
+  }
+
+  // Музыка идёт своей дорожкой (lane -2), под голосом: она не принадлежит
+  // ни одной сцене и режется только там, где сцена перебивает её своей.
+  for (const segment of music) {
+    const id = `r${nextId++}`;
+    const duration = rational(segment.durationFrames);
+
+    resources.push(
+      `<asset id="${id}" name="${xmlEscape(basename(segment.path))}" start="0s" ` +
+        `duration="${rational(segment.sourceStartFrames + segment.durationFrames)}" ` +
+        `hasAudio="1" audioSources="1" audioChannels="2">` +
+        `<media-rep kind="original-media" src="${fileUrl(segment.path)}"/></asset>`,
+    );
+    spine.push(
+      `<asset-clip ref="${id}" name="${xmlEscape(segment.name)}" lane="-2" ` +
+        `offset="${rational(segment.startFrames)}" duration="${duration}" ` +
+        `start="${rational(segment.sourceStartFrames)}" audioRole="music"/>`,
+    );
   }
 
   const total = clips.reduce((sum, c) => sum + c.durationFrames, 0);
@@ -144,19 +178,40 @@ export function timecode(frames: number): string {
  * склейки. Имена файлов идут в комментариях FROM CLIP NAME, потому что
  * само поле reel ограничено восемью символами.
  */
-export function toEdl(projectTitle: string, clips: TimelineClip[]): string {
+export function toEdl(
+  projectTitle: string,
+  clips: TimelineClip[],
+  music: MusicSegment[] = [],
+): string {
   const lines = [`TITLE: ${projectTitle}`, "FCM: NON-DROP FRAME", ""];
+  let event = 0;
+  const next = () => String(++event).padStart(3, "0");
 
-  clips.forEach((clip, index) => {
-    const event = String(index + 1).padStart(3, "0");
+  clips.forEach((clip) => {
     const recIn = timecode(clip.startFrames);
     const recOut = timecode(clip.startFrames + clip.durationFrames);
     const srcOut = timecode(clip.durationFrames);
 
     lines.push(
-      `${event}  AX       V     C        00:00:00:00 ${srcOut} ${recIn} ${recOut}`,
+      `${next()}  AX       V     C        00:00:00:00 ${srcOut} ${recIn} ${recOut}`,
       `* FROM CLIP NAME: ${clip.videoPath ? basename(clip.videoPath) : "BLACK"}`,
       `* SCENE ${String(clip.order).padStart(2, "0")}: ${clip.name}`,
+      "",
+    );
+  });
+
+  // Музыка отдельными аудио-событиями: EDL не знает про дорожки-слои, но
+  // канал A монтажка кладёт на свою звуковую линию.
+  music.forEach((segment) => {
+    const srcIn = timecode(segment.sourceStartFrames);
+    const srcOut = timecode(segment.sourceStartFrames + segment.durationFrames);
+    const recIn = timecode(segment.startFrames);
+    const recOut = timecode(segment.startFrames + segment.durationFrames);
+
+    lines.push(
+      `${next()}  AX       A     C        ${srcIn} ${srcOut} ${recIn} ${recOut}`,
+      `* FROM CLIP NAME: ${basename(segment.path)}`,
+      `* MUSIC: ${segment.name}`,
       "",
     );
   });

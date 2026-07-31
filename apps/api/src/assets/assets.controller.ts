@@ -6,6 +6,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UploadedFile,
   UseGuards,
@@ -16,8 +17,10 @@ import {
   AssetType,
   CreateAssetSchema,
   GenerateMissingSchema,
+  SetProjectMusicSchema,
   type CreateAssetDto,
   type GenerateMissingDto,
+  type SetProjectMusicDto,
 } from "@foundry/shared-types";
 import { AuthGuard } from "../common/auth.guard";
 import { UserId } from "../common/user-id.decorator";
@@ -42,6 +45,69 @@ export class ProjectAssetsController {
     @Body(new ZodValidationPipe(GenerateMissingSchema)) dto: GenerateMissingDto,
   ) {
     return this.assets.generateMissing(userId, projectId, dto.types);
+  }
+}
+
+/**
+ * Базовый трек проекта. Отдельный контроллер, а не слот сцены: музыка тянется
+ * через весь таймлайн и к конкретной сцене не привязана.
+ */
+@Controller("projects/:projectId/music")
+@UseGuards(AuthGuard)
+export class ProjectMusicController {
+  constructor(private readonly assets: AssetsService) {}
+
+  @Get()
+  find(@UserId() userId: string, @Param("projectId") projectId: string) {
+    return this.assets.projectMusic(userId, projectId);
+  }
+
+  @Post()
+  create(
+    @UserId() userId: string,
+    @Param("projectId") projectId: string,
+    @Body(new ZodValidationPipe(CreateAssetSchema)) dto: CreateAssetDto,
+  ) {
+    return this.assets.createProjectMusic(userId, projectId, dto);
+  }
+
+  @Post("upload")
+  @UseInterceptors(
+    FileInterceptor("file", {
+      storage: diskStorage({
+        destination: UPLOAD_DIR,
+        filename: (_req, file, cb) => {
+          const safe = file.originalname.replace(/[^\w.-]/g, "_");
+          cb(null, `${Date.now()}-${safe}`);
+        },
+      }),
+      limits: { fileSize: UPLOAD_MAX_BYTES },
+    }),
+  )
+  upload(
+    @UserId() userId: string,
+    @Param("projectId") projectId: string,
+    @UploadedFile() file?: { filename: string; originalname: string },
+  ) {
+    if (!file) throw new BadRequestException("File is required");
+    assertAllowedFile(file.originalname, "MUSIC");
+    return this.assets.attachProjectMusicUpload(
+      userId,
+      projectId,
+      file.filename,
+      file.originalname,
+    );
+  }
+
+  /** Выбрать базовый трек; assetId = null снимает музыку с проекта. */
+  @Patch()
+  setActive(
+    @UserId() userId: string,
+    @Param("projectId") projectId: string,
+    @Body(new ZodValidationPipe(SetProjectMusicSchema))
+    dto: SetProjectMusicDto,
+  ) {
+    return this.assets.setProjectMusic(userId, projectId, dto.assetId);
   }
 }
 

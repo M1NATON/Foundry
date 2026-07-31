@@ -145,11 +145,14 @@ export class ScenesService {
     await this.assertSceneOwned(userId, sceneId);
     const field = ACTIVE_ASSET_FIELD_BY_TYPE[dto.type];
 
-    const asset = await this.prisma.asset.findUnique({
-      where: { id: dto.assetId },
-    });
-    if (!asset || asset.sceneId !== sceneId || asset.type !== dto.type) {
-      throw new BadRequestException("Asset does not belong to this scene/type");
+    // null — снять выбор совсем: так сцена возвращается к музыке проекта.
+    if (dto.assetId !== null) {
+      const asset = await this.prisma.asset.findUnique({
+        where: { id: dto.assetId },
+      });
+      if (!asset || asset.sceneId !== sceneId || asset.type !== dto.type) {
+        throw new BadRequestException("Asset does not belong to this scene/type");
+      }
     }
 
     return this.prisma.scene.update({
