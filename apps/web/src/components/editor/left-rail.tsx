@@ -1,18 +1,13 @@
 "use client";
 
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Download, FileText, Layers, Library } from "lucide-react";
+import { FileText, Layers, Library } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEditor } from "@/lib/editor-store";
 
-interface LeftRailProps {
-  onExport: () => void;
-}
-
-export function LeftRail({ onExport }: LeftRailProps) {
+export function LeftRail() {
   const pathname = usePathname();
-  const { id: projectId } = useParams<{ id: string }>();
   const { step, setStep, tool, setTool } = useEditor();
 
   const items = [
@@ -38,10 +33,10 @@ export function LeftRail({ onExport }: LeftRailProps) {
       label: "Assets",
       icon: Layers,
       onClick: () => {
-        setStep("storyboard");
+        setStep("producing");
         setTool(tool === "frames" ? null : "frames");
       },
-      active: step === "storyboard" && tool === "frames",
+      active: step === "producing" && tool === "frames",
     },
   ];
 
@@ -75,19 +70,6 @@ export function LeftRail({ onExport }: LeftRailProps) {
           </button>
         );
       })}
-
-      <div className="mt-auto">
-        <button
-          onClick={onExport}
-          aria-label="Export"
-          className={cn(
-            "flex h-9 w-9 items-center justify-center rounded-md",
-            "text-secondary transition-colors hover:bg-border/40 hover:text-primary",
-          )}
-        >
-          <Download className="h-4 w-4" strokeWidth={1.75} />
-        </button>
-      </div>
     </nav>
   );
 }

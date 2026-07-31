@@ -4,9 +4,11 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Clapperboard,
+  Download,
   FileText,
   GripHorizontal,
   ListOrdered,
+  Upload,
 } from "lucide-react";
 import { SPRING } from "@/components/ui/primitives";
 import type { EditorStep } from "@/lib/editor-store";
@@ -15,6 +17,8 @@ import { cn } from "@/lib/utils";
 interface FloatingToolbarProps {
   step: EditorStep;
   onStepChange: (step: EditorStep) => void;
+  onImport: () => void;
+  onExport: () => void;
 }
 
 /**
@@ -37,7 +41,12 @@ const STEPS = [
  * Плавающая панель инструментов. Перетаскивается за ручку (GripHorizontal)
  * и запоминает позицию в пределах сессии — пользователь ставит её, где удобно.
  */
-export function FloatingToolbar({ step, onStepChange }: FloatingToolbarProps) {
+export function FloatingToolbar({
+  step,
+  onStepChange,
+  onImport,
+  onExport,
+}: FloatingToolbarProps) {
   const constraintsRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -111,6 +120,29 @@ export function FloatingToolbar({ step, onStepChange }: FloatingToolbarProps) {
             </div>
           );
         })}
+
+        {/* Разделитель обязателен: без него Import/Export читаются
+            как ещё один шаг пайплайна. */}
+        <span className="mx-1 h-4 w-px bg-border" aria-hidden />
+
+        <button
+          onClick={onImport}
+          aria-label="Import storyboard"
+          title="Import storyboard"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-secondary
+                     transition-colors hover:bg-border/40 hover:text-primary"
+        >
+          <Upload className="h-4 w-4" strokeWidth={1.75} />
+        </button>
+        <button
+          onClick={onExport}
+          aria-label="Export project"
+          title="Export project"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-secondary
+                     transition-colors hover:bg-border/40 hover:text-primary"
+        >
+          <Download className="h-4 w-4" strokeWidth={1.75} />
+        </button>
       </motion.div>
     </>
   );

@@ -47,8 +47,11 @@ export default function EditorPage() {
       />
 
       <div className="flex min-h-0 flex-1">
-        <LeftRail onExport={() => setExportOpen(true)} />
-        <EditorWorkspace projectId={projectId} />
+        <LeftRail />
+        <EditorWorkspace
+          projectId={projectId}
+          onExport={() => setExportOpen(true)}
+        />
       </div>
 
       <ExportPanel

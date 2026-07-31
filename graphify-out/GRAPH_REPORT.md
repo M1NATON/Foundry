@@ -1,16 +1,16 @@
 # Graph Report - Foundry-opus-5  (2026-07-31)
 
 ## Corpus Check
-- 110 files · ~89,587 words
+- 110 files · ~89,618 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 893 nodes · 1427 edges · 64 communities (54 shown, 10 thin omitted)
+- 892 nodes · 1426 edges · 63 communities (53 shown, 10 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `edf9893d`
+- Built from commit: `7346ea2b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -36,7 +36,6 @@
 - shared-types/package.json
 - AssetsService
 - editor-store.tsx
-- 5.2. Верхняя панель редактора
 - compilerOptions
 - projects.ts
 - foundry_design_prompt.md
@@ -48,7 +47,7 @@
 - Foundry
 - next-env.d.ts
 - tailwind.config.ts
-- button.tsx
+- primitives.tsx
 - project.ts
 - scene.ts
 - asset.ts
@@ -98,13 +97,13 @@
   apps/api/src/scenes/scenes.service.ts → packages/shared-types/src/storyboard.ts
 - `Field()` --calls--> `cn()`  [EXTRACTED]
   apps/web/src/components/editor/inspector-panel.tsx → apps/web/src/lib/utils.ts
-- `EditorChrome()` --calls--> `useEditor()`  [EXTRACTED]
-  apps/web/src/components/editor/editor-chrome.tsx → apps/web/src/lib/editor-store.tsx
+- `EditorWorkspace()` --calls--> `useEditor()`  [EXTRACTED]
+  apps/web/src/components/editor/editor-workspace.tsx → apps/web/src/lib/editor-store.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (64 total, 10 thin omitted)
+## Communities (63 total, 10 thin omitted)
 
 ### Community 0 - "UserId"
 Cohesion: 0.06
@@ -115,8 +114,8 @@ Cohesion: 0.13
 Nodes (12): ProjectScenesController, ScenesController, Body, Controller, Delete, Get, Param, Patch (+4 more)
 
 ### Community 2 - "enums.ts"
-Cohesion: 0.24
-Nodes (8): ExportFormat, PIPELINE_STAGES, PROJECT_STATUS_LABEL, projectProgress(), ProjectStatus, SceneStatus, ExportRequestDto, ExportRequestSchema
+Cohesion: 0.21
+Nodes (9): ExportFormat, PIPELINE_STAGES, PROJECT_STATUS_LABEL, projectProgress(), ProjectStatus, SceneStatus, EXPORT_FORMATS, ExportRequestDto (+1 more)
 
 ### Community 3 - "dependencies"
 Cohesion: 0.04
@@ -164,19 +163,19 @@ Nodes (8): Tabs(), TabsContent(), TabsContext, TabsContextValue, TabsList(), Tab
 
 ### Community 14 - "inspector-panel.tsx"
 Cohesion: 0.14
-Nodes (24): ACCEPT_FOR, Field(), FieldProps, GENERATE_TOOLS, InspectorPanel(), InspectorPanelProps, OPEN_TOOLS, SceneInspector() (+16 more)
+Nodes (25): ACCEPT_FOR, Field(), FieldProps, GENERATE_TOOLS, InspectorPanel(), InspectorPanelProps, OPEN_TOOLS, SceneInspector() (+17 more)
 
 ### Community 15 - "storyboard.ts"
-Cohesion: 0.17
-Nodes (14): hasDefaultTitle(), sceneDurationSec(), countWords(), estimateSeconds(), extractJson(), ImportStoryboardDto, ImportStoryboardSchema, optionalText (+6 more)
+Cohesion: 0.22
+Nodes (7): ImportStoryboardDto, ImportStoryboardSchema, optionalText, StoryboardImport, StoryboardObjectSchema, StoryboardScene, StoryboardSceneSchema
 
 ### Community 16 - "ExportService"
-Cohesion: 0.14
-Nodes (9): ExportController, Body, Controller, Param, Post, UseGuards, ExportService, Injectable (+1 more)
+Cohesion: 0.15
+Nodes (8): ExportController, Body, Controller, Param, Post, UseGuards, ExportService, Injectable
 
 ### Community 17 - "editor-workspace.tsx"
-Cohesion: 0.23
-Nodes (15): EditorWorkspace(), EditorWorkspaceProps, ProducingView(), ScriptView(), ScriptViewProps, ImportStoryboardDialog(), ImportStoryboardDialogProps, copyToClipboard() (+7 more)
+Cohesion: 0.24
+Nodes (14): EditorWorkspace(), EditorWorkspaceProps, ScriptView(), ScriptViewProps, ImportStoryboardDialog(), ImportStoryboardDialogProps, copyToClipboard(), copyWithFallback() (+6 more)
 
 ### Community 18 - "shared-types/package.json"
 Cohesion: 0.10
@@ -187,20 +186,16 @@ Cohesion: 0.10
 Nodes (16): AssetsController, SceneAssetsController, Body, Controller, Delete, Get, Param, Post (+8 more)
 
 ### Community 20 - "editor-store.tsx"
-Cohesion: 0.15
-Nodes (13): FloatingToolbar(), FloatingToolbarProps, EditorContext, EditorProvider(), EditorState, EditorStep, readStoredTheme(), Theme (+5 more)
-
-### Community 21 - "5.2. Верхняя панель редактора"
-Cohesion: 0.67
-Nodes (3): 5.2. Верхняя панель редактора, `Export`, `Library` / стрелка назад
+Cohesion: 0.16
+Nodes (12): FloatingToolbar(), FloatingToolbarProps, EditorContext, EditorProvider(), EditorState, EditorStep, readStoredTheme(), Theme (+4 more)
 
 ### Community 22 - "compilerOptions"
 Cohesion: 0.14
 Nodes (13): compilerOptions, declaration, esModuleInterop, lib, module, moduleResolution, noEmit, skipLibCheck (+5 more)
 
 ### Community 23 - "projects.ts"
-Cohesion: 0.15
-Nodes (8): LibraryPage(), api, ApiError, ProjectDetail, projectKeys, useCreateProject(), useProjects(), researchKeys
+Cohesion: 0.18
+Nodes (6): api, ApiError, ProjectDetail, projectKeys, researchKeys, scriptKeys
 
 ### Community 24 - "foundry_design_prompt.md"
 Cohesion: 0.20
@@ -230,9 +225,9 @@ Nodes (10): LlmModule, Module, firstSentence(), GeminiResponseSchema, LlmScene, 
 Cohesion: 0.18
 Nodes (10): Foundry, REST API, Дизайн-система, Команды, Локальный запуск, Переменные окружения, Поток данных, Стек (+2 more)
 
-### Community 35 - "button.tsx"
-Cohesion: 0.16
-Nodes (12): EmptyLibrary(), EmptyLibraryProps, NewProjectRow(), NewProjectRowProps, Button, ButtonProps, Size, SIZES (+4 more)
+### Community 35 - "primitives.tsx"
+Cohesion: 0.10
+Nodes (25): LibraryPage(), EmptyLibrary(), EmptyLibraryProps, NewProjectRow(), NewProjectRowProps, Cover(), hashTone(), ProjectCard() (+17 more)
 
 ### Community 36 - "project.ts"
 Cohesion: 0.22
@@ -267,24 +262,24 @@ Cohesion: 0.20
 Nodes (7): AppModule, Module, ALLOWED, assertAllowedFile(), AUDIO_EXT, IMAGE_EXT, VIDEO_EXT
 
 ### Community 53 - "cn"
-Cohesion: 0.14
-Nodes (21): EditorPage(), EditorChrome(), EditorChromeProps, LeftRail(), LeftRailProps, ExportPanel(), ExportPanelProps, ExportResult (+13 more)
+Cohesion: 0.26
+Nodes (10): EditorPage(), EditorChrome(), EditorChromeProps, LeftRail(), ExportPanel(), ExportPanelProps, ExportResult, useEditor() (+2 more)
 
 ### Community 54 - "export.service.ts"
 Cohesion: 0.50
 Nodes (3): ExportResult, ProjectPayload, ScenePayload
 
 ### Community 55 - "storyboard-list-view.tsx"
-Cohesion: 0.23
-Nodes (12): SceneListItemProps, StoryboardListView(), StoryboardListViewProps, STATUS_TONE, tickStep(), Timeline(), TimelineProps, useCreateScene() (+4 more)
+Cohesion: 0.22
+Nodes (12): SceneListItemProps, StoryboardListView(), StoryboardListViewProps, STATUS_TONE, tickStep(), Timeline(), TimelineProps, StatusDot() (+4 more)
 
 ### Community 56 - "src/script.ts"
-Cohesion: 0.33
-Nodes (5): formatDuration(), Script, ScriptSchema, UpsertScriptDto, UpsertScriptSchema
+Cohesion: 0.20
+Nodes (12): hasDefaultTitle(), sceneDurationSec(), countWords(), estimateSeconds(), formatDuration(), Script, ScriptSchema, UpsertScriptDto (+4 more)
 
 ### Community 57 - "5. Карта всех кнопок и элементов управления"
-Cohesion: 0.22
-Nodes (9): 5.11. Экспорт, 5.5. Редактор сценария, 5.8. Таймлайн, 5.9. Центральный холст Stage, 5. Карта всех кнопок и элементов управления, `Copy storyboard prompt`, `Open script` / действие пустого Stage, Большое текстовое поле сценария (+1 more)
+Cohesion: 0.17
+Nodes (12): 5.11. Экспорт, 5.2. Верхняя панель редактора, 5.5. Редактор сценария, 5.8. Таймлайн, 5.9. Центральный холст Stage, 5. Карта всех кнопок и элементов управления, `Copy storyboard prompt`, `Export` (+4 more)
 
 ### Community 58 - "5.10. Инспектор выбранной сцены"
 Cohesion: 0.18
@@ -311,21 +306,21 @@ Cohesion: 0.50
 Nodes (4): 5.6. Панель Storyboard, `Add scene`, `Import storyboard`, `Split from script`
 
 ## Knowledge Gaps
-- **372 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+367 more)
+- **371 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+366 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `sceneDurationSec()` connect `storyboard.ts` to `scene.ts`, `storyboard-list-view.tsx`?**
+- **Why does `sceneDurationSec()` connect `src/script.ts` to `scene.ts`, `storyboard-list-view.tsx`?**
   _High betweenness centrality (0.122) - this node is a cross-community bridge._
-- **Why does `Timeline()` connect `storyboard-list-view.tsx` to `editor-workspace.tsx`, `cn`, `inspector-panel.tsx`, `storyboard.ts`?**
-  _High betweenness centrality (0.122) - this node is a cross-community bridge._
+- **Why does `Timeline()` connect `storyboard-list-view.tsx` to `src/script.ts`, `cn`, `inspector-panel.tsx`?**
+  _High betweenness centrality (0.121) - this node is a cross-community bridge._
 - **Why does `AssetType` connect `AssetsService` to `enums.ts`, `scene.ts`, `asset.ts`?**
   _High betweenness centrality (0.105) - this node is a cross-community bridge._
 - **What connects `$schema`, `collection`, `sourceRoot` to the rest of the system?**
-  _372 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _371 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `UserId` be split into smaller, more focused modules?**
   _Cohesion score 0.06291591046581972 - nodes in this community are weakly interconnected._
 - **Should `ScenesService` be split into smaller, more focused modules?**

@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ClipboardPaste, GripVertical, Plus, Trash2, Wand2 } from "lucide-react";
+import { GripVertical, Plus, Trash2, Wand2 } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
 import { formatDuration, sceneDurationSec } from "@foundry/shared-types";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
-import { ImportStoryboardDialog } from "@/components/scenes/import-storyboard-dialog";
 import { useEditor } from "@/lib/editor-store";
 import {
   useCreateScene,
@@ -39,7 +38,6 @@ export function StoryboardListView({
   const reorder = useReorderScenes(projectId);
   const createScene = useCreateScene(projectId);
   const split = useSplitIntoScenes(projectId);
-  const [importOpen, setImportOpen] = useState(false);
 
   const { ordered, draggingId, dragProps } = useDragReorder(scenes, (items) =>
     reorder.mutate(items),
@@ -70,8 +68,8 @@ export function StoryboardListView({
         {ordered.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border px-6 py-10 text-center">
             <p className="text-sm text-secondary">
-              No scenes yet — split the script into scenes or import a
-              storyboard.
+              No scenes yet — split the script below, or import a storyboard
+              from the toolbar.
             </p>
           </div>
         ) : (
@@ -102,14 +100,6 @@ export function StoryboardListView({
           </Button>
           <Button
             size="sm"
-            variant="secondary"
-            onClick={() => setImportOpen(true)}
-          >
-            <ClipboardPaste className="h-3.5 w-3.5" strokeWidth={1.75} />
-            Import storyboard
-          </Button>
-          <Button
-            size="sm"
             variant="ghost"
             onClick={() =>
               createScene.mutate({ title: "New scene", voiceText: "" })
@@ -121,13 +111,6 @@ export function StoryboardListView({
           </Button>
         </div>
       </div>
-
-      <ImportStoryboardDialog
-        projectId={projectId}
-        sceneCount={scenes.length}
-        open={importOpen}
-        onClose={() => setImportOpen(false)}
-      />
     </section>
   );
 }

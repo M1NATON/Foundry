@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/script-view.tsx": {
-    "mtime": 1785505763.3015316,
-    "ast_hash": "7493bea050a308c6775e0aa1644866b3",
+    "mtime": 1785506727.0421124,
+    "ast_hash": "904f716a9acbf841026b7a24efe7c23e",
     "semantic_hash": ""
   },
   "apps/web/test/editor-workspace.test.tsx": {

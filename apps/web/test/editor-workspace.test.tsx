@@ -55,7 +55,7 @@ function render(qc: QueryClient, step: EditorStep): string {
   return renderToStaticMarkup(
     <QueryClientProvider client={qc}>
       <EditorProvider initialStep={step} initialSelectedSceneId={SCENE_ID}>
-        <EditorWorkspace projectId={PROJECT_ID} />
+        <EditorWorkspace projectId={PROJECT_ID} onExport={() => {}} />
       </EditorProvider>
     </QueryClientProvider>,
   );
