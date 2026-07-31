@@ -17,6 +17,7 @@ export const AssetSchema = z.object({
   prompt: z.string(),
   status: AssetStatus,
   url: z.string().nullable(),
+  durationSec: z.number().nullable(),
   errorMsg: z.string().nullable(),
   createdAt: z.string(),
 });

@@ -86,6 +86,8 @@ model Asset {
   prompt    String      @db.Text
   status    AssetStatus @default(QUEUED)
   url       String?
+  // Реальная длительность файла (ffprobe). Для картинок и заглушек — null.
+  durationSec Float?
   errorMsg  String?
   createdAt DateTime    @default(now())
 

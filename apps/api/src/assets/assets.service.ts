@@ -3,14 +3,17 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
+import { join } from "node:path";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
+  MIN_SCENE_SECONDS,
   type AssetType,
   type CreateAssetDto,
 } from "@foundry/shared-types";
 import { PrismaService } from "../prisma/prisma.service";
 import { ProjectsService } from "../projects/projects.service";
 import { AssetsQueue } from "./assets.queue";
+import { probeDurationSec } from "./media-duration";
 import { UPLOAD_DIR } from "./upload";
 
 @Injectable()
@@ -82,6 +85,10 @@ export class AssetsService {
     if (!scene) throw new NotFoundException("Scene not found");
     await this.projects.assertOwned(userId, scene.projectId);
 
+    const durationSec = await probeDurationSec(
+      join(process.cwd(), UPLOAD_DIR, filename),
+    );
+
     const asset = await this.prisma.asset.create({
       data: {
         sceneId,
@@ -90,11 +97,21 @@ export class AssetsService {
         prompt: originalName,
         status: "READY",
         url: `/api/${UPLOAD_DIR}/${filename}`,
+        durationSec,
       },
     });
+
     await this.prisma.scene.update({
       where: { id: sceneId },
-      data: { [ACTIVE_ASSET_FIELD_BY_TYPE[type]]: asset.id },
+      data: {
+        [ACTIVE_ASSET_FIELD_BY_TYPE[type]]: asset.id,
+        // Голос задаёт реальную длину сцены: оценка «150 слов в минуту»
+        // нужна только пока начитки нет. Клип и музыка длину не диктуют —
+        // их можно подрезать в монтаже.
+        ...(type === "VOICE" && durationSec != null
+          ? { durationSec: sceneSecondsFromVoice(durationSec) }
+          : {}),
+      },
     });
     await this.settleScene(sceneId);
     return asset;
@@ -159,4 +176,12 @@ export class AssetsService {
 
     return { id: assetId };
   }
+}
+
+/**
+ * Длина сцены по голосу: округляем вверх, чтобы фраза не обрывалась на
+ * стыке, и держим тот же нижний предел, что и оценка по тексту.
+ */
+export function sceneSecondsFromVoice(voiceDurationSec: number): number {
+  return Math.max(MIN_SCENE_SECONDS, Math.ceil(voiceDurationSec));
 }

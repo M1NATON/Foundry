@@ -21,6 +21,7 @@ function asset(id: string, type: Asset["type"], status: Asset["status"]): Asset 
     type,
     status,
     url: status === "READY" ? `/uploads/${id}` : null,
+    durationSec: null,
     provider: "gemini",
     prompt: "",
     errorMsg: null,
