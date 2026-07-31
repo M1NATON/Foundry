@@ -82,7 +82,7 @@ export function Stage({
               />
             </div>
 
-            <div className="relative flex flex-1 items-center justify-center bg-bg">
+            <div className="relative flex min-w-0 flex-1 items-center justify-center bg-bg p-4">
               <button
                 onClick={() => setShowPrompts((v) => !v)}
                 aria-pressed={showPrompts}
@@ -102,9 +102,9 @@ export function Stage({
                 <>
                   <AssetMedia
                     asset={keyArt}
-                    className="max-h-full w-full object-contain"
+                    className="max-h-full max-w-full object-contain"
                   />
-                  <figcaption className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-md bg-surface/90 px-3 py-1.5 text-xs text-secondary shadow-subtle backdrop-blur">
+                  <figcaption className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-md bg-surface/90 px-3 py-1.5 text-xs text-secondary shadow-subtle backdrop-blur">
                     {scene.title}
                     {scene.durationSec != null && (
                       <span className="ml-2 tabular-nums">

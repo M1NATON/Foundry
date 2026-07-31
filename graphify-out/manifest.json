@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785509654.8763797,
-    "ast_hash": "8468d55ebc89ca4fd43d4fed792f43e2",
+    "mtime": 1785513118.3668964,
+    "ast_hash": "6151cb39643056ff2fbfef37211adffd",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785512257.6378918,
-    "ast_hash": "a702f754a9d9274c07b91dfa496d1037",
+    "mtime": 1785513106.691992,
+    "ast_hash": "70858875ba48a3548d2696abbe16b1a0",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
@@ -610,13 +610,18 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/asset-media.tsx": {
-    "mtime": 1785512138.9327462,
-    "ast_hash": "e8ab9ce8ef698ff36ac27e1d27159ba1",
+    "mtime": 1785513077.468233,
+    "ast_hash": "2a5f11418c42b6e500d43b5b70715867",
     "semantic_hash": ""
   },
   "apps/api/uploads/1785512021315-Glass_server_node_inside_glowi.mp4": {
     "mtime": 1785512021.3278122,
     "ast_hash": "a17b8c671f90d09ae62a6f73036037aa",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/scenes/media-player.tsx": {
+    "mtime": 1785513064.1369126,
+    "ast_hash": "7409824bea4e32b3f0c598036fae79ce",
     "semantic_hash": ""
   }
 }

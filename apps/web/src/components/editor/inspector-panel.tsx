@@ -98,8 +98,10 @@ export function InspectorPanel({
           exit={{ opacity: 0, x: 24 }}
           transition={SPRING}
           onKeyDown={onKeyDown}
-          className="absolute right-0 top-0 z-40 flex h-full w-[min(420px,70%)] flex-col
-                     border-l border-border bg-surface"
+          // В потоке, а не поверх канваса: иначе инспектор наезжает на
+          // превью и видео не помещается в оставшееся место целиком.
+          className="flex h-full w-[340px] shrink-0 flex-col border-l border-border
+                     bg-surface xl:w-[420px]"
           aria-label="Inspector"
         >
           {scene ? (

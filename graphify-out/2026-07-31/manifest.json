@@ -110,8 +110,8 @@
     "semantic_hash": "85585f4bcc561dd8e131c550ed2291f6"
   },
   "apps/web/next.config.ts": {
-    "mtime": 1785510592.5506206,
-    "ast_hash": "7fd48bd20fa8a6e542fb23e34b7378e7",
+    "mtime": 1785510750.9327648,
+    "ast_hash": "afa8509942881361e11eea814f8edcda",
     "semantic_hash": ""
   },
   "apps/web/package.json": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "apps/web/next-env.d.ts": {
-    "mtime": 1785510637.1744564,
-    "ast_hash": "1977dd4aa66833eef8ae95b31ca3bfe8",
+    "mtime": 1785510733.8450058,
+    "ast_hash": "ba64ff7d54714a8f64db89b1003207d8",
     "semantic_hash": ""
   },
   "apps/web/src/app/page.tsx": {
@@ -360,8 +360,8 @@
     "semantic_hash": "0702c62bbdc2699565742864b80c1fc3"
   },
   "apps/web/src/components/scenes/asset-preview.tsx": {
-    "mtime": 1785427113.8373623,
-    "ast_hash": "e060e04103f3618a232176b75a00d2c0",
+    "mtime": 1785512218.7846546,
+    "ast_hash": "eca78df72c0a314be6daab00280f38b7",
     "semantic_hash": ""
   },
   "apps/web/src/lib/queries/research.ts": {
@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785507979.9003673,
-    "ast_hash": "be7cdde57b66eb2fe5f232501a439e16",
+    "mtime": 1785512257.6378918,
+    "ast_hash": "a702f754a9d9274c07b91dfa496d1037",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785509003.9180136,
-    "ast_hash": "9e92fc81d089c3f7a668b3367c86a24c",
+    "mtime": 1785512257.6382568,
+    "ast_hash": "056df50d6322b4a99d22c4b0005cf65a",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "apps/web/test/editor-workspace.test.tsx": {
-    "mtime": 1785510565.934534,
-    "ast_hash": "fc710305ba541c5d0d9c5796367935e1",
+    "mtime": 1785512436.1405787,
+    "ast_hash": "bb8b5cd359e6f30f4dca1d0b60f3cef9",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/producing-view.tsx": {
@@ -607,6 +607,16 @@
   "apps/web/src/components/editor/pipeline-stepper.tsx": {
     "mtime": 1785510223.5616155,
     "ast_hash": "4be3b91255b0aa69854684d076b60d9b",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/scenes/asset-media.tsx": {
+    "mtime": 1785512138.9327462,
+    "ast_hash": "e8ab9ce8ef698ff36ac27e1d27159ba1",
+    "semantic_hash": ""
+  },
+  "apps/api/uploads/1785512021315-Glass_server_node_inside_glowi.mp4": {
+    "mtime": 1785512021.3278122,
+    "ast_hash": "a17b8c671f90d09ae62a6f73036037aa",
     "semantic_hash": ""
   }
 }
