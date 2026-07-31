@@ -23,6 +23,13 @@ export const sceneKeys = {
   asset: (assetId: string) => ["assets", assetId] as const,
 };
 
+export type SceneFieldUpdater = (
+  sceneId: string,
+  field: keyof UpdateSceneDto,
+  value: string,
+  debounceMs?: number,
+) => void;
+
 export function useScenes(projectId: string) {
   return useQuery({
     queryKey: sceneKeys.list(projectId),
@@ -54,12 +61,29 @@ export function useUpdateScene(projectId: string) {
  * Оптимистично пишет в кеш, чтобы оба поля видели одно значение сразу,
  * и debounce-ит PATCH, чтобы не слать запрос на каждую букву.
  */
-export function useUpdateSceneField(projectId: string) {
+export function useUpdateSceneField(projectId: string): SceneFieldUpdater {
   const qc = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ id, dto }: { id: string; dto: UpdateSceneDto }) =>
       api.patch<Scene>(`/scenes/${id}`, dto),
-    onSettled: () => invalidateProject(qc, projectId),
+    onSuccess: (updated, variables) => {
+      const [field, submittedValue] = Object.entries(variables.dto)[0] ?? [];
+      qc.setQueryData<Scene[]>(sceneKeys.list(projectId), (old) =>
+        old?.map((scene) => {
+          if (scene.id !== updated.id) return scene;
+
+          // Поздний ответ не должен затереть текст, который пользователь уже
+          // продолжил набирать после отправки этого PATCH.
+          if (field && scene[field as keyof Scene] !== submittedValue) {
+            return scene;
+          }
+          return updated;
+        }),
+      );
+    },
+    onError: () => {
+      void qc.invalidateQueries({ queryKey: sceneKeys.list(projectId) });
+    },
   });
 
   const timers = useRef<Map<string, NodeJS.Timeout>>(new Map());

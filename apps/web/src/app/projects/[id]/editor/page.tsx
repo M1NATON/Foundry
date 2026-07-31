@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProject } from "@/lib/queries/projects";
-import { useScenes } from "@/lib/queries/scenes";
+import { useScenes, useUpdateSceneField } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
 import { useEditor } from "@/lib/editor-store";
 import { EditorChrome } from "@/components/editor/editor-chrome";
@@ -20,6 +20,7 @@ export default function EditorPage() {
   const router = useRouter();
   const { data: project, isLoading, isError } = useProject(projectId);
   const { data: scenes } = useScenes(projectId);
+  const updateSceneField = useUpdateSceneField(projectId);
   const { data: script } = useScript(projectId);
   const { tool, setTool, selectedSceneId } = useEditor();
   const [exportOpen, setExportOpen] = useState(false);
@@ -65,7 +66,7 @@ export default function EditorPage() {
           <Stage
             scene={selectedScene}
             script={script ?? null}
-            projectId={projectId}
+            onUpdateSceneField={updateSceneField}
             onOpenScript={() => setTool("script")}
           />
 
@@ -92,8 +93,10 @@ export default function EditorPage() {
         <InspectorPanel
           projectId={projectId}
           scene={selectedScene}
+          scenes={scenes ?? []}
           sceneCount={scenes?.length ?? 0}
           tool={tool}
+          onUpdateSceneField={updateSceneField}
           onClose={() => setTool(null)}
         />
       </div>

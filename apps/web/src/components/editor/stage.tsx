@@ -11,12 +11,12 @@ import {
   formatDuration,
 } from "@foundry/shared-types";
 import { SPRING } from "@/components/ui/primitives";
-import { useUpdateSceneField } from "@/lib/queries/scenes";
+import type { SceneFieldUpdater } from "@/lib/queries/scenes";
 
 interface StageProps {
   scene: Scene | null;
   script: Script | null;
-  projectId: string;
+  onUpdateSceneField: SceneFieldUpdater;
   onOpenScript: () => void;
 }
 
@@ -26,14 +26,18 @@ interface StageProps {
  * Voiceover слева редактируется прямо на холсте — тот же источник данных,
  * что и поле в инспекторе (общий React Query кеш, debounce).
  */
-export function Stage({ scene, script, projectId, onOpenScript }: StageProps) {
+export function Stage({
+  scene,
+  script,
+  onUpdateSceneField,
+  onOpenScript,
+}: StageProps) {
   const activeVideo = scene && activeAssetOf(scene, "VIDEO");
   const activeFrame = scene && activeAssetOf(scene, "IMAGE");
   const keyArt =
     (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
     (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
 
-  const updateField = useUpdateSceneField(projectId);
   const voiceRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea по контенту — без фиксированных rows.
@@ -64,10 +68,9 @@ export function Stage({ scene, script, projectId, onOpenScript }: StageProps) {
               </p>
               <textarea
                 ref={voiceRef}
-                key={scene.id}
-                defaultValue={scene.voiceText}
+                value={scene.voiceText}
                 onChange={(e) =>
-                  updateField(scene.id, "voiceText", e.target.value)
+                  onUpdateSceneField(scene.id, "voiceText", e.target.value)
                 }
                 placeholder="Write the voiceover for this scene…"
                 spellCheck={false}

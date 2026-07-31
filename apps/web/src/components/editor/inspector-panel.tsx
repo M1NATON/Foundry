@@ -14,7 +14,11 @@ import {
   Wand2,
   X,
 } from "lucide-react";
-import { ACTIVE_ASSET_FIELD_BY_TYPE, type AssetType, type Scene } from "@foundry/shared-types";
+import {
+  ACTIVE_ASSET_FIELD_BY_TYPE,
+  type AssetType,
+  type Scene,
+} from "@foundry/shared-types";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,9 +30,9 @@ import {
   useGenerateAsset,
   useSplitIntoScenes,
   useUpdateScene,
-  useUpdateSceneField,
   useUploadAsset,
 } from "@/lib/queries/scenes";
+import type { SceneFieldUpdater } from "@/lib/queries/scenes";
 import type { EditorTool } from "@/lib/editor-store";
 import { useEditor } from "@/lib/editor-store";
 import { cn } from "@/lib/utils";
@@ -36,8 +40,10 @@ import { cn } from "@/lib/utils";
 interface InspectorPanelProps {
   projectId: string;
   scene: Scene | null;
+  scenes: Scene[];
   sceneCount: number;
   tool: EditorTool;
+  onUpdateSceneField: SceneFieldUpdater;
   onClose: () => void;
 }
 
@@ -65,11 +71,28 @@ const ACCEPT_FOR: Record<AssetType, string> = {
 export function InspectorPanel({
   projectId,
   scene,
+  scenes,
   sceneCount,
   tool,
+  onUpdateSceneField,
   onClose,
 }: InspectorPanelProps) {
   const open = OPEN_TOOLS.has(tool) || scene !== null;
+  const { setSelectedSceneId } = useEditor();
+
+  // Alt+←/→ переходит к соседней сцене, пока фокус внутри инспектора —
+  // ускоряет последовательное заполнение полей многих сцен подряд.
+  function onKeyDown(e: React.KeyboardEvent) {
+    if (!scene || !e.altKey) return;
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    const idx = scenes.findIndex((s) => s.id === scene.id);
+    if (idx === -1) return;
+    const nextIdx = e.key === "ArrowLeft" ? idx - 1 : idx + 1;
+    const next = scenes[nextIdx];
+    if (!next) return;
+    e.preventDefault();
+    setSelectedSceneId(next.id);
+  }
 
   return (
     <AnimatePresence>
@@ -80,6 +103,7 @@ export function InspectorPanel({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 24 }}
           transition={SPRING}
+          onKeyDown={onKeyDown}
           className="absolute right-0 top-0 z-40 flex h-full w-[min(420px,70%)] flex-col
                      border-l border-border bg-surface"
           aria-label="Inspector"
@@ -87,7 +111,12 @@ export function InspectorPanel({
           {tool === "storyboard" ? (
             <StoryboardBody projectId={projectId} sceneCount={sceneCount} />
           ) : scene ? (
-            <SceneInspector projectId={projectId} scene={scene} tool={tool} />
+            <SceneInspector
+              projectId={projectId}
+              scene={scene}
+              tool={tool}
+              onUpdateSceneField={onUpdateSceneField}
+            />
           ) : (
             <EmptySelection />
           )}
@@ -218,13 +247,14 @@ function SceneInspector({
   projectId,
   scene,
   tool,
+  onUpdateSceneField,
 }: {
   projectId: string;
   scene: Scene;
   tool: EditorTool;
+  onUpdateSceneField: SceneFieldUpdater;
 }) {
   const updateScene = useUpdateScene(projectId);
-  const updateField = useUpdateSceneField(projectId);
   const generate = useGenerateAsset(projectId);
   const upload = useUploadAsset(projectId);
   const deleteScene = useDeleteScene(projectId);
@@ -234,6 +264,10 @@ function SceneInspector({
   const [mode, setMode] = useState<"generate" | "upload">("generate");
 
   const activeTool = GENERATE_TOOLS.find((t) => t.tool === tool);
+  const emptyGenerateTool = activeTool ?? GENERATE_TOOLS[0];
+  const pendingGenerateType = generate.isPending
+    ? generate.variables?.dto.type
+    : undefined;
   const relevantAssets = activeTool
     ? scene.assets.filter((a) => a.type === activeTool.type)
     : scene.assets;
@@ -286,9 +320,10 @@ function SceneInspector({
             Voiceover
           </span>
           <textarea
-            key={scene.id}
-            defaultValue={scene.voiceText}
-            onChange={(e) => updateField(scene.id, "voiceText", e.target.value)}
+            value={scene.voiceText}
+            onChange={(e) =>
+              onUpdateSceneField(scene.id, "voiceText", e.target.value)
+            }
             rows={4}
             spellCheck={false}
             className={cn(
@@ -333,7 +368,7 @@ function SceneInspector({
                 disabled={generate.isPending}
               >
                 <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
-                {generate.isPending ? "…" : label}
+                {pendingGenerateType === type ? "Generating…" : label}
               </Button>
             ))}
           </TabsContent>
@@ -362,9 +397,28 @@ function SceneInspector({
             Assets
           </p>
           {relevantAssets.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-border p-6">
-              <p className="text-xs text-secondary">Nothing generated yet.</p>
-            </div>
+            <button
+              onClick={() =>
+                generate.mutate({
+                  sceneId: scene.id,
+                  dto: { type: emptyGenerateTool.type, provider: "gemini" },
+                })
+              }
+              disabled={generate.isPending}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border
+                         border-dashed border-border p-6 text-xs text-secondary
+                         transition-colors hover:border-secondary/40 hover:text-primary
+                         disabled:cursor-default disabled:opacity-60"
+            >
+              {pendingGenerateType === emptyGenerateTool.type ? (
+                <>
+                  <span className="h-4 w-4 animate-pulse rounded-full bg-accent" />
+                  Generating {emptyGenerateTool.label.toLowerCase()}…
+                </>
+              ) : (
+                `Nothing generated yet — generate a ${emptyGenerateTool.label.toLowerCase()}.`
+              )}
+            </button>
           ) : (
             <div className="space-y-3">
               {relevantAssets.map((asset) => (
