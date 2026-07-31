@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Trash2 } from "lucide-react";
 import type { Asset } from "@foundry/shared-types";
 import { isAssetPending } from "@foundry/shared-types";
+import { AssetMedia } from "@/components/scenes/asset-media";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import {
   useAssetPolling,
@@ -61,12 +62,14 @@ export function AssetPreview({
     >
       <div className="relative aspect-video">
         {current.url && !isPending ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={current.url}
-            alt={current.prompt}
-            className="h-full w-full object-cover"
-          />
+          // Клик по плееру не должен заодно менять активный ассет — для
+          // этого в подписи есть отдельная кнопка «Use».
+          <div
+            className="h-full w-full"
+            onClick={(e) => current.type !== "IMAGE" && e.stopPropagation()}
+          >
+            <AssetMedia asset={current} />
+          </div>
         ) : (
           <div className="relative h-full w-full">
             <div
@@ -107,13 +110,31 @@ export function AssetPreview({
               : current.type.toLowerCase()}
         </span>
 
+        {selectable && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveAsset.mutate({
+                sceneId,
+                dto: { type: current.type, assetId: current.id },
+              });
+            }}
+            className="ml-auto text-xs text-secondary transition-colors hover:text-primary"
+          >
+            Use
+          </button>
+        )}
+
         <button
           onClick={(e) => {
             e.stopPropagation();
             deleteAsset.mutate(current.id);
           }}
-          className="ml-auto text-secondary opacity-0 transition-opacity
-                     hover:text-accent group-hover/asset:opacity-100"
+          className={cn(
+            "text-secondary opacity-0 transition-opacity",
+            "hover:text-accent group-hover/asset:opacity-100",
+            !selectable && "ml-auto",
+          )}
           aria-label="Delete asset"
         >
           <Trash2 className="h-3.5 w-3.5" strokeWidth={1.75} />

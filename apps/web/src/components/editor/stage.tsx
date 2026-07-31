@@ -10,6 +10,7 @@ import {
   estimateSeconds,
   formatDuration,
 } from "@foundry/shared-types";
+import { AssetMedia } from "@/components/scenes/asset-media";
 import { SPRING } from "@/components/ui/primitives";
 import { useSceneField } from "@/lib/use-scene-field";
 
@@ -99,10 +100,8 @@ export function Stage({
 
               {keyArt?.url ? (
                 <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={keyArt.url}
-                    alt={scene.title}
+                  <AssetMedia
+                    asset={keyArt}
                     className="max-h-full w-full object-contain"
                   />
                   <figcaption className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-md bg-surface/90 px-3 py-1.5 text-xs text-secondary shadow-subtle backdrop-blur">

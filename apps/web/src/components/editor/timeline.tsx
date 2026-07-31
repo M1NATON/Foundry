@@ -11,6 +11,7 @@ import {
 } from "@foundry/shared-types";
 import { Minus, Plus } from "lucide-react";
 import { PreviewPlayer } from "@/components/editor/preview-player";
+import { AssetMedia } from "@/components/scenes/asset-media";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
@@ -172,9 +173,11 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
             const dragging = draggingId === scene.id;
             const activeVideo = activeAssetOf(scene, "VIDEO");
             const activeFrame = activeAssetOf(scene, "IMAGE");
+            // Для миниатюры кадр предпочтительнее клипа: картинка рисуется
+            // сразу, видео сначала тянет метаданные ради первого кадра.
             const thumb =
-              (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
-              (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
+              (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null) ??
+              (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null);
             return (
               <motion.div
                 key={scene.id}
@@ -197,14 +200,10 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
                 aria-label={`Scene ${scene.order + 1}: ${scene.title}`}
               >
                 <div className="relative min-h-0 flex-1">
-                  {thumb?.url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={thumb.url}
-                      alt=""
-                      draggable={false}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
+                  {thumb ? (
+                    <div className="pointer-events-none absolute inset-0">
+                      <AssetMedia asset={thumb} controls={false} />
+                    </div>
                   ) : (
                     <div className="hatch absolute inset-0 opacity-30" />
                   )}

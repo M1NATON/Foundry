@@ -81,6 +81,34 @@ describe("EditorWorkspace", () => {
     expect(markup).not.toContain("Original voiceover");
   });
 
+  it("plays a video asset in a player, not in an img", () => {
+    const qc = seed("Original voiceover");
+    qc.setQueryData<Scene[]>(sceneKeys.list(PROJECT_ID), (old) =>
+      old?.map((s) => ({
+        ...s,
+        assets: [
+          {
+            id: "a1",
+            sceneId: s.id,
+            type: "VIDEO",
+            provider: "upload",
+            prompt: "",
+            status: "READY",
+            url: "/uploads/clip.mp4",
+            errorMsg: null,
+            createdAt: "2026-07-30T10:00:00.000Z",
+          },
+        ],
+        activeVideoId: "a1",
+      })),
+    );
+
+    const markup = render(qc, "producing");
+
+    expect(markup).toContain("<video");
+    expect(markup).not.toContain('<img src="/uploads/clip.mp4"');
+  });
+
   it("labels the total duration outside the time ruler", () => {
     const markup = render(seed("Original voiceover"), "producing");
 
