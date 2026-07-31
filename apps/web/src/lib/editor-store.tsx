@@ -13,7 +13,7 @@ import {
  * один из них. Всё состояние сцен и скрипта живёт в кеше React Query,
  * поэтому размонтирование вида ничего не теряет.
  */
-export type EditorStep = "script" | "storyboard" | "producing";
+export type EditorStep = "research" | "script" | "storyboard" | "producing";
 
 /** Фокус инспектора внутри Producing — какой тип ассета показывать. */
 export type EditorTool = "frames" | "clip" | "voice" | "music" | null;

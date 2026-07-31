@@ -360,8 +360,8 @@
     "semantic_hash": "0702c62bbdc2699565742864b80c1fc3"
   },
   "apps/web/src/components/scenes/asset-preview.tsx": {
-    "mtime": 1785512218.7846546,
-    "ast_hash": "eca78df72c0a314be6daab00280f38b7",
+    "mtime": 1785514852.9050853,
+    "ast_hash": "2df6d39f8ec518a3cd726508064f8a21",
     "semantic_hash": ""
   },
   "apps/web/src/lib/queries/research.ts": {
@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785513633.9034648,
-    "ast_hash": "c57648f4387c0c65efda9020c4430097",
+    "mtime": 1785514968.8040938,
+    "ast_hash": "882d18f60929d97c292106332684cac5",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785512257.6382568,
-    "ast_hash": "056df50d6322b4a99d22c4b0005cf65a",
+    "mtime": 1785514492.3483262,
+    "ast_hash": "c99a6ae7234079ecb463c6681c689701",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/asset-media.tsx": {
-    "mtime": 1785513077.468233,
-    "ast_hash": "2a5f11418c42b6e500d43b5b70715867",
+    "mtime": 1785514722.82388,
+    "ast_hash": "a063898490637cc725a4bab28c5ca8fb",
     "semantic_hash": ""
   },
   "apps/api/uploads/1785512021315-Glass_server_node_inside_glowi.mp4": {
@@ -620,8 +620,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/media-player.tsx": {
-    "mtime": 1785513064.1369126,
-    "ast_hash": "7409824bea4e32b3f0c598036fae79ce",
+    "mtime": 1785514638.4396305,
+    "ast_hash": "f8e87cd4ef04cd8cbc551b0c04b389e9",
     "semantic_hash": ""
   }
 }

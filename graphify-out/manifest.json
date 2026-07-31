@@ -185,9 +185,9 @@
     "semantic_hash": ""
   },
   "packages/shared-types/src/asset.ts": {
-    "mtime": 1785141450.9755702,
-    "ast_hash": "ffe52b65adc6c89f7257abe09aa80821",
-    "semantic_hash": "ffe52b65adc6c89f7257abe09aa80821"
+    "mtime": 1785516804.5719447,
+    "ast_hash": "bec87e2f690ddf3562810d1afc26f42f",
+    "semantic_hash": ""
   },
   "packages/shared-types/src/enums.ts": {
     "mtime": 1785508750.5128942,
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "apps/api/src/assets/assets.service.ts": {
-    "mtime": 1785426724.5155487,
-    "ast_hash": "0c4747288933da87cb0997a6cc8e043b",
+    "mtime": 1785516804.5721605,
+    "ast_hash": "a7673447ee926872eaa2ae46573a2bcc",
     "semantic_hash": ""
   },
   "apps/api/src/assets/placeholder.ts": {
@@ -400,12 +400,12 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
-    "mtime": 1785507120.2200992,
-    "ast_hash": "5d4eef655a46d9970a534050743f2603",
+    "mtime": 1785516315.484194,
+    "ast_hash": "757a94b7a99efccb3d0aa9d613810f9a",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785514968.8040938,
+    "mtime": 1785517350.7117052,
     "ast_hash": "882d18f60929d97c292106332684cac5",
     "semantic_hash": ""
   },
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/editor-store.tsx": {
-    "mtime": 1785506312.112015,
-    "ast_hash": "97f60318863dc6499c053eab920ee5a6",
+    "mtime": 1785516677.3756635,
+    "ast_hash": "47ce992bd5ffe69de032512ded34ea32",
     "semantic_hash": ""
   },
   "packages/shared-types/src/storyboard.ts": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/test/helpers.test.ts": {
-    "mtime": 1785508554.7717605,
-    "ast_hash": "99462abd8107116f76e5b02ab05318f1",
+    "mtime": 1785517100.525007,
+    "ast_hash": "9e8e86b2eba354bd825ae5841960d20b",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/editor-workspace.tsx": {
-    "mtime": 1785510290.0930755,
-    "ast_hash": "191edf66dc8afd63427bfa8bdd7645b4",
+    "mtime": 1785516337.4570403,
+    "ast_hash": "3bbe4da89cf9bace9b5a41bc98f8ba45",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/script-view.tsx": {
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "apps/web/test/editor-workspace.test.tsx": {
-    "mtime": 1785512436.1405787,
-    "ast_hash": "bb8b5cd359e6f30f4dca1d0b60f3cef9",
+    "mtime": 1785516976.1045375,
+    "ast_hash": "05f74bb250b518c7d07f45ac349b8551",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/producing-view.tsx": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/pipeline-stepper.tsx": {
-    "mtime": 1785510223.5616155,
-    "ast_hash": "4be3b91255b0aa69854684d076b60d9b",
+    "mtime": 1785516313.3642087,
+    "ast_hash": "1a21f5bd7fcd7701b7e4f48132f32a6c",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/asset-media.tsx": {
@@ -622,6 +622,26 @@
   "apps/web/src/components/scenes/media-player.tsx": {
     "mtime": 1785514638.4396305,
     "ast_hash": "f8e87cd4ef04cd8cbc551b0c04b389e9",
+    "semantic_hash": ""
+  },
+  "apps/api/prisma/migrations/20260731165030_asset_duration/migration.sql": {
+    "mtime": 1785516630.697335,
+    "ast_hash": "27e687799b069012e203867bb1e5beda",
+    "semantic_hash": ""
+  },
+  "apps/api/src/assets/media-duration.ts": {
+    "mtime": 1785516302.871282,
+    "ast_hash": "10e9ad415f2afc94ba58692d7d16dbe6",
+    "semantic_hash": ""
+  },
+  "apps/api/test/media-duration.test.ts": {
+    "mtime": 1785517209.1368294,
+    "ast_hash": "660d7bed114d9ac727d07d0906249198",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/editor/research-view.tsx": {
+    "mtime": 1785516628.4690053,
+    "ast_hash": "0bde59ce7f0af11ee639bfdf6fda417b",
     "semantic_hash": ""
   }
 }

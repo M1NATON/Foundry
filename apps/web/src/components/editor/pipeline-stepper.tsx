@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BookOpen,
   Clapperboard,
   Download,
   FileText,
@@ -17,12 +18,13 @@ interface PipelineStepperProps {
 }
 
 /**
- * Степпер пайплайна: Script — сплошной текст начитки, Storyboard — состав
- * и порядок сцен, Producing — канвас с таймлайном и инспектором сцены.
- * Frames/Clip/Voice/Music убраны отсюда — те же действия уже доступны
- * в InspectorPanel при выбранной сцене.
+ * Степпер пайплайна: Research — источники и заметки, Script — сплошной текст
+ * начитки, Storyboard — состав и порядок сцен, Producing — канвас с таймлайном
+ * и инспектором сцены. Frames/Clip/Voice/Music убраны отсюда — те же действия
+ * уже доступны в InspectorPanel при выбранной сцене.
  */
 const STEPS = [
+  { key: "research", label: "Research", icon: BookOpen },
   { key: "script", label: "Script", icon: FileText },
   { key: "storyboard", label: "Storyboard", icon: ListOrdered },
   { key: "producing", label: "Producing", icon: Clapperboard },

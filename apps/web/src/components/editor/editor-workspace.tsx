@@ -5,6 +5,7 @@ import { useEditor } from "@/lib/editor-store";
 import { useScenes } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
 import { ProducingView } from "@/components/editor/producing-view";
+import { ResearchView } from "@/components/editor/research-view";
 import { ScriptView } from "@/components/editor/script-view";
 import { StoryboardListView } from "@/components/editor/storyboard-list-view";
 
@@ -13,10 +14,10 @@ interface EditorWorkspaceProps {
 }
 
 /**
- * Переключатель этапов пайплайна: Script → Storyboard → Producing.
+ * Переключатель этапов пайплайна: Research → Script → Storyboard → Producing.
  * Виды взаимоисключающие: в DOM живёт ровно один из них, никаких оверлеев
- * поверх постоянно смонтированного канваса. Данные (сцены, скрипт) берутся
- * из кеша React Query, поэтому размонтирование вида не теряет правок.
+ * поверх постоянно смонтированного канваса. Данные (сцены, скрипт, research)
+ * берутся из кеша React Query, поэтому размонтирование вида не теряет правок.
  */
 export function EditorWorkspace({ projectId }: EditorWorkspaceProps) {
   const { step, setStep } = useEditor();
@@ -34,6 +35,8 @@ export function EditorWorkspace({ projectId }: EditorWorkspaceProps) {
 
   return (
     <div className="relative flex min-w-0 flex-1">
+      {step === "research" && <ResearchView projectId={projectId} />}
+
       {step === "script" && <ScriptView projectId={projectId} />}
 
       {step === "storyboard" && (

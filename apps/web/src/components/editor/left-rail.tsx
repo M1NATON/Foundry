@@ -18,9 +18,6 @@ export function LeftRail() {
       href: "/",
       active: pathname === "/",
     },
-    // TODO(research): отдельная кнопка для Research/Sources появится здесь,
-    // когда для apps/api/src/research будет свой UI. Сейчас research API
-    // существует, но фронтенд его не показывает.
     {
       key: "script",
       label: "Script",
