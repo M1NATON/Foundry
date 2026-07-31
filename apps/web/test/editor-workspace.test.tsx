@@ -81,6 +81,16 @@ describe("EditorWorkspace", () => {
     expect(markup).not.toContain("Original voiceover");
   });
 
+  it("labels the total duration outside the time ruler", () => {
+    const markup = render(seed("Original voiceover"), "producing");
+
+    // 12 секунд сцены. Раньше подпись жила внутри дорожки и слипалась
+    // с последней меткой шкалы в «0:12total».
+    expect(markup).toContain("Total:");
+    expect(markup).toContain("0:12");
+    expect(markup).not.toContain(" total");
+  });
+
   it("lists scenes on Storyboard without the per-scene production fields", () => {
     const markup = render(seed("Original voiceover"), "storyboard");
 

@@ -121,6 +121,13 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
         >
           Reset
         </button>
+
+        {/* Общая длительность закреплена справа и не участвует в
+            позиционировании меток — иначе она наезжает на последнюю
+            из них и читается как «00:40total». */}
+        <div className="ml-auto shrink-0 border-l border-border pl-4 text-xs tabular-nums text-secondary">
+          Total: {formatDuration(totalSec)}
+        </div>
       </div>
 
       <div ref={scrollRef} className="overflow-x-auto">
@@ -140,9 +147,6 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
               </span>
             );
           })}
-          <span className="absolute right-3 top-0 flex h-full items-center text-xs tabular-nums text-secondary">
-            {formatDuration(totalSec)} total
-          </span>
         </div>
 
         <div

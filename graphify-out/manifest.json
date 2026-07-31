@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785507370.641161,
-    "ast_hash": "8a4efc7929fb994987a57e8173f2d1a1",
+    "mtime": 1785507479.2796628,
+    "ast_hash": "f060fabb5ea292a5558be94dc1f825b1",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "apps/web/test/editor-workspace.test.tsx": {
-    "mtime": 1785507127.3742766,
-    "ast_hash": "95de9deda43d7f7865726691840f8e2f",
+    "mtime": 1785507505.6095421,
+    "ast_hash": "99135bd673179fea3b2cc02f22d9f15a",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/producing-view.tsx": {
