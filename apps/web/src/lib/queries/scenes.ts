@@ -57,6 +57,15 @@ export function useSetActiveAsset(projectId: string) {
   });
 }
 
+export function useDuplicateScene(projectId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (sceneId: string) =>
+      api.post<Scene>(`/scenes/${sceneId}/duplicate`),
+    onSuccess: () => invalidateProject(qc, projectId),
+  });
+}
+
 export function useDeleteScene(projectId: string) {
   const qc = useQueryClient();
   return useMutation({

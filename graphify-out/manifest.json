@@ -215,8 +215,8 @@
     "semantic_hash": "6b712523aa7717311dac5ca0022625e2"
   },
   "packages/shared-types/src/scene.ts": {
-    "mtime": 1785506221.7214296,
-    "ast_hash": "8502bca4131650be5bf5f38379951660",
+    "mtime": 1785508452.018202,
+    "ast_hash": "95b916c2089fcd037aa0b0e0b7560853",
     "semantic_hash": ""
   },
   "packages/shared-types/src/script.ts": {
@@ -310,8 +310,8 @@
     "semantic_hash": "218610ef6d6680051f74c0efe8c4930e"
   },
   "apps/api/src/scenes/scenes.controller.ts": {
-    "mtime": 1785426385.2953248,
-    "ast_hash": "c879f6f75b5f6e3c35004e433ece431a",
+    "mtime": 1785508373.2755632,
+    "ast_hash": "50816b2466e32a46a85ee9635a5617cb",
     "semantic_hash": ""
   },
   "apps/api/src/scenes/scenes.module.ts": {
@@ -320,8 +320,8 @@
     "semantic_hash": "e8cb0ba77aa5992a489e91ffdb527f0a"
   },
   "apps/api/src/scenes/scenes.service.ts": {
-    "mtime": 1785427008.3452258,
-    "ast_hash": "a9ed278997a3884bc1ceea0369240d80",
+    "mtime": 1785508358.951629,
+    "ast_hash": "0fbc493684071a04d7e53bad861f179d",
     "semantic_hash": ""
   },
   "apps/web/next-env.d.ts": {
@@ -370,8 +370,8 @@
     "semantic_hash": "9876e6bcdc88770ec03fc8444035658a"
   },
   "apps/web/src/lib/queries/scenes.ts": {
-    "mtime": 1785507859.7960312,
-    "ast_hash": "be4ef1057c9a1a2aef6102ee51c9ed32",
+    "mtime": 1785508382.1135228,
+    "ast_hash": "be404edec11242ff1190c16645de795a",
     "semantic_hash": ""
   },
   "apps/web/src/lib/queries/script.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785507831.6339583,
-    "ast_hash": "a2932faf1c6f6da0584851faf0ba62a4",
+    "mtime": 1785508413.0542567,
+    "ast_hash": "e8f708e4a113322dc190dd4d41c3f665",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785507479.2796628,
-    "ast_hash": "f060fabb5ea292a5558be94dc1f825b1",
+    "mtime": 1785508601.122359,
+    "ast_hash": "07a552dd18492e778895ade17677fc44",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "packages/shared-types/test/helpers.test.ts": {
-    "mtime": 1785258036.3795953,
-    "ast_hash": "9aa71d13c29f82f061585c90597a0332",
+    "mtime": 1785508554.7717605,
+    "ast_hash": "99462abd8107116f76e5b02ab05318f1",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/storyboard-list-view.tsx": {
-    "mtime": 1785506971.9747827,
-    "ast_hash": "8143f15a7452ed7f44e64c254a1a62b5",
+    "mtime": 1785508601.1225371,
+    "ast_hash": "31fd1a0b8d9f70ff3c42e642bf49933b",
     "semantic_hash": ""
   },
   "apps/web/src/lib/use-drag-reorder.ts": {
@@ -592,6 +592,11 @@
   "apps/web/src/lib/use-scene-field.ts": {
     "mtime": 1785507742.6504552,
     "ast_hash": "bdafbb38a528804e52f0ae657767d012",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/editor/readiness-badge.tsx": {
+    "mtime": 1785508585.3395908,
+    "ast_hash": "5ea002ecb417a8d4eb0c49320b852e9a",
     "semantic_hash": ""
   }
 }

@@ -2,7 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ImageIcon, Mic, Music, Trash2, Upload, Video, X } from "lucide-react";
+import {
+  Copy,
+  ImageIcon,
+  Mic,
+  Music,
+  Trash2,
+  Upload,
+  Video,
+  X,
+} from "lucide-react";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
   type AssetType,
@@ -14,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AssetPreview } from "@/components/scenes/asset-preview";
 import {
   useDeleteScene,
+  useDuplicateScene,
   useGenerateAsset,
   useUpdateScene,
   useUploadAsset,
@@ -185,6 +195,7 @@ function SceneInspector({
   const generate = useGenerateAsset(projectId);
   const upload = useUploadAsset(projectId);
   const deleteScene = useDeleteScene(projectId);
+  const duplicateScene = useDuplicateScene(projectId);
   const { setSelectedSceneId } = useEditor();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploadType, setUploadType] = useState<AssetType>("IMAGE");
@@ -228,6 +239,19 @@ function SceneInspector({
         <span className="shrink-0 text-xs text-secondary">
           Scene {String(scene.order + 1).padStart(2, "0")}
         </span>
+        <button
+          onClick={() =>
+            duplicateScene.mutate(scene.id, {
+              onSuccess: (copy) => setSelectedSceneId(copy.id),
+            })
+          }
+          disabled={duplicateScene.isPending}
+          aria-label="Duplicate scene"
+          title="Duplicate scene (voiceover and prompts, without assets)"
+          className="shrink-0 rounded-sm p-1 text-secondary transition-colors hover:bg-border/40 hover:text-primary"
+        >
+          <Copy className="h-4 w-4" strokeWidth={1.75} />
+        </button>
         <button
           onClick={() => {
             deleteScene.mutate(scene.id);

@@ -10,6 +10,7 @@ import {
   sceneDurationSec,
 } from "@foundry/shared-types";
 import { Minus, Plus } from "lucide-react";
+import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
 import { useReorderScenes } from "@/lib/queries/scenes";
@@ -222,6 +223,7 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
                   >
                     {scene.title}
                   </span>
+                  <ReadinessBadge scene={scene} />
                   <span className="shrink-0 text-xs tabular-nums text-secondary">
                     {formatDuration(durations[i])}
                   </span>

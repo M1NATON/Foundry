@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { GripVertical, Plus, Trash2, Wand2 } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
 import { formatDuration, sceneDurationSec } from "@foundry/shared-types";
+import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
 import { useEditor } from "@/lib/editor-store";
@@ -189,6 +190,8 @@ function SceneListItem({
           {scene.title}
         </button>
       )}
+
+      <ReadinessBadge scene={scene} />
 
       <span className="shrink-0 text-xs tabular-nums text-secondary">
         {formatDuration(sceneDurationSec(scene))}

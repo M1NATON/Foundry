@@ -714,8 +714,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "apps_api_src_app_module_appmodule",
-      "community": 10,
-      "community_name": "app.module.ts",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "appmodule"
     },
     {
@@ -725,8 +725,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_app_module_ts_module",
-      "community": 10,
-      "community_name": "app.module.ts",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "module"
     },
     {
@@ -1099,8 +1099,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue",
-      "community": 52,
-      "community_name": "AssetsQueue",
+      "community": 19,
+      "community_name": "AssetsService",
       "norm_label": "assetsqueue"
     },
     {
@@ -1110,8 +1110,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_ts_injectable",
-      "community": 52,
-      "community_name": "AssetsQueue",
+      "community": 19,
+      "community_name": "AssetsService",
       "norm_label": "injectable"
     },
     {
@@ -1121,8 +1121,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue_enqueue",
-      "community": 52,
-      "community_name": "AssetsQueue",
+      "community": 19,
+      "community_name": "AssetsService",
       "norm_label": ".enqueue()"
     },
     {
@@ -1132,8 +1132,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue_onmoduledestroy",
-      "community": 52,
-      "community_name": "AssetsQueue",
+      "community": 19,
+      "community_name": "AssetsService",
       "norm_label": ".onmoduledestroy()"
     },
     {
@@ -1144,7 +1144,7 @@
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "assets.service.ts"
     },
     {
@@ -1176,8 +1176,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_constructor",
-      "community": 52,
-      "community_name": "AssetsQueue",
+      "community": 19,
+      "community_name": "AssetsService",
       "norm_label": ".constructor()"
     },
     {
@@ -1308,8 +1308,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "upload.ts"
     },
     {
@@ -1319,8 +1319,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload_image_ext",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "image_ext"
     },
     {
@@ -1330,8 +1330,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload_video_ext",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "video_ext"
     },
     {
@@ -1341,8 +1341,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload_audio_ext",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "audio_ext"
     },
     {
@@ -1352,8 +1352,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload_allowed",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "allowed"
     },
     {
@@ -1363,8 +1363,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_api_src_assets_upload_assertallowedfile",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "assertallowedfile()"
     },
     {
@@ -1957,8 +1957,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_main",
-      "community": 10,
-      "community_name": "app.module.ts",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "main.ts"
     },
     {
@@ -1968,8 +1968,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_api_src_main_bootstrap",
-      "community": 10,
-      "community_name": "app.module.ts",
+      "community": 52,
+      "community_name": "upload.ts",
       "norm_label": "bootstrap()"
     },
     {
@@ -1979,8 +1979,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module",
-      "community": 53,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "PrismaService",
       "norm_label": "prisma.module.ts"
     },
     {
@@ -1990,8 +1990,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module_prismamodule",
-      "community": 53,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "PrismaService",
       "norm_label": "prismamodule"
     },
     {
@@ -2001,8 +2001,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "global",
-      "community": 53,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "PrismaService",
       "norm_label": "global"
     },
     {
@@ -2012,8 +2012,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module_ts_module",
-      "community": 53,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "PrismaService",
       "norm_label": "module"
     },
     {
@@ -2024,7 +2024,7 @@
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "prisma.service.ts"
     },
     {
@@ -2035,7 +2035,7 @@
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_service_prismaservice",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "prismaservice"
     },
     {
@@ -2046,7 +2046,7 @@
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_service_ts_injectable",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "injectable"
     },
     {
@@ -2057,7 +2057,7 @@
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_service_prismaservice_onmoduleinit",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": ".onmoduleinit()"
     },
     {
@@ -2078,8 +2078,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "projectscontroller"
     },
     {
@@ -2089,8 +2089,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_controller",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "controller"
     },
     {
@@ -2100,8 +2100,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_useguards",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "useguards"
     },
     {
@@ -2111,8 +2111,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_post",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "post"
     },
     {
@@ -2122,8 +2122,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_body",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "body"
     },
     {
@@ -2133,8 +2133,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_get",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "get"
     },
     {
@@ -2144,8 +2144,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_param",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "param"
     },
     {
@@ -2155,8 +2155,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_patch",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "patch"
     },
     {
@@ -2166,8 +2166,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_ts_delete",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": "delete"
     },
     {
@@ -2177,8 +2177,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_constructor",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".constructor()"
     },
     {
@@ -2188,8 +2188,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_create",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".create()"
     },
     {
@@ -2199,8 +2199,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_findall",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".findall()"
     },
     {
@@ -2210,8 +2210,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_findone",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".findone()"
     },
     {
@@ -2221,8 +2221,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_update",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".update()"
     },
     {
@@ -2232,8 +2232,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_controller_projectscontroller_remove",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".remove()"
     },
     {
@@ -2277,7 +2277,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "projects.service.ts"
     },
     {
@@ -2287,7 +2287,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice",
-      "community": 42,
+      "community": 40,
       "community_name": "ProjectsService",
       "norm_label": "projectsservice"
     },
@@ -2298,7 +2298,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_ts_injectable",
-      "community": 42,
+      "community": 40,
       "community_name": "ProjectsService",
       "norm_label": "injectable"
     },
@@ -2310,7 +2310,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_constructor",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": ".constructor()"
     },
     {
@@ -2320,8 +2320,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_create",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".create()"
     },
     {
@@ -2331,8 +2331,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_findall",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".findall()"
     },
     {
@@ -2342,8 +2342,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_findone",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 1,
+      "community_name": "ProjectsController",
       "norm_label": ".findone()"
     },
     {
@@ -2354,7 +2354,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_update",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".update()"
     },
     {
@@ -2365,7 +2365,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_remove",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".remove()"
     },
     {
@@ -2376,7 +2376,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_assertowned",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".assertowned()"
     },
     {
@@ -2387,7 +2387,7 @@
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_advancestatus",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".advancestatus()"
     },
     {
@@ -2408,8 +2408,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_researchcontroller",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "researchcontroller"
     },
     {
@@ -2419,8 +2419,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_controller",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "controller"
     },
     {
@@ -2430,8 +2430,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_useguards",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "useguards"
     },
     {
@@ -2441,8 +2441,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_get",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "get"
     },
     {
@@ -2452,8 +2452,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_param",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "param"
     },
     {
@@ -2463,8 +2463,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_put",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "put"
     },
     {
@@ -2474,8 +2474,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_ts_body",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": "body"
     },
     {
@@ -2485,8 +2485,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_researchcontroller_constructor",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": ".constructor()"
     },
     {
@@ -2496,8 +2496,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_researchcontroller_findone",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": ".findone()"
     },
     {
@@ -2507,8 +2507,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "apps_api_src_research_research_controller_researchcontroller_upsert",
-      "community": 0,
-      "community_name": "UserId",
+      "community": 53,
+      "community_name": "ResearchController",
       "norm_label": ".upsert()"
     },
     {
@@ -2552,7 +2552,7 @@
       "_origin": "ast",
       "id": "apps_api_src_research_research_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "research.service.ts"
     },
     {
@@ -2562,7 +2562,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_researchservice",
-      "community": 42,
+      "community": 40,
       "community_name": "ProjectsService",
       "norm_label": "researchservice"
     },
@@ -2573,7 +2573,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_ts_injectable",
-      "community": 42,
+      "community": 40,
       "community_name": "ProjectsService",
       "norm_label": "injectable"
     },
@@ -2584,7 +2584,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_researchservice_constructor",
-      "community": 42,
+      "community": 40,
       "community_name": "ProjectsService",
       "norm_label": ".constructor()"
     },
@@ -2596,7 +2596,7 @@
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_researchservice_findone",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".findone()"
     },
     {
@@ -2607,7 +2607,7 @@
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_researchservice_upsert",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".upsert()"
     },
     {
@@ -2618,7 +2618,7 @@
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_parsesources",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": "parsesources()"
     },
     {
@@ -2639,8 +2639,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_projectscenescontroller",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "projectscenescontroller"
     },
     {
@@ -2650,8 +2650,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_controller",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "controller"
     },
     {
@@ -2661,8 +2661,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_useguards",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "useguards"
     },
     {
@@ -2672,8 +2672,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_get",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "get"
     },
     {
@@ -2683,8 +2683,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_param",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "param"
     },
     {
@@ -2694,8 +2694,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_post",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "post"
     },
     {
@@ -2705,8 +2705,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_body",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "body"
     },
     {
@@ -2716,8 +2716,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_projectscenescontroller_constructor",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".constructor()"
     },
     {
@@ -2727,8 +2727,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_projectscenescontroller_findall",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".findall()"
     },
     {
@@ -2738,8 +2738,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_projectscenescontroller_create",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".create()"
     },
     {
@@ -2749,8 +2749,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_projectscenescontroller_import",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".import()"
     },
     {
@@ -2760,8 +2760,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "scenescontroller"
     },
     {
@@ -2771,8 +2771,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_patch",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "patch"
     },
     {
@@ -2782,8 +2782,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_ts_delete",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "delete"
     },
     {
@@ -2793,8 +2793,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller_constructor",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".constructor()"
     },
     {
@@ -2804,41 +2804,52 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller_reorder",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".reorder()"
+    },
+    {
+      "label": ".duplicate()",
+      "file_type": "code",
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
+      "community": 0,
+      "community_name": "UserId",
+      "norm_label": ".duplicate()"
     },
     {
       "label": ".update()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L73",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller_update",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".update()"
     },
     {
       "label": ".setActiveAsset()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L82",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller_setactiveasset",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".setactiveasset()"
     },
     {
       "label": ".remove()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L91",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_controller_scenescontroller_remove",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".remove()"
     },
     {
@@ -2882,7 +2893,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "scenes.service.ts"
     },
     {
@@ -2893,7 +2904,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_with_assets",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "with_assets"
     },
     {
@@ -2903,8 +2914,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "scenesservice"
     },
     {
@@ -2914,8 +2925,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_ts_injectable",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": "injectable"
     },
     {
@@ -2926,7 +2937,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_constructor",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": ".constructor()"
     },
     {
@@ -2936,8 +2947,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_findall",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".findall()"
     },
     {
@@ -2947,8 +2958,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_create",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".create()"
     },
     {
@@ -2958,8 +2969,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_update",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".update()"
     },
     {
@@ -2969,85 +2980,96 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_setactiveasset",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".setactiveasset()"
+    },
+    {
+      "label": ".duplicate()",
+      "file_type": "code",
+      "source_file": "apps/api/src/scenes/scenes.service.ts",
+      "source_location": "L125",
+      "_origin": "ast",
+      "id": "apps_api_src_scenes_scenes_service_scenesservice_duplicate",
+      "community": 0,
+      "community_name": "UserId",
+      "norm_label": ".duplicate()"
     },
     {
       "label": ".remove()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L121",
+      "source_location": "L155",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_remove",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".remove()"
     },
     {
       "label": ".reorder()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L128",
+      "source_location": "L162",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_reorder",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".reorder()"
     },
     {
       "label": ".importStoryboard()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L169",
+      "source_location": "L203",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".importstoryboard()"
     },
     {
       "label": ".applyImportedTitle()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L211",
+      "source_location": "L245",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_applyimportedtitle",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".applyimportedtitle()"
     },
     {
       "label": ".assertSceneOwned()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L227",
+      "source_location": "L261",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_assertsceneowned",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".assertsceneowned()"
     },
     {
       "label": ".nextOrder()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L237",
+      "source_location": "L271",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_scenesservice_nextorder",
-      "community": 1,
-      "community_name": "ScenesService",
+      "community": 0,
+      "community_name": "UserId",
       "norm_label": ".nextorder()"
     },
     {
       "label": "parseStoryboard()",
       "file_type": "code",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L251",
+      "source_location": "L285",
       "_origin": "ast",
       "id": "apps_api_src_scenes_scenes_service_parsestoryboard",
-      "community": 40,
-      "community_name": ".assertOwned",
+      "community": 42,
+      "community_name": "PrismaService",
       "norm_label": "parsestoryboard()"
     },
     {
@@ -3234,7 +3256,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service",
       "community": 42,
-      "community_name": "ProjectsService",
+      "community_name": "PrismaService",
       "norm_label": "scripts.service.ts"
     },
     {
@@ -3245,7 +3267,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": "scriptsservice"
     },
     {
@@ -3256,7 +3278,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_ts_injectable",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": "injectable"
     },
     {
@@ -3267,7 +3289,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_constructor",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".constructor()"
     },
     {
@@ -3278,7 +3300,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_findone",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".findone()"
     },
     {
@@ -3289,7 +3311,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_upsert",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".upsert()"
     },
     {
@@ -3300,7 +3322,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_splitintoscenes",
       "community": 40,
-      "community_name": ".assertOwned",
+      "community_name": "ProjectsService",
       "norm_label": ".splitintoscenes()"
     },
     {
@@ -4235,7 +4257,7 @@
       "_origin": "ast",
       "id": "apps_web_src_app_page",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "app/page.tsx"
     },
     {
@@ -4246,7 +4268,7 @@
       "_origin": "ast",
       "id": "apps_web_src_app_page_librarypage",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "librarypage()"
     },
     {
@@ -4257,7 +4279,7 @@
       "_origin": "ast",
       "id": "apps_web_src_app_page_skeletongrid",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "skeletongrid()"
     },
     {
@@ -4289,7 +4311,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_layout",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "[id]/layout.tsx"
     },
@@ -4300,7 +4322,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_layout_projectlayout",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "projectlayout()"
     },
@@ -4421,8 +4443,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_floating_toolbar",
-      "community": 21,
-      "community_name": "cn",
+      "community": 38,
+      "community_name": "editor-store.tsx",
       "norm_label": "floating-toolbar.tsx"
     },
     {
@@ -4432,7 +4454,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_floating_toolbar_floatingtoolbarprops",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "floatingtoolbarprops"
     },
@@ -4443,8 +4465,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_floating_toolbar_floatingtoolbar",
-      "community": 21,
-      "community_name": "cn",
+      "community": 38,
+      "community_name": "editor-store.tsx",
       "norm_label": "floatingtoolbar()"
     },
     {
@@ -4462,7 +4484,7 @@
       "label": "InspectorPanelProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L26",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_inspectorpanelprops",
       "community": 13,
@@ -4473,7 +4495,7 @@
       "label": "GENERATE_TOOLS",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L34",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_generate_tools",
       "community": 13,
@@ -4484,18 +4506,18 @@
       "label": "OPEN_TOOLS",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L46",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_open_tools",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "open_tools"
     },
     {
       "label": "ACCEPT_FOR",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L48",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_accept_for",
       "community": 13,
@@ -4506,18 +4528,18 @@
       "label": "InspectorPanel()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L55",
+      "source_location": "L65",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_inspectorpanel",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "inspectorpanel()"
     },
     {
       "label": "EmptySelection()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L109",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_emptyselection",
       "community": 13,
@@ -4528,7 +4550,7 @@
       "label": "SceneTitle()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L119",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_scenetitle",
       "community": 13,
@@ -4539,7 +4561,7 @@
       "label": "SceneInspector()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L170",
+      "source_location": "L180",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_sceneinspector",
       "community": 13,
@@ -4550,7 +4572,7 @@
       "label": "SceneTextareaProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L351",
+      "source_location": "L375",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_scenetextareaprops",
       "community": 13,
@@ -4561,7 +4583,7 @@
       "label": "SceneTextarea()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L362",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_inspector_panel_scenetextarea",
       "community": 13,
@@ -4597,8 +4619,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_producing_view",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "producing-view.tsx"
     },
     {
@@ -4608,8 +4630,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_producing_view_producingviewprops",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "producingviewprops"
     },
     {
@@ -4619,9 +4641,31 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_producing_view_producingview",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "producingview()"
+    },
+    {
+      "label": "readiness-badge.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_components_editor_readiness_badge",
+      "community": 21,
+      "community_name": "cn",
+      "norm_label": "readiness-badge.tsx"
+    },
+    {
+      "label": "ReadinessBadge()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "community": 21,
+      "community_name": "cn",
+      "norm_label": "readinessbadge()"
     },
     {
       "label": "script-view.tsx",
@@ -4663,8 +4707,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_stage",
-      "community": 21,
-      "community_name": "cn",
+      "community": 20,
+      "community_name": "use-scene-field.ts",
       "norm_label": "stage.tsx"
     },
     {
@@ -4674,8 +4718,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_stage_stageprops",
-      "community": 21,
-      "community_name": "cn",
+      "community": 20,
+      "community_name": "use-scene-field.ts",
       "norm_label": "stageprops"
     },
     {
@@ -4686,7 +4730,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_editor_stage_stage",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "stage()"
     },
     {
@@ -4696,8 +4740,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_stage_promptfield",
-      "community": 21,
-      "community_name": "cn",
+      "community": 20,
+      "community_name": "use-scene-field.ts",
       "norm_label": "promptfield()"
     },
     {
@@ -4707,48 +4751,48 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_storyboard_list_view",
-      "community": 13,
-      "community_name": "inspector-panel.tsx",
+      "community": 21,
+      "community_name": "cn",
       "norm_label": "storyboard-list-view.tsx"
     },
     {
       "label": "StoryboardListViewProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_storyboard_list_view_storyboardlistviewprops",
-      "community": 13,
-      "community_name": "inspector-panel.tsx",
+      "community": 21,
+      "community_name": "cn",
       "norm_label": "storyboardlistviewprops"
     },
     {
       "label": "StoryboardListView()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "storyboardlistview()"
     },
     {
       "label": "SceneListItemProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L118",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_storyboard_list_view_scenelistitemprops",
-      "community": 13,
-      "community_name": "inspector-panel.tsx",
+      "community": 21,
+      "community_name": "cn",
       "norm_label": "scenelistitemprops"
     },
     {
       "label": "SceneListItem()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L126",
+      "source_location": "L127",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_storyboard_list_view_scenelistitem",
       "community": 13,
@@ -4770,7 +4814,7 @@
       "label": "TimelineProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_timelineprops",
       "community": 14,
@@ -4781,7 +4825,7 @@
       "label": "clampZoom()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_clampzoom",
       "community": 14,
@@ -4792,7 +4836,7 @@
       "label": "STATUS_TONE",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_status_tone",
       "community": 14,
@@ -4803,7 +4847,7 @@
       "label": "tickStep()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_tickstep",
       "community": 14,
@@ -4814,7 +4858,7 @@
       "label": "Timeline()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L51",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_timeline",
       "community": 14,
@@ -4873,7 +4917,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_empty_library",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "empty-library.tsx"
     },
     {
@@ -4884,7 +4928,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_empty_library_emptylibraryprops",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "emptylibraryprops"
     },
     {
@@ -4895,7 +4939,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_empty_library_emptylibrary",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "emptylibrary()"
     },
     {
@@ -4906,7 +4950,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_new_project_row",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "new-project-row.tsx"
     },
     {
@@ -4917,7 +4961,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_new_project_row_newprojectrowprops",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "newprojectrowprops"
     },
     {
@@ -4928,7 +4972,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_library_new_project_row_newprojectrow",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "newprojectrow()"
     },
     {
@@ -4938,8 +4982,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "project-card.tsx"
     },
     {
@@ -4949,8 +4993,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_projectcardprops",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "projectcardprops"
     },
     {
@@ -4960,8 +5004,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_projectcard",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "projectcard()"
     },
     {
@@ -4971,8 +5015,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_cover",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "cover()"
     },
     {
@@ -4982,8 +5026,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_hashtone",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "hashtone()"
     },
     {
@@ -5060,7 +5104,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "button.tsx"
     },
     {
@@ -5071,7 +5115,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_variant",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "variant"
     },
     {
@@ -5082,7 +5126,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_size",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "size"
     },
     {
@@ -5093,7 +5137,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_buttonprops",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "buttonprops"
     },
     {
@@ -5104,7 +5148,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_variants",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "variants"
     },
     {
@@ -5115,7 +5159,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_sizes",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "sizes"
     },
     {
@@ -5126,7 +5170,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_button_button",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "button"
     },
     {
@@ -5136,8 +5180,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "primitives.tsx"
     },
     {
@@ -5147,8 +5191,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_spring",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "spring"
     },
     {
@@ -5159,7 +5203,7 @@
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_rise",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "rise"
     },
     {
@@ -5169,8 +5213,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_staggerdelay",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "staggerdelay()"
     },
     {
@@ -5180,8 +5224,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_progressprops",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "progressprops"
     },
     {
@@ -5191,8 +5235,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_progress",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "progress()"
     },
     {
@@ -5202,8 +5246,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_statusdotprops",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "statusdotprops"
     },
     {
@@ -5213,8 +5257,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_dot_tone",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "dot_tone"
     },
     {
@@ -5224,8 +5268,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_statusdot",
-      "community": 14,
-      "community_name": "timeline.tsx",
+      "community": 13,
+      "community_name": "inspector-panel.tsx",
       "norm_label": "statusdot()"
     },
     {
@@ -5422,7 +5466,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "editor-store.tsx"
     },
@@ -5433,7 +5477,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorstep",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "editorstep"
     },
@@ -5455,7 +5499,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_theme",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "theme"
     },
@@ -5466,7 +5510,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_readstoredtheme",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "readstoredtheme()"
     },
@@ -5477,7 +5521,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorstate",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "editorstate"
     },
@@ -5488,7 +5532,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorcontext",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "editorcontext"
     },
@@ -5499,7 +5543,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorprovider",
-      "community": 20,
+      "community": 38,
       "community_name": "editor-store.tsx",
       "norm_label": "editorprovider()"
     },
@@ -5510,8 +5554,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_useeditor",
-      "community": 17,
-      "community_name": "editor-workspace.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "useeditor()"
     },
     {
@@ -5555,7 +5599,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_useprojects",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "useprojects()"
     },
     {
@@ -5577,7 +5621,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_usecreateproject",
       "community": 35,
-      "community_name": "button.tsx",
+      "community_name": "primitives.tsx",
       "norm_label": "usecreateproject()"
     },
     {
@@ -5665,7 +5709,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_scenekeys",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "scenekeys"
     },
     {
@@ -5713,10 +5757,21 @@
       "norm_label": "usesetactiveasset()"
     },
     {
-      "label": "useDeleteScene()",
+      "label": "useDuplicateScene()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
       "source_location": "L60",
+      "_origin": "ast",
+      "id": "apps_web_src_lib_queries_scenes_useduplicatescene",
+      "community": 13,
+      "community_name": "inspector-panel.tsx",
+      "norm_label": "useduplicatescene()"
+    },
+    {
+      "label": "useDeleteScene()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/queries/scenes.ts",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usedeletescene",
       "community": 13,
@@ -5727,18 +5782,18 @@
       "label": "useReorderScenes()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L68",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usereorderscenes",
-      "community": 13,
-      "community_name": "inspector-panel.tsx",
+      "community": 14,
+      "community_name": "timeline.tsx",
       "norm_label": "usereorderscenes()"
     },
     {
       "label": "useSplitIntoScenes()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L98",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usesplitintoscenes",
       "community": 17,
@@ -5749,7 +5804,7 @@
       "label": "useImportStoryboard()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L108",
+      "source_location": "L117",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_useimportstoryboard",
       "community": 17,
@@ -5760,7 +5815,7 @@
       "label": "useGenerateAsset()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L117",
+      "source_location": "L126",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usegenerateasset",
       "community": 13,
@@ -5771,7 +5826,7 @@
       "label": "useUploadAsset()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L126",
+      "source_location": "L135",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_useuploadasset",
       "community": 13,
@@ -5782,7 +5837,7 @@
       "label": "useDeleteAsset()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L146",
+      "source_location": "L155",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usedeleteasset",
       "community": 13,
@@ -5793,7 +5848,7 @@
       "label": "useAssetPolling()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L159",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_useassetpolling",
       "community": 13,
@@ -5804,7 +5859,7 @@
       "label": "invalidateProject()",
       "file_type": "code",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L183",
+      "source_location": "L192",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_invalidateproject",
       "community": 13,
@@ -5830,7 +5885,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_script_scriptkeys",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "scriptkeys"
     },
     {
@@ -5896,7 +5951,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "use-scene-field.ts"
     },
     {
@@ -5907,7 +5962,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_scenetextfield",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "scenetextfield"
     },
     {
@@ -5918,7 +5973,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_pendingwrite",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "pendingwrite"
     },
     {
@@ -5929,7 +5984,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_pendingwrites",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "pendingwrites"
     },
     {
@@ -5940,7 +5995,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_undostacks",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "undostacks"
     },
     {
@@ -5951,7 +6006,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_lastundopushat",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "lastundopushat"
     },
     {
@@ -5962,7 +6017,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_keyof",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "keyof()"
     },
     {
@@ -5973,7 +6028,7 @@
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_usescenefield",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "usescenefield()"
     },
     {
@@ -6005,8 +6060,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_lib_utils_formatrelativedate",
-      "community": 21,
-      "community_name": "cn",
+      "community": 35,
+      "community_name": "primitives.tsx",
       "norm_label": "formatrelativedate()"
     },
     {
@@ -6039,7 +6094,7 @@
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "editor-workspace.test.tsx"
     },
     {
@@ -6050,7 +6105,7 @@
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_scene",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "scene()"
     },
     {
@@ -6061,7 +6116,7 @@
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_script",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "script"
     },
     {
@@ -6072,7 +6127,7 @@
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_seed",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "seed()"
     },
     {
@@ -6083,7 +6138,7 @@
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_render",
       "community": 20,
-      "community_name": "editor-store.tsx",
+      "community_name": "use-scene-field.ts",
       "norm_label": "render()"
     },
     {
@@ -6962,8 +7017,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "asset.ts"
     },
     {
@@ -6973,8 +7028,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_createassetschema",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "createassetschema"
     },
     {
@@ -6984,8 +7039,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_createassetdto",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "createassetdto"
     },
     {
@@ -6995,8 +7050,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_assetschema",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 37,
+      "community_name": "scene.ts",
       "norm_label": "assetschema"
     },
     {
@@ -7006,8 +7061,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_asset",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 15,
+      "community_name": "storyboard.ts",
       "norm_label": "asset"
     },
     {
@@ -7017,8 +7072,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_asset_pending_statuses",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "asset_pending_statuses"
     },
     {
@@ -7028,8 +7083,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "packages_shared_types_src_asset_isassetpending",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "isassetpending()"
     },
     {
@@ -7050,8 +7105,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_shared_types_src_enums_projectstatus",
-      "community": 2,
-      "community_name": "enums.ts",
+      "community": 36,
+      "community_name": "project.ts",
       "norm_label": "projectstatus"
     },
     {
@@ -7061,8 +7116,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "packages_shared_types_src_enums_scenestatus",
-      "community": 2,
-      "community_name": "enums.ts",
+      "community": 37,
+      "community_name": "scene.ts",
       "norm_label": "scenestatus"
     },
     {
@@ -7083,8 +7138,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_shared_types_src_enums_assetstatus",
-      "community": 38,
-      "community_name": "asset.ts",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "assetstatus"
     },
     {
@@ -7171,8 +7226,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_shared_types_src_export_export_formats",
-      "community": 16,
-      "community_name": "ExportService",
+      "community": 2,
+      "community_name": "enums.ts",
       "norm_label": "export_formats"
     },
     {
@@ -7204,8 +7259,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "packages_shared_types_src_project_hasdefaulttitle",
-      "community": 15,
-      "community_name": "storyboard.ts",
+      "community": 36,
+      "community_name": "project.ts",
       "norm_label": "hasdefaulttitle()"
     },
     {
@@ -7468,8 +7523,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "packages_shared_types_src_scene_scene",
-      "community": 37,
-      "community_name": "scene.ts",
+      "community": 15,
+      "community_name": "storyboard.ts",
       "norm_label": "scene"
     },
     {
@@ -7484,10 +7539,32 @@
       "norm_label": "scenedurationsec()"
     },
     {
+      "label": "SCENE_ASSET_SLOTS",
+      "file_type": "code",
+      "source_file": "packages/shared-types/src/scene.ts",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "packages_shared_types_src_scene_scene_asset_slots",
+      "community": 37,
+      "community_name": "scene.ts",
+      "norm_label": "scene_asset_slots"
+    },
+    {
+      "label": "sceneReadiness()",
+      "file_type": "code",
+      "source_file": "packages/shared-types/src/scene.ts",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "packages_shared_types_src_scene_scenereadiness",
+      "community": 37,
+      "community_name": "scene.ts",
+      "norm_label": "scenereadiness()"
+    },
+    {
       "label": "SetActiveAssetSchema",
       "file_type": "code",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L81",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "packages_shared_types_src_scene_setactiveassetschema",
       "community": 37,
@@ -7498,7 +7575,7 @@
       "label": "SetActiveAssetDto",
       "file_type": "code",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L85",
+      "source_location": "L100",
       "_origin": "ast",
       "id": "packages_shared_types_src_scene_setactiveassetdto",
       "community": 37,
@@ -7509,7 +7586,7 @@
       "label": "activeAssetOf()",
       "file_type": "code",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L88",
+      "source_location": "L103",
       "_origin": "ast",
       "id": "packages_shared_types_src_scene_activeassetof",
       "community": 37,
@@ -7746,6 +7823,28 @@
       "community": 15,
       "community_name": "storyboard.ts",
       "norm_label": "helpers.test.ts"
+    },
+    {
+      "label": "asset()",
+      "file_type": "code",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "packages_shared_types_test_helpers_test_asset",
+      "community": 15,
+      "community_name": "storyboard.ts",
+      "norm_label": "asset()"
+    },
+    {
+      "label": "scene()",
+      "file_type": "code",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "packages_shared_types_test_helpers_test_scene",
+      "community": 15,
+      "community_name": "storyboard.ts",
+      "norm_label": "scene()"
     },
     {
       "label": "tsconfig.build.json",
@@ -12754,7 +12853,19 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L91",
+      "source_location": "L73",
+      "weight": 1.0,
+      "context": "decorator",
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
+      "target": "apps_api_src_common_user_id_decorator_userid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L96",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -12778,7 +12889,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L83",
+      "source_location": "L88",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -12790,7 +12901,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L74",
+      "source_location": "L79",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -14078,7 +14189,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L185",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_service_scenesservice_duplicate",
+      "target": "apps_api_src_prisma_prisma_service_prismaservice"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/api/src/scenes/scenes.service.ts",
+      "source_location": "L219",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
@@ -14090,7 +14213,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L148",
+      "source_location": "L182",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_reorder",
@@ -14877,7 +15000,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L233",
+      "source_location": "L267",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_assertsceneowned",
@@ -14913,7 +15036,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L174",
+      "source_location": "L208",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
@@ -14925,7 +15048,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L146",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_reorder",
@@ -14997,7 +15120,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L201",
+      "source_location": "L235",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
@@ -15603,7 +15726,19 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L91",
+      "source_location": "L73",
+      "weight": 1.0,
+      "context": "decorator",
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
+      "target": "apps_api_src_scenes_scenes_controller_ts_param",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L96",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15615,7 +15750,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L84",
+      "source_location": "L89",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15627,7 +15762,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L75",
+      "source_location": "L80",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15656,6 +15791,18 @@
       "context": "decorator",
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_projectscenescontroller_import",
+      "target": "apps_api_src_scenes_scenes_controller_ts_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "context": "decorator",
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
       "target": "apps_api_src_scenes_scenes_controller_ts_post",
       "confidence_score": 1.0
     },
@@ -15711,7 +15858,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L85",
+      "source_location": "L90",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15723,7 +15870,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L76",
+      "source_location": "L81",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15794,7 +15941,18 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L91",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_controller_scenescontroller",
+      "target": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller",
@@ -15816,7 +15974,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L82",
+      "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller",
@@ -15827,7 +15985,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L73",
+      "source_location": "L78",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller",
@@ -15850,7 +16008,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L81",
+      "source_location": "L86",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15862,7 +16020,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L72",
+      "source_location": "L77",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15874,7 +16032,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L90",
+      "source_location": "L95",
       "weight": 1.0,
       "context": "decorator",
       "_origin": "ast",
@@ -15912,7 +16070,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L78",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_controller_scenescontroller_duplicate",
+      "target": "apps_api_src_scenes_scenes_service_scenesservice_duplicate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/api/src/scenes/scenes.controller.ts",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller_update",
@@ -15924,7 +16094,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L87",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller_setactiveasset",
@@ -15936,7 +16106,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.controller.ts",
-      "source_location": "L92",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_controller_scenescontroller_remove",
@@ -15993,7 +16163,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L251",
+      "source_location": "L285",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service",
@@ -16026,7 +16196,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L211",
+      "source_location": "L245",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16037,7 +16207,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L227",
+      "source_location": "L261",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16070,6 +16240,17 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_service_scenesservice",
+      "target": "apps_api_src_scenes_scenes_service_scenesservice_duplicate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.service.ts",
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
@@ -16081,7 +16262,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L169",
+      "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16092,7 +16273,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L237",
+      "source_location": "L271",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16103,7 +16284,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L121",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16114,7 +16295,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L128",
+      "source_location": "L162",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice",
@@ -16172,7 +16353,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L220",
+      "source_location": "L138",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_service_scenesservice_duplicate",
+      "target": "apps_api_src_scenes_scenes_service_scenesservice_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.service.ts",
+      "source_location": "L254",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_applyimportedtitle",
@@ -16184,7 +16377,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L150",
+      "source_location": "L184",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_reorder",
@@ -16232,7 +16425,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L122",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_api_src_scenes_scenes_service_scenesservice_duplicate",
+      "target": "apps_api_src_scenes_scenes_service_scenesservice_assertsceneowned",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/scenes/scenes.service.ts",
+      "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_remove",
@@ -16244,7 +16449,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L176",
+      "source_location": "L210",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
@@ -16256,7 +16461,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L200",
+      "source_location": "L234",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_scenesservice_importstoryboard",
@@ -16269,7 +16474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/api/src/scenes/scenes.service.ts",
-      "source_location": "L262",
+      "source_location": "L296",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_api_src_scenes_scenes_service_parsestoryboard",
@@ -18408,7 +18613,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L48",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18419,7 +18624,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L109",
+      "source_location": "L119",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18430,7 +18635,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L34",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18441,7 +18646,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L55",
+      "source_location": "L65",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18452,7 +18657,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L26",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18463,7 +18668,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L46",
+      "source_location": "L56",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18474,7 +18679,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L170",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18485,7 +18690,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L362",
+      "source_location": "L386",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18496,7 +18701,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L351",
+      "source_location": "L375",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18507,7 +18712,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L119",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18519,7 +18724,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L14",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18531,7 +18736,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L14",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18543,7 +18748,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L11",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18555,7 +18760,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L11",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18567,7 +18772,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L12",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18579,7 +18784,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L12",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18591,7 +18796,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L13",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18603,7 +18808,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L13",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18615,7 +18820,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L13",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18627,7 +18832,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L13",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18639,7 +18844,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L13",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18651,7 +18856,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L23",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18663,7 +18868,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L22",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18675,7 +18880,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L23",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18687,7 +18892,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L15",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18699,7 +18904,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L15",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18711,7 +18916,19 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L15",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_inspector_panel",
+      "target": "apps_web_src_lib_queries_scenes_useduplicatescene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18723,7 +18940,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L15",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18735,7 +18952,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L15",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18747,7 +18964,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L21",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18759,7 +18976,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L21",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18771,7 +18988,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L24",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18783,7 +19000,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L24",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel",
@@ -18807,7 +19024,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L30",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_inspectorpanelprops",
@@ -18820,7 +19037,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L193",
+      "source_location": "L204",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18832,7 +19049,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L62",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_inspectorpanel",
@@ -18844,7 +19061,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L63",
+      "source_location": "L73",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_inspectorpanel",
@@ -18868,7 +19085,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L188",
+      "source_location": "L199",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18880,7 +19097,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L187",
+      "source_location": "L197",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18892,7 +19109,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L185",
+      "source_location": "L198",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
+      "target": "apps_web_src_lib_queries_scenes_useduplicatescene"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
+      "source_location": "L195",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18904,7 +19133,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L184",
+      "source_location": "L194",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18916,7 +19145,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L186",
+      "source_location": "L196",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18928,7 +19157,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L181",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18940,7 +19169,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L291",
+      "source_location": "L315",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_sceneinspector",
@@ -18952,7 +19181,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/inspector-panel.tsx",
-      "source_location": "L372",
+      "source_location": "L396",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_inspector_panel_scenetextarea",
@@ -19146,6 +19375,113 @@
       "_origin": "ast",
       "source": "apps_web_src_components_editor_producing_view_producingview",
       "target": "apps_web_src_lib_editor_store_useeditor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_readiness_badge",
+      "target": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_readiness_badge",
+      "target": "apps_web_src_lib_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_readiness_badge",
+      "target": "apps_web_src_lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_storyboard_list_view",
+      "target": "apps_web_src_components_editor_readiness_badge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_components_editor_readiness_badge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "target": "apps_web_src_lib_utils_cn"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/editor/readiness-badge.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "target": "packages_shared_types_src_scene_scene_asset_slots"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_storyboard_list_view",
+      "target": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_components_editor_readiness_badge_readinessbadge",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -19482,7 +19818,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L126",
+      "source_location": "L127",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19493,7 +19829,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19504,7 +19840,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19515,7 +19851,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19527,7 +19863,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19539,7 +19875,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19551,7 +19887,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19563,7 +19899,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19575,7 +19911,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19587,7 +19923,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19599,7 +19935,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19611,7 +19947,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19623,7 +19959,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19635,7 +19971,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19647,7 +19983,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19659,7 +19995,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19671,7 +20007,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19683,7 +20019,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19695,7 +20031,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
@@ -19707,36 +20043,12 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view",
       "target": "apps_web_src_lib_utils_cn",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L37",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
-      "target": "apps_web_src_lib_editor_store_useeditor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L39",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
-      "target": "apps_web_src_lib_queries_scenes_usecreatescene"
     },
     {
       "relation": "calls",
@@ -19748,7 +20060,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
-      "target": "apps_web_src_lib_queries_scenes_usereorderscenes"
+      "target": "apps_web_src_lib_editor_store_useeditor"
     },
     {
       "relation": "calls",
@@ -19760,6 +20072,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
+      "target": "apps_web_src_lib_queries_scenes_usecreatescene"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
+      "target": "apps_web_src_lib_queries_scenes_usereorderscenes"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
       "target": "apps_web_src_lib_queries_scenes_usesplitintoscenes"
     },
     {
@@ -19768,7 +20104,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L42",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_storyboardlistview",
@@ -19780,7 +20116,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L134",
+      "source_location": "L135",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_scenelistitem",
@@ -19792,7 +20128,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L133",
+      "source_location": "L134",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_scenelistitem",
@@ -19804,7 +20140,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/storyboard-list-view.tsx",
-      "source_location": "L150",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_storyboard_list_view_scenelistitem",
@@ -19814,7 +20150,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19825,7 +20161,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19836,7 +20172,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19847,7 +20183,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L51",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19858,7 +20194,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19870,7 +20206,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19882,7 +20218,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19894,7 +20230,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19906,7 +20242,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19918,7 +20254,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19930,7 +20266,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19942,7 +20278,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19954,7 +20290,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19966,7 +20302,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19978,7 +20314,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -19990,7 +20326,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -20002,7 +20338,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L98",
+      "source_location": "L99",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20014,7 +20350,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20027,7 +20363,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20039,7 +20375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L53",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20051,7 +20387,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L57",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20063,7 +20399,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L182",
+      "source_location": "L183",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -20075,7 +20411,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -21824,7 +22160,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L183",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21846,7 +22182,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L159",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21868,7 +22204,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L146",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21879,7 +22215,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L60",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21890,7 +22226,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L117",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_queries_scenes",
+      "target": "apps_web_src_lib_queries_scenes_useduplicatescene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/queries/scenes.ts",
+      "source_location": "L126",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21901,7 +22248,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L108",
+      "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21912,7 +22259,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L68",
+      "source_location": "L77",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21945,7 +22292,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L98",
+      "source_location": "L107",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -21967,7 +22314,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L126",
+      "source_location": "L135",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes",
@@ -22063,7 +22410,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L64",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_queries_scenes_useduplicatescene",
+      "target": "apps_web_src_lib_queries_scenes_invalidateproject",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/queries/scenes.ts",
+      "source_location": "L73",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_usedeletescene",
@@ -22075,7 +22434,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L94",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_usereorderscenes",
@@ -22087,7 +22446,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L103",
+      "source_location": "L112",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_usesplitintoscenes",
@@ -22099,7 +22458,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L113",
+      "source_location": "L122",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_useimportstoryboard",
@@ -22111,7 +22470,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L122",
+      "source_location": "L131",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_usegenerateasset",
@@ -22123,7 +22482,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L143",
+      "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_useuploadasset",
@@ -22135,7 +22494,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L151",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_usedeleteasset",
@@ -22147,7 +22506,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/queries/scenes.ts",
-      "source_location": "L171",
+      "source_location": "L180",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_lib_queries_scenes_useassetpolling",
@@ -23415,6 +23774,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_src_asset_asset",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -23431,7 +23802,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -23639,7 +24010,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -23756,7 +24127,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -23867,7 +24238,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -23944,7 +24315,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L88",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_src_scene",
@@ -24010,11 +24381,33 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/src/scene.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_src_scene",
+      "target": "packages_shared_types_src_scene_scene_asset_slots",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/src/scene.ts",
       "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_src_scene",
       "target": "packages_shared_types_src_scene_scenedurationsec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/src/scene.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_src_scene",
+      "target": "packages_shared_types_src_scene_scenereadiness",
       "confidence_score": 1.0
     },
     {
@@ -24032,7 +24425,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L85",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_src_scene",
@@ -24043,7 +24436,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/src/scene.ts",
-      "source_location": "L81",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_src_scene",
@@ -24121,6 +24514,18 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_src_scene_scene",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -24143,6 +24548,42 @@
       "_origin": "ast",
       "source": "packages_shared_types_src_scene_scenedurationsec",
       "target": "packages_shared_types_src_script_estimateseconds"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_src_scene_scenedurationsec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/src/scene.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_src_scene_scenereadiness",
+      "target": "packages_shared_types_src_scene_activeassetof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_src_scene_scenereadiness",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -24262,7 +24703,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -24298,7 +24739,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -24310,7 +24751,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -24443,7 +24884,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -24455,7 +24896,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
@@ -24467,11 +24908,33 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "packages/shared-types/test/helpers.test.ts",
-      "source_location": "L2",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_shared_types_test_helpers_test",
       "target": "packages_shared_types_src_storyboard_sceneseconds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_test_helpers_test_asset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared-types/test/helpers.test.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_shared_types_test_helpers_test",
+      "target": "packages_shared_types_test_helpers_test_scene",
       "confidence_score": 1.0
     },
     {
@@ -26467,5 +26930,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5ba8de84d16c782b4d7562cb8ded76c662ca5929"
+  "built_at_commit": "b76c7b1938077bc2dc01ca82d9d07590cc2376ec"
 }

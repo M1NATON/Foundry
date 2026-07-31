@@ -78,6 +78,21 @@ export const ACTIVE_ASSET_FIELD_BY_TYPE = {
   "activeFrameId" | "activeVideoId" | "activeVoiceId" | "activeMusicId"
 >;
 
+/** Слоты сцены в порядке пайплайна: кадр → клип → голос → музыка. */
+export const SCENE_ASSET_SLOTS = ["IMAGE", "VIDEO", "VOICE", "MUSIC"] as const;
+
+/**
+ * Готовность сцены: сколько слотов уже закрыто выбранным готовым ассетом.
+ * Считаются именно активные ассеты — просто «что-то сгенерировано» не значит,
+ * что этот вариант выбран для сборки.
+ */
+export function sceneReadiness(scene: Scene): { filled: number; total: number } {
+  const filled = SCENE_ASSET_SLOTS.filter(
+    (type) => activeAssetOf(scene, type)?.status === "READY",
+  ).length;
+  return { filled, total: SCENE_ASSET_SLOTS.length };
+}
+
 export const SetActiveAssetSchema = z.object({
   type: AssetType,
   assetId: z.string(),

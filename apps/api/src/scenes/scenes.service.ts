@@ -118,6 +118,40 @@ export class ScenesService {
     });
   }
 
+  /**
+   * Копия сцены сразу после оригинала. Ассеты не копируются: они привязаны
+   * к конкретной генерации, а дублируют сцену ради текста и промптов.
+   */
+  async duplicate(userId: string, sceneId: string) {
+    const { projectId } = await this.assertSceneOwned(userId, sceneId);
+
+    const source = await this.prisma.scene.findUnique({
+      where: { id: sceneId },
+    });
+    if (!source) throw new NotFoundException("Scene not found");
+
+    const [, copy] = await this.prisma.$transaction([
+      this.prisma.scene.updateMany({
+        where: { projectId, order: { gt: source.order } },
+        data: { order: { increment: 1 } },
+      }),
+      this.prisma.scene.create({
+        data: {
+          projectId,
+          order: source.order + 1,
+          title: `${source.title} copy`.slice(0, 200),
+          voiceText: source.voiceText,
+          imagePrompt: source.imagePrompt,
+          videoPrompt: source.videoPrompt,
+          durationSec: source.durationSec,
+        },
+        include: WITH_ASSETS,
+      }),
+    ]);
+
+    return copy;
+  }
+
   async remove(userId: string, sceneId: string) {
     await this.assertSceneOwned(userId, sceneId);
     await this.prisma.scene.delete({ where: { id: sceneId } });
