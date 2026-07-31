@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { FileText } from "lucide-react";
+import { Eye, EyeOff, FileText } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
 import {
   activeAssetOf,
@@ -33,6 +33,9 @@ export function Stage({
   onOpenScript,
 }: StageProps) {
   const voice = useSceneField(projectId, scene, "voiceText");
+  const imagePrompt = useSceneField(projectId, scene, "imagePrompt");
+  const videoPrompt = useSceneField(projectId, scene, "videoPrompt");
+  const [showPrompts, setShowPrompts] = useState(false);
   const activeVideo = scene && activeAssetOf(scene, "VIDEO");
   const activeFrame = scene && activeAssetOf(scene, "IMAGE");
   const keyArt =
@@ -79,6 +82,21 @@ export function Stage({
             </div>
 
             <div className="relative flex flex-1 items-center justify-center bg-bg">
+              <button
+                onClick={() => setShowPrompts((v) => !v)}
+                aria-pressed={showPrompts}
+                className="absolute right-3 top-3 z-10 flex items-center gap-1.5 rounded-md
+                           border border-border bg-surface/85 px-2.5 py-1.5 text-xs text-secondary
+                           shadow-subtle backdrop-blur transition-colors hover:text-primary"
+              >
+                {showPrompts ? (
+                  <EyeOff className="h-3 w-3" strokeWidth={1.75} />
+                ) : (
+                  <Eye className="h-3 w-3" strokeWidth={1.75} />
+                )}
+                {showPrompts ? "Hide prompts" : "Show prompts"}
+              </button>
+
               {keyArt?.url ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -109,6 +127,24 @@ export function Stage({
                   </div>
                 </div>
               )}
+
+              {/* Оверлей, а не сдвиг канваса: при закрытой панели превью
+                  не теряет ни пикселя высоты. */}
+              <AnimatePresence>
+                {showPrompts && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 12 }}
+                    transition={SPRING}
+                    className="absolute inset-x-0 bottom-0 space-y-3 border-t border-border
+                               bg-surface/90 p-4 backdrop-blur"
+                  >
+                    <PromptField label="Image prompt" field={imagePrompt} />
+                    <PromptField label="Video prompt" field={videoPrompt} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         ) : (
@@ -139,5 +175,34 @@ export function Stage({
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+/**
+ * Промпт прямо на канвасе — тот же useSceneField, что и в инспекторе,
+ * так что правка видна в обоих местах сразу и уходит на сервер один раз.
+ */
+function PromptField({
+  label,
+  field,
+}: {
+  label: string;
+  field: ReturnType<typeof useSceneField>;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-xs uppercase tracking-wide text-secondary">
+        {label}
+      </span>
+      <textarea
+        {...field.fieldProps}
+        rows={2}
+        spellCheck={false}
+        placeholder={`Describe the ${label.toLowerCase()}…`}
+        className="w-full resize-none rounded-md border border-border bg-surface px-3 py-2
+                   text-sm leading-relaxed outline-none transition-colors
+                   focus:border-secondary/40 placeholder:text-secondary/60"
+      />
+    </label>
   );
 }

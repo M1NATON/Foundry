@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785507775.850303,
-    "ast_hash": "52f8cc39f825b88042072d376607fdcc",
+    "mtime": 1785507979.9003673,
+    "ast_hash": "be7cdde57b66eb2fe5f232501a439e16",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {

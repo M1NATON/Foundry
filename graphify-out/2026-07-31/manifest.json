@@ -370,8 +370,8 @@
     "semantic_hash": "9876e6bcdc88770ec03fc8444035658a"
   },
   "apps/web/src/lib/queries/scenes.ts": {
-    "mtime": 1785432651.4190423,
-    "ast_hash": "d9ad893aa1c87754609ee9c3efa13e91",
+    "mtime": 1785507859.7960312,
+    "ast_hash": "be4ef1057c9a1a2aef6102ee51c9ed32",
     "semantic_hash": ""
   },
   "apps/web/src/lib/queries/script.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785506459.3943396,
-    "ast_hash": "6b921f1b5d48d08b5956a2eb3c205e89",
+    "mtime": 1785507831.6339583,
+    "ast_hash": "a2932faf1c6f6da0584851faf0ba62a4",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785432628.1744277,
-    "ast_hash": "641d5cb4c92cd0348d426b84732db7c0",
+    "mtime": 1785507775.850303,
+    "ast_hash": "52f8cc39f825b88042072d376607fdcc",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/editor-workspace.tsx": {
-    "mtime": 1785506904.7822974,
-    "ast_hash": "24cd58460e98a978fb668d0a09e36570",
+    "mtime": 1785507846.8952534,
+    "ast_hash": "9b64c452003f34749e17c3b6b05e4822",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/script-view.tsx": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/producing-view.tsx": {
-    "mtime": 1785506474.6752696,
-    "ast_hash": "8bbb09404f271e5256c5b8416489d426",
+    "mtime": 1785507846.8951328,
+    "ast_hash": "810b4d6c64e15ad2ed99b01780e8c07d",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/storyboard-list-view.tsx": {
@@ -587,6 +587,11 @@
   "apps/web/src/lib/use-drag-reorder.ts": {
     "mtime": 1785506236.5083616,
     "ast_hash": "1fcbd69cd06719d07827a58e8a8da86d",
+    "semantic_hash": ""
+  },
+  "apps/web/src/lib/use-scene-field.ts": {
+    "mtime": 1785507742.6504552,
+    "ast_hash": "bdafbb38a528804e52f0ae657767d012",
     "semantic_hash": ""
   }
 }
