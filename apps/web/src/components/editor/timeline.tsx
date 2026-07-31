@@ -10,6 +10,7 @@ import {
   sceneDurationSec,
 } from "@foundry/shared-types";
 import { Minus, Plus } from "lucide-react";
+import { PreviewPlayer } from "@/components/editor/preview-player";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
@@ -95,6 +96,10 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
   return (
     <section className="shrink-0 border-t border-border bg-surface">
       <div className="flex items-center gap-2 border-b border-border px-3 py-1.5">
+        <PreviewPlayer scenes={ordered} />
+
+        <span className="h-4 w-px bg-border" aria-hidden />
+
         <button
           onClick={() => setTimelineZoom((z) => clampZoom(z - ZOOM_STEP))}
           disabled={timelineZoom <= MIN_ZOOM}
