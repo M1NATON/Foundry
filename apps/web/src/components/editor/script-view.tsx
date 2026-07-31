@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import {
   buildStoryboardPrompt,
   countWords,
   estimateSeconds,
   formatDuration,
 } from "@foundry/shared-types";
+import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/clipboard";
+import { useEditor } from "@/lib/editor-store";
+import { useScenes, useSplitIntoScenes } from "@/lib/queries/scenes";
 import { useSaveScript, useScript } from "@/lib/queries/script";
 
 interface ScriptViewProps {
@@ -25,12 +29,16 @@ const COPIED_MS = 2000;
  */
 export function ScriptView({ projectId }: ScriptViewProps) {
   const { data: script } = useScript(projectId);
+  const { data: scenes } = useScenes(projectId);
   const saveScript = useSaveScript(projectId);
+  const split = useSplitIntoScenes(projectId);
+  const { setStep } = useEditor();
 
   const [content, setContent] = useState(script?.content ?? "");
   const [dirty, setDirty] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const [confirmSplit, setConfirmSplit] = useState(false);
   const loadedFor = useRef<string | null>(script ? projectId : null);
 
   useEffect(() => {
@@ -75,6 +83,31 @@ export function ScriptView({ projectId }: ScriptViewProps) {
 
   const words = countWords(content);
   const seconds = estimateSeconds(words);
+  const sceneCount = scenes?.length ?? 0;
+
+  /**
+   * Нарезка пересобирает раскадровку целиком, поэтому при существующих
+   * сценах первый клик только предупреждает. Несохранённый текст уходит
+   * на сервер до нарезки — иначе резать будут предыдущую версию.
+   */
+  async function splitIntoScenes() {
+    if (!content.trim()) return;
+    if (sceneCount > 0 && !confirmSplit) {
+      setConfirmSplit(true);
+      return;
+    }
+    setConfirmSplit(false);
+    try {
+      if (dirty) {
+        await saveScript.mutateAsync({ content });
+        setDirty(false);
+      }
+      await split.mutateAsync();
+      setStep("storyboard");
+    } catch {
+      // Текст сообщения показывает разметка ниже по split.isError.
+    }
+  }
 
   return (
     <section
@@ -106,7 +139,7 @@ export function ScriptView({ projectId }: ScriptViewProps) {
         />
 
         {content.trim() && (
-          <div className="mt-6 flex shrink-0 items-center gap-3">
+          <div className="mt-6 flex shrink-0 flex-wrap items-center gap-3">
             <button
               onClick={async () => {
                 const prompt = buildStoryboardPrompt(content);
@@ -123,6 +156,32 @@ export function ScriptView({ projectId }: ScriptViewProps) {
                 Could not copy — select and copy manually.
               </span>
             )}
+
+            <div className="ml-auto flex items-center gap-3">
+              {confirmSplit && (
+                <span className="text-xs text-accent">
+                  Replaces {sceneCount} scene{sceneCount === 1 ? "" : "s"} and
+                  their assets.
+                </span>
+              )}
+              {split.isError && !confirmSplit && (
+                <span className="text-xs text-accent">
+                  Could not split the script — try again.
+                </span>
+              )}
+              <Button
+                variant="primary"
+                onClick={splitIntoScenes}
+                disabled={split.isPending || saveScript.isPending}
+              >
+                {split.isPending
+                  ? "Splitting…"
+                  : confirmSplit
+                    ? "Split anyway"
+                    : "Split into scenes"}
+                <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
+              </Button>
+            </div>
           </div>
         )}
       </div>
