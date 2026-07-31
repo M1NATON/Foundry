@@ -19,7 +19,7 @@ import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import { DEFAULT_TIMELINE_ZOOM, useEditor } from "@/lib/editor-store";
 import { useReorderScenes } from "@/lib/queries/scenes";
-import { useDragReorder } from "@/lib/use-drag-reorder";
+import { mergeHandlers, useDragReorder } from "@/lib/use-drag-reorder";
 import { useSceneDrop } from "@/lib/use-scene-drop";
 import { cn } from "@/lib/utils";
 
@@ -78,14 +78,27 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
   const tickCount = Math.ceil(totalSec / step);
   const trackWidth = Math.max(totalSec * timelineZoom, MIN_SCENE_WIDTH_PX);
 
-  // Ctrl+колесо масштабирует таймлайн (px per second); обычный скролл остаётся горизонтальным.
+  // Ctrl+колесо масштабирует таймлайн (px per second), обычное колесо ведёт
+  // его вбок: прокручивать здесь вертикально нечего, а тянуть мышью тонкую
+  // полосу под дорожками — не работа с монтажом.
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     function handler(e: WheelEvent) {
-      if (!e.ctrlKey) return;
+      if (!el) return;
+
+      if (e.ctrlKey) {
+        e.preventDefault();
+        setTimelineZoom((z) => clampZoom(z + e.deltaY * -0.1));
+        return;
+      }
+
+      // Горизонтальный жест трекпада браузер отработает сам и точнее.
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (el.scrollWidth <= el.clientWidth) return;
+
       e.preventDefault();
-      setTimelineZoom((z) => clampZoom(z + e.deltaY * -0.1));
+      el.scrollLeft += e.deltaY;
     }
     el.addEventListener("wheel", handler, { passive: false });
     return () => el.removeEventListener("wheel", handler);
@@ -258,8 +271,9 @@ const SceneCard = forwardRef<HTMLDivElement, SceneCardProps>(function SceneCard(
       ref={ref}
       layout
       transition={SPRING}
-      {...dragProps}
-      {...drop.dropProps}
+      // Перестановка сцен и приём файла слушают одни и те же события —
+      // spread'ом подряд их класть нельзя, второй набор затрёт первый.
+      {...mergeHandlers(dragProps, drop.dropProps)}
       onClick={onSelect}
       className={cn(
         "group relative flex h-full shrink-0 cursor-grab flex-col overflow-hidden rounded-md border bg-surface text-left transition-all active:cursor-grabbing",

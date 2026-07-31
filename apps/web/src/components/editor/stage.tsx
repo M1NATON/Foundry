@@ -18,6 +18,7 @@ import { useProjectMusic } from "@/lib/queries/music";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { MediaPlayer } from "@/components/scenes/media-player";
 import { SPRING } from "@/components/ui/primitives";
+import { useAutoResize } from "@/lib/use-auto-resize";
 import { useSceneField } from "@/lib/use-scene-field";
 import { cn } from "@/lib/utils";
 
@@ -70,13 +71,9 @@ export function Stage({
 
   const voiceRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-resize textarea по контенту — без фиксированных rows.
-  useEffect(() => {
-    const el = voiceRef.current;
-    if (!el) return;
-    el.style.height = "auto";
-    el.style.height = `${el.scrollHeight}px`;
-  }, [scene?.id, scene?.voiceText]);
+  // Auto-resize по контенту — без фиксированных rows. Меряем показанное
+  // значение, а не scene.voiceText: у поля есть свой черновик ввода.
+  useAutoResize(voiceRef, voice.fieldProps.value);
 
   const scriptSeconds = script ? estimateSeconds(script.wordCount) : 0;
 

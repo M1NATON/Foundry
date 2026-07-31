@@ -9,6 +9,34 @@ export interface ReorderItem {
 }
 
 /**
+ * Складывает два набора drag-пропсов в один.
+ *
+ * Разложенные подряд через spread, они молча затирают одноимённые
+ * обработчики — второй набор побеждает, и первый перестаёт работать без
+ * единой ошибки. Так на карточке сцены пропала перестановка, когда рядом
+ * повесили приём файлов: оба слушают dragenter и dragover.
+ */
+export function mergeHandlers<
+  A extends Record<string, unknown>,
+  B extends Record<string, unknown>,
+>(a: A, b: B): A & B {
+  const merged: Record<string, unknown> = { ...a };
+
+  for (const [key, next] of Object.entries(b)) {
+    const previous = merged[key];
+    merged[key] =
+      typeof previous === "function" && typeof next === "function"
+        ? (...args: unknown[]) => {
+            (previous as (...rest: unknown[]) => void)(...args);
+            (next as (...rest: unknown[]) => void)(...args);
+          }
+        : next;
+  }
+
+  return merged as A & B;
+}
+
+/**
  * Перетаскивание сцен, общее для таймлайна и списка раскадровки.
  * Пока тащим — порядок держится локально, иначе карточка «прыгает» между
  * позицией курсора и ответом сервера. На drop уходит только реально
