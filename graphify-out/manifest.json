@@ -40,9 +40,9 @@
     "semantic_hash": "4cba92746341c277853275c8eaa1a798"
   },
   "apps/api/src/llm/llm.service.ts": {
-    "mtime": 1785160455.6906593,
-    "ast_hash": "6147cdc80ae031a09aaab0b74b131c54",
-    "semantic_hash": "6147cdc80ae031a09aaab0b74b131c54"
+    "mtime": 1785509581.8626149,
+    "ast_hash": "52a9d5f9a259802dfeaf8bab3f0353fd",
+    "semantic_hash": ""
   },
   "apps/api/src/main.ts": {
     "mtime": 1785169705.9460115,
@@ -310,18 +310,18 @@
     "semantic_hash": ""
   },
   "apps/api/src/scenes/scenes.controller.ts": {
-    "mtime": 1785508373.2755632,
-    "ast_hash": "50816b2466e32a46a85ee9635a5617cb",
+    "mtime": 1785509629.8465762,
+    "ast_hash": "a58c116f1bba72a3826b623929e7dfa6",
     "semantic_hash": ""
   },
   "apps/api/src/scenes/scenes.module.ts": {
-    "mtime": 1785143118.1317806,
-    "ast_hash": "e8cb0ba77aa5992a489e91ffdb527f0a",
-    "semantic_hash": "e8cb0ba77aa5992a489e91ffdb527f0a"
+    "mtime": 1785509629.8462753,
+    "ast_hash": "5593969eeff96c43f25f215bd8983c9a",
+    "semantic_hash": ""
   },
   "apps/api/src/scenes/scenes.service.ts": {
-    "mtime": 1785508358.951629,
-    "ast_hash": "0fbc493684071a04d7e53bad861f179d",
+    "mtime": 1785509629.8464744,
+    "ast_hash": "90b912b8662fe8e91fd734fbb277dc5a",
     "semantic_hash": ""
   },
   "apps/web/next-env.d.ts": {
@@ -370,8 +370,8 @@
     "semantic_hash": "9876e6bcdc88770ec03fc8444035658a"
   },
   "apps/web/src/lib/queries/scenes.ts": {
-    "mtime": 1785508382.1135228,
-    "ast_hash": "be404edec11242ff1190c16645de795a",
+    "mtime": 1785509654.8761797,
+    "ast_hash": "0ab9d3ae19e9aed2829036335afc430b",
     "semantic_hash": ""
   },
   "apps/web/src/lib/queries/script.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/inspector-panel.tsx": {
-    "mtime": 1785508413.0542567,
-    "ast_hash": "e8f708e4a113322dc190dd4d41c3f665",
+    "mtime": 1785509654.8763797,
+    "ast_hash": "8468d55ebc89ca4fd43d4fed792f43e2",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/left-rail.tsx": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "apps/api/test/llm.service.test.ts": {
-    "mtime": 1785258036.3800273,
-    "ast_hash": "672958cec99ee6df1c5762c14aebe6bf",
+    "mtime": 1785509681.6735632,
+    "ast_hash": "a53095ed83cf7a72a1c844d8a56e3d21",
     "semantic_hash": ""
   },
   "apps/web/test/utils.test.ts": {

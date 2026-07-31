@@ -37,3 +37,29 @@ describe("LlmService", () => {
     expect(fetch).toHaveBeenCalledOnce();
   });
 });
+
+describe("LlmService prompts", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("builds prompts from the first sentence when Gemini is not configured", async () => {
+    vi.stubEnv("GEMINI_API_KEY", "");
+
+    const prompts = await new LlmService().promptsFor(
+      "A trench opens below. The lights go out.",
+    );
+
+    expect(prompts.imagePrompt).toContain("A trench opens below");
+    expect(prompts.videoPrompt).not.toBe("");
+  });
+
+  it("returns empty prompts for a scene without voiceover", async () => {
+    vi.stubEnv("GEMINI_API_KEY", "");
+
+    expect(await new LlmService().promptsFor("   ")).toEqual({
+      imagePrompt: "",
+      videoPrompt: "",
+    });
+  });
+});

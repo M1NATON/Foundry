@@ -69,6 +69,11 @@ export class ScenesController {
     return this.scenes.reorder(userId, dto);
   }
 
+  @Post(":id/prompts")
+  regeneratePrompts(@UserId() userId: string, @Param("id") id: string) {
+    return this.scenes.regeneratePrompts(userId, id);
+  }
+
   @Post(":id/duplicate")
   duplicate(@UserId() userId: string, @Param("id") id: string) {
     return this.scenes.duplicate(userId, id);

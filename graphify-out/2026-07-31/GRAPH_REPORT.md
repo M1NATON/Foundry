@@ -1,16 +1,16 @@
 # Graph Report - Foundry-opus-5  (2026-07-31)
 
 ## Corpus Check
-- 113 files · ~91,220 words
+- 114 files · ~91,621 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 914 nodes · 1475 edges · 67 communities (56 shown, 11 thin omitted)
+- 921 nodes · 1488 edges · 67 communities (57 shown, 10 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `310d777d`
+- Built from commit: `b91d7091`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -34,7 +34,7 @@
 - ExportService
 - editor-workspace.tsx
 - shared-types/package.json
-- AssetsService
+- .upload
 - use-scene-field.ts
 - cn
 - compilerOptions
@@ -64,21 +64,21 @@
 - task_completion.md
 - tech_stack.md
 - web/core.md
-- upload.ts
+- ScriptsService
 - asset.ts
 - export.service.ts
 - tabs.tsx
 - src/script.ts
 - 5. Карта всех кнопок и элементов управления
 - 5.10. Инспектор выбранной сцены
-- 5.2. Верхняя панель редактора
+- preview-player.tsx
 - 5.4. Плавающая панель инструментов
-- AssetsQueue
+- AssetsService
 - 5.1. Библиотека проектов
 - 5.3. Левая панель редактора
 - 5.7. Диалог Import storyboard
 - 5.6. Панель Storyboard
-- PrismaModule
+- prisma.module.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 31 edges
@@ -86,9 +86,9 @@
 3. `ProjectsService` - 24 edges
 4. `PrismaService` - 20 edges
 5. `compilerOptions` - 20 edges
-6. `Foundry: полное описание проекта для нейросети` - 20 edges
-7. `ScenesService` - 18 edges
-8. `useEditor()` - 18 edges
+6. `useEditor()` - 20 edges
+7. `Foundry: полное описание проекта для нейросети` - 20 edges
+8. `ScenesService` - 18 edges
 9. `ExportService` - 16 edges
 10. `compilerOptions` - 16 edges
 
@@ -107,14 +107,14 @@
 ## Import Cycles
 - None detected.
 
-## Communities (67 total, 11 thin omitted)
+## Communities (67 total, 10 thin omitted)
 
 ### Community 0 - "UserId"
-Cohesion: 0.06
-Nodes (33): AuthedRequest, AuthGuard, Injectable, UserId, Injectable, ZodValidationPipe, ResearchController, Body (+25 more)
+Cohesion: 0.08
+Nodes (25): AuthedRequest, AuthGuard, Injectable, UserId, Injectable, ZodValidationPipe, ResearchController, Body (+17 more)
 
 ### Community 1 - "ProjectsController"
-Cohesion: 0.13
+Cohesion: 0.12
 Nodes (9): ProjectsController, Body, Controller, Delete, Get, Param, Patch, Post (+1 more)
 
 ### Community 2 - "enums.ts"
@@ -185,9 +185,9 @@ Nodes (13): EditorWorkspace(), EditorWorkspaceProps, ScriptView(), ScriptViewPro
 Cohesion: 0.10
 Nodes (19): dependencies, zod, devDependencies, typescript, exports, files, dist, typescript (+11 more)
 
-### Community 19 - "AssetsService"
-Cohesion: 0.12
-Nodes (14): AssetsController, SceneAssetsController, Body, Controller, Delete, Get, Param, Post (+6 more)
+### Community 19 - ".upload"
+Cohesion: 0.08
+Nodes (19): AppModule, Module, AssetsController, SceneAssetsController, Body, Controller, Delete, Get (+11 more)
 
 ### Community 20 - "use-scene-field.ts"
 Cohesion: 0.13
@@ -254,20 +254,20 @@ Cohesion: 0.29
 Nodes (5): Research, ResearchSchema, Source, UpsertResearchDto, UpsertResearchSchema
 
 ### Community 40 - ".assertOwned"
-Cohesion: 0.21
-Nodes (6): parseSources(), ResearchService, Injectable, ScriptsService, Injectable, SourceSchema
+Cohesion: 0.24
+Nodes (4): parseSources(), ResearchService, Injectable, SourceSchema
 
 ### Community 42 - "ProjectsService"
-Cohesion: 0.24
+Cohesion: 0.31
 Nodes (5): PrismaService, Injectable, ProjectsService, Injectable, WITH_ASSETS
 
 ### Community 43 - "Memory Maintenance"
 Cohesion: 0.33
 Nodes (5): Add/update threshold, Discovery Model, Maintenance Actions, Memory Maintenance, Style
 
-### Community 52 - "upload.ts"
-Cohesion: 0.20
-Nodes (7): AppModule, Module, ALLOWED, assertAllowedFile(), AUDIO_EXT, IMAGE_EXT, VIDEO_EXT
+### Community 52 - "ScriptsService"
+Cohesion: 0.14
+Nodes (10): ScriptsController, Body, Controller, Get, Param, Post, Put, UseGuards (+2 more)
 
 ### Community 53 - "asset.ts"
 Cohesion: 0.29
@@ -286,20 +286,24 @@ Cohesion: 0.33
 Nodes (5): formatDuration(), Script, ScriptSchema, UpsertScriptDto, UpsertScriptSchema
 
 ### Community 57 - "5. Карта всех кнопок и элементов управления"
-Cohesion: 0.22
-Nodes (9): 5.11. Экспорт, 5.5. Редактор сценария, 5.8. Таймлайн, 5.9. Центральный холст Stage, 5. Карта всех кнопок и элементов управления, `Copy storyboard prompt`, `Open script` / действие пустого Stage, Большое текстовое поле сценария (+1 more)
+Cohesion: 0.17
+Nodes (12): 5.11. Экспорт, 5.2. Верхняя панель редактора, 5.5. Редактор сценария, 5.8. Таймлайн, 5.9. Центральный холст Stage, 5. Карта всех кнопок и элементов управления, `Copy storyboard prompt`, `Export` (+4 more)
 
 ### Community 58 - "5.10. Инспектор выбранной сцены"
 Cohesion: 0.18
 Nodes (11): 5.10. Инспектор выбранной сцены, `Clip`, `Frame`, `Music`, `Voice`, Иконка корзины `Delete scene`, Карточка ассета, Поле `Image prompt` (+3 more)
 
-### Community 59 - "5.2. Верхняя панель редактора"
-Cohesion: 0.67
-Nodes (3): 5.2. Верхняя панель редактора, `Export`, `Library` / стрелка назад
+### Community 59 - "preview-player.tsx"
+Cohesion: 0.38
+Nodes (6): plan(), PlannedScene, PreviewPlayer(), PreviewPlayerProps, readyUrl(), startAudio()
 
 ### Community 60 - "5.4. Плавающая панель инструментов"
 Cohesion: 0.29
 Nodes (7): 5.4. Плавающая панель инструментов, `Clip`, `Frames`, `Music`, `Script`, `Storyboard`, `Voice`
+
+### Community 61 - "AssetsService"
+Cohesion: 0.27
+Nodes (4): AssetsQueue, Injectable, AssetsService, Injectable
 
 ### Community 62 - "5.1. Библиотека проектов"
 Cohesion: 0.33
@@ -317,29 +321,29 @@ Nodes (5): 5.7. Диалог Import storyboard, `Cancel`, `Copy prompt`, `Import
 Cohesion: 0.50
 Nodes (4): 5.6. Панель Storyboard, `Add scene`, `Import storyboard`, `Split from script`
 
-### Community 66 - "PrismaModule"
-Cohesion: 0.67
+### Community 66 - "prisma.module.ts"
+Cohesion: 0.50
 Nodes (3): PrismaModule, Module, Global
 
 ## Knowledge Gaps
-- **377 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+372 more)
+- **379 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `webpack` (+374 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AssetType` connect `AssetsService` to `enums.ts`, `scene.ts`, `asset.ts`?**
-  _High betweenness centrality (0.092) - this node is a cross-community bridge._
+- **Why does `AssetType` connect `.upload` to `enums.ts`, `scene.ts`, `asset.ts`?**
+  _High betweenness centrality (0.093) - this node is a cross-community bridge._
 - **Why does `sceneDurationSec()` connect `storyboard.ts` to `scene.ts`, `timeline.tsx`?**
-  _High betweenness centrality (0.089) - this node is a cross-community bridge._
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
 - **Why does `Timeline()` connect `timeline.tsx` to `cn`, `storyboard.ts`?**
-  _High betweenness centrality (0.088) - this node is a cross-community bridge._
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
 - **What connects `$schema`, `collection`, `sourceRoot` to the rest of the system?**
-  _377 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _379 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `UserId` be split into smaller, more focused modules?**
-  _Cohesion score 0.059076682316118935 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0777323202805377 - nodes in this community are weakly interconnected._
 - **Should `ProjectsController` be split into smaller, more focused modules?**
-  _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12105263157894737 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._

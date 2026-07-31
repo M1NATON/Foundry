@@ -57,6 +57,16 @@ export function useSetActiveAsset(projectId: string) {
   });
 }
 
+/** Пересборка промптов по текущей начитке сцены. */
+export function useRegeneratePrompts(projectId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (sceneId: string) =>
+      api.post<Scene>(`/scenes/${sceneId}/prompts`),
+    onSuccess: () => invalidateProject(qc, projectId),
+  });
+}
+
 export function useDuplicateScene(projectId: string) {
   const qc = useQueryClient();
   return useMutation({

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Copy,
   ImageIcon,
+  RefreshCw,
   Mic,
   Music,
   Trash2,
@@ -25,6 +26,7 @@ import {
   useDeleteScene,
   useDuplicateScene,
   useGenerateAsset,
+  useRegeneratePrompts,
   useUpdateScene,
   useUploadAsset,
 } from "@/lib/queries/scenes";
@@ -196,6 +198,7 @@ function SceneInspector({
   const upload = useUploadAsset(projectId);
   const deleteScene = useDeleteScene(projectId);
   const duplicateScene = useDuplicateScene(projectId);
+  const regeneratePrompts = useRegeneratePrompts(projectId);
   const { setSelectedSceneId } = useEditor();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploadType, setUploadType] = useState<AssetType>("IMAGE");
@@ -281,6 +284,24 @@ function SceneInspector({
         />
         <SceneTextarea label="Image prompt" rows={2} field={imagePrompt} />
         <SceneTextarea label="Video prompt" rows={2} field={videoPrompt} />
+
+        <div className="flex items-center gap-3">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => regeneratePrompts.mutate(scene.id)}
+            disabled={regeneratePrompts.isPending || !scene.voiceText.trim()}
+            title="Rewrite both prompts from the current voiceover"
+          >
+            <RefreshCw className="h-3.5 w-3.5" strokeWidth={1.75} />
+            {regeneratePrompts.isPending
+              ? "Rewriting…"
+              : "Prompts from voiceover"}
+          </Button>
+          {regeneratePrompts.isError && (
+            <span className="text-xs text-accent">Could not rewrite them.</span>
+          )}
+        </div>
 
         <Tabs value={mode} onValueChange={(v) => setMode(v as "generate" | "upload")}>
           <TabsList>

@@ -14,6 +14,21 @@ const SPLIT_PROMPT = [
   "Script:",
 ].join("\n");
 
+const PROMPTS_PROMPT = [
+  "You are a video production assistant. Read the narration of a single scene.",
+  "Return STRICTLY a JSON object (no markdown, no code fences, no prose) with exactly these fields:",
+  '"imagePrompt" (string, a cinematic still-image prompt for this scene),',
+  '"videoPrompt" (string, a short camera-motion prompt for this scene).',
+  "Narration:",
+].join("\n");
+
+const ScenePromptsSchema = z.object({
+  imagePrompt: z.string().default(""),
+  videoPrompt: z.string().default(""),
+});
+
+export type ScenePrompts = z.infer<typeof ScenePromptsSchema>;
+
 const LlmSceneSchema = z.object({
   title: z.string().trim().min(1),
   voiceText: z.string().default(""),
@@ -52,33 +67,10 @@ export class LlmService {
     if (!apiKey) return this.localSplit(scriptContent);
 
     try {
-      const response = await fetch(GEMINI_URL, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: `${SPLIT_PROMPT}\n${scriptContent}` }],
-            },
-          ],
-          generationConfig: { responseMimeType: "application/json" },
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Gemini responded with ${response.status}`);
-      }
-
-      const payload: unknown = await response.json();
-      const parsed = GeminiResponseSchema.parse(payload);
-      const text = parsed.candidates[0].content.parts
-        .map((part) => part.text)
-        .join("");
-
+      const text = await this.generate(
+        apiKey,
+        `${SPLIT_PROMPT}\n${scriptContent}`,
+      );
       return LlmScenesSchema.parse(JSON.parse(extractJson(text)));
     } catch (error) {
       this.logger.warn(
@@ -88,6 +80,51 @@ export class LlmService {
       );
       return this.localSplit(scriptContent);
     }
+  }
+
+  /**
+   * Промпты кадра и клипа по тексту сцены — когда начитку переписали,
+   * а промпты остались от прошлой версии. Как и split, работает без
+   * ключа Gemini: локальный фолбэк собирает их из первой фразы.
+   */
+  async promptsFor(voiceText: string): Promise<ScenePrompts> {
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey || !voiceText.trim()) return localPrompts(voiceText);
+
+    try {
+      const text = await this.generate(apiKey, `${PROMPTS_PROMPT}\n${voiceText}`);
+      return ScenePromptsSchema.parse(JSON.parse(extractJson(text)));
+    } catch (error) {
+      this.logger.warn(
+        `Gemini prompts failed, falling back to local prompts: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+      return localPrompts(voiceText);
+    }
+  }
+
+  /** Один вызов Gemini: ответ ожидается строго как JSON. */
+  private async generate(apiKey: string, prompt: string): Promise<string> {
+    const response = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-goog-api-key": apiKey,
+      },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json" },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Gemini responded with ${response.status}`);
+    }
+
+    const payload: unknown = await response.json();
+    const parsed = GeminiResponseSchema.parse(payload);
+    return parsed.candidates[0].content.parts.map((part) => part.text).join("");
   }
 
   /** Абзац = сцена. Полностью детерминировано, без сети. */
@@ -108,12 +145,20 @@ export class LlmService {
       return {
         title,
         voiceText: chunk,
-        imagePrompt: `Cinematic establishing shot: ${firstSentence(chunk)}. Muted natural palette, 35mm, shallow depth of field.`,
-        videoPrompt: "Slow push-in, 4s, subtle parallax.",
+        ...localPrompts(chunk),
         durationSec: estimateSeconds(countWords(chunk)),
       };
     });
   }
+}
+
+/** Детерминированные промпты по тексту сцены — без сети и без ключа. */
+function localPrompts(text: string): ScenePrompts {
+  if (!text.trim()) return { imagePrompt: "", videoPrompt: "" };
+  return {
+    imagePrompt: `Cinematic establishing shot: ${firstSentence(text)}. Muted natural palette, 35mm, shallow depth of field.`,
+    videoPrompt: "Slow push-in, 4s, subtle parallax.",
+  };
 }
 
 function firstSentence(text: string): string {

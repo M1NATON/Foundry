@@ -20,6 +20,7 @@ import {
   type StoryboardImport,
   type UpdateSceneDto,
 } from "@foundry/shared-types";
+import { LlmService } from "../llm/llm.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { ProjectsService } from "../projects/projects.service";
 
@@ -32,6 +33,7 @@ export class ScenesService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly projects: ProjectsService,
+    private readonly llm: LlmService,
   ) {}
 
   async findAll(userId: string, projectId: string) {
@@ -114,6 +116,34 @@ export class ScenesService {
     return this.prisma.scene.update({
       where: { id: sceneId },
       data: { [field]: dto.assetId },
+      include: WITH_ASSETS,
+    });
+  }
+
+  /**
+   * Пересобирает промпты по текущей начитке — для случая, когда текст
+   * сцены переписали, а промпты остались от прошлой версии.
+   */
+  async regeneratePrompts(userId: string, sceneId: string) {
+    await this.assertSceneOwned(userId, sceneId);
+
+    const scene = await this.prisma.scene.findUnique({
+      where: { id: sceneId },
+      select: { voiceText: true },
+    });
+    if (!scene) throw new NotFoundException("Scene not found");
+    if (!scene.voiceText.trim()) {
+      throw new BadRequestException("Scene has no voiceover to work from");
+    }
+
+    const prompts = await this.llm.promptsFor(scene.voiceText);
+
+    return this.prisma.scene.update({
+      where: { id: sceneId },
+      data: {
+        imagePrompt: prompts.imagePrompt,
+        videoPrompt: prompts.videoPrompt,
+      },
       include: WITH_ASSETS,
     });
   }
