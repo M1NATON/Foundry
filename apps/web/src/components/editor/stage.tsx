@@ -11,12 +11,12 @@ import {
   formatDuration,
 } from "@foundry/shared-types";
 import { SPRING } from "@/components/ui/primitives";
-import type { SceneFieldUpdater } from "@/lib/queries/scenes";
+import { useSceneField } from "@/lib/use-scene-field";
 
 interface StageProps {
+  projectId: string;
   scene: Scene | null;
   script: Script | null;
-  onUpdateSceneField: SceneFieldUpdater;
   onOpenScript: () => void;
 }
 
@@ -27,11 +27,12 @@ interface StageProps {
  * что и поле в инспекторе (общий React Query кеш, debounce).
  */
 export function Stage({
+  projectId,
   scene,
   script,
-  onUpdateSceneField,
   onOpenScript,
 }: StageProps) {
+  const voice = useSceneField(projectId, scene, "voiceText");
   const activeVideo = scene && activeAssetOf(scene, "VIDEO");
   const activeFrame = scene && activeAssetOf(scene, "IMAGE");
   const keyArt =
@@ -68,10 +69,7 @@ export function Stage({
               </p>
               <textarea
                 ref={voiceRef}
-                value={scene.voiceText}
-                onChange={(e) =>
-                  onUpdateSceneField(scene.id, "voiceText", e.target.value)
-                }
+                {...voice.fieldProps}
                 placeholder="Write the voiceover for this scene…"
                 spellCheck={false}
                 className="w-full resize-none overflow-hidden bg-transparent

@@ -18,7 +18,7 @@ import {
   useUpdateScene,
   useUploadAsset,
 } from "@/lib/queries/scenes";
-import type { SceneFieldUpdater } from "@/lib/queries/scenes";
+import { useSceneField } from "@/lib/use-scene-field";
 import type { EditorTool } from "@/lib/editor-store";
 import { useEditor } from "@/lib/editor-store";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,6 @@ interface InspectorPanelProps {
   scene: Scene | null;
   scenes: Scene[];
   tool: EditorTool;
-  onUpdateSceneField: SceneFieldUpdater;
   onClose: () => void;
 }
 
@@ -58,7 +57,6 @@ export function InspectorPanel({
   scene,
   scenes,
   tool,
-  onUpdateSceneField,
   onClose,
 }: InspectorPanelProps) {
   const open = OPEN_TOOLS.has(tool) || scene !== null;
@@ -97,7 +95,6 @@ export function InspectorPanel({
               projectId={projectId}
               scene={scene}
               tool={tool}
-              onUpdateSceneField={onUpdateSceneField}
               onClose={onClose}
             />
           ) : (
@@ -174,15 +171,16 @@ function SceneInspector({
   projectId,
   scene,
   tool,
-  onUpdateSceneField,
   onClose,
 }: {
   projectId: string;
   scene: Scene;
   tool: EditorTool;
-  onUpdateSceneField: SceneFieldUpdater;
   onClose: () => void;
 }) {
+  const voice = useSceneField(projectId, scene, "voiceText");
+  const imagePrompt = useSceneField(projectId, scene, "imagePrompt");
+  const videoPrompt = useSceneField(projectId, scene, "videoPrompt");
   const updateScene = useUpdateScene(projectId);
   const generate = useGenerateAsset(projectId);
   const upload = useUploadAsset(projectId);
@@ -251,38 +249,14 @@ function SceneInspector({
       </div>
 
       <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4">
-        <label className="block">
-          <span className="mb-1.5 block text-xs uppercase tracking-tight text-secondary">
-            Voiceover
-          </span>
-          <textarea
-            value={scene.voiceText}
-            onChange={(e) =>
-              onUpdateSceneField(scene.id, "voiceText", e.target.value)
-            }
-            rows={4}
-            spellCheck={false}
-            className={cn(
-              "w-full resize-none rounded-md border border-border bg-surface px-3 py-2",
-              "text-sm leading-relaxed outline-none transition-colors",
-              "focus:border-secondary/40 font-display tracking-tight",
-            )}
-          />
-        </label>
-        <Field
-          label="Image prompt"
-          value={scene.imagePrompt ?? ""}
-          onCommit={(imagePrompt) =>
-            updateScene.mutate({ id: scene.id, dto: { imagePrompt } })
-          }
+        <SceneTextarea
+          label="Voiceover"
+          rows={4}
+          serif
+          field={voice}
         />
-        <Field
-          label="Video prompt"
-          value={scene.videoPrompt ?? ""}
-          onCommit={(videoPrompt) =>
-            updateScene.mutate({ id: scene.id, dto: { videoPrompt } })
-          }
-        />
+        <SceneTextarea label="Image prompt" rows={2} field={imagePrompt} />
+        <SceneTextarea label="Video prompt" rows={2} field={videoPrompt} />
 
         <Tabs value={mode} onValueChange={(v) => setMode(v as "generate" | "upload")}>
           <TabsList>
@@ -374,35 +348,27 @@ function SceneInspector({
   );
 }
 
-interface FieldProps {
+interface SceneTextareaProps {
   label: string;
-  value: string;
+  rows: number;
   serif?: boolean;
-  onCommit: (value: string) => void;
+  field: ReturnType<typeof useSceneField>;
 }
 
-function Field({ label, value, serif, onCommit }: FieldProps) {
-  const [draft, setDraft] = useState(value);
-  const [focused, setFocused] = useState(false);
-
-  if (!focused && draft !== value) {
-    setDraft(value);
-  }
-
+/**
+ * Поле сцены с живым вводом: тот же useSceneField, что и на канвасе,
+ * поэтому набранное здесь сразу видно там (и наоборот).
+ */
+function SceneTextarea({ label, rows, serif, field }: SceneTextareaProps) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs uppercase tracking-tight text-secondary">
         {label}
       </span>
       <textarea
-        value={draft}
-        onFocus={() => setFocused(true)}
-        onBlur={() => {
-          setFocused(false);
-          if (draft !== value) onCommit(draft);
-        }}
-        onChange={(e) => setDraft(e.target.value)}
-        rows={serif ? 4 : 2}
+        {...field.fieldProps}
+        rows={rows}
+        spellCheck={false}
         className={cn(
           "w-full resize-none rounded-md border border-border bg-surface px-3 py-2",
           "text-sm leading-relaxed outline-none transition-colors",

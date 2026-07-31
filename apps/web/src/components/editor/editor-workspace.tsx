@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ImportStoryboardDialog } from "@/components/scenes/import-storyboard-dialog";
 import { useEditor } from "@/lib/editor-store";
-import { useScenes, useUpdateSceneField } from "@/lib/queries/scenes";
+import { useScenes } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
 import { FloatingToolbar } from "@/components/editor/floating-toolbar";
 import { ProducingView } from "@/components/editor/producing-view";
@@ -28,7 +28,6 @@ export function EditorWorkspace({
   const { step, setStep } = useEditor();
   const { data: scenes, isSuccess } = useScenes(projectId);
   const { data: script } = useScript(projectId);
-  const updateSceneField = useUpdateSceneField(projectId);
   const [importOpen, setImportOpen] = useState(false);
 
   // Пустой проект открывается на Script: раскадровку и продакшн не с чего
@@ -57,7 +56,6 @@ export function EditorWorkspace({
           projectId={projectId}
           scenes={scenes ?? []}
           script={script ?? null}
-          onUpdateSceneField={updateSceneField}
         />
       )}
 

@@ -5,13 +5,11 @@ import { InspectorPanel } from "@/components/editor/inspector-panel";
 import { Stage } from "@/components/editor/stage";
 import { Timeline } from "@/components/editor/timeline";
 import { useEditor } from "@/lib/editor-store";
-import type { SceneFieldUpdater } from "@/lib/queries/scenes";
 
 interface ProducingViewProps {
   projectId: string;
   scenes: Scene[];
   script: Script | null;
-  onUpdateSceneField: SceneFieldUpdater;
 }
 
 /**
@@ -23,7 +21,6 @@ export function ProducingView({
   projectId,
   scenes,
   script,
-  onUpdateSceneField,
 }: ProducingViewProps) {
   const { tool, setTool, setStep, selectedSceneId, setSelectedSceneId } =
     useEditor();
@@ -33,9 +30,9 @@ export function ProducingView({
     <>
       <div className="relative flex min-w-0 flex-1 flex-col">
         <Stage
+          projectId={projectId}
           scene={selectedScene}
           script={script}
-          onUpdateSceneField={onUpdateSceneField}
           onOpenScript={() => setStep("script")}
         />
 
@@ -47,7 +44,6 @@ export function ProducingView({
         scene={selectedScene}
         scenes={scenes}
         tool={tool}
-        onUpdateSceneField={onUpdateSceneField}
         onClose={() => {
           setTool(null);
           setSelectedSceneId(null);
