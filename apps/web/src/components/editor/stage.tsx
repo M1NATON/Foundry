@@ -13,6 +13,7 @@ import {
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { SPRING } from "@/components/ui/primitives";
 import { useSceneField } from "@/lib/use-scene-field";
+import { cn } from "@/lib/utils";
 
 interface StageProps {
   projectId: string;
@@ -37,11 +38,21 @@ export function Stage({
   const imagePrompt = useSceneField(projectId, scene, "imagePrompt");
   const videoPrompt = useSceneField(projectId, scene, "videoPrompt");
   const [showPrompts, setShowPrompts] = useState(false);
+
   const activeVideo = scene && activeAssetOf(scene, "VIDEO");
   const activeFrame = scene && activeAssetOf(scene, "IMAGE");
-  const keyArt =
-    (activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null) ??
-    (activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null);
+  const clip =
+    activeVideo?.status === "READY" && activeVideo.url ? activeVideo : null;
+  const frame =
+    activeFrame?.status === "READY" && activeFrame.url ? activeFrame : null;
+
+  // Что показывать, когда у сцены есть и кадр, и клип. По умолчанию клип —
+  // он ближе к финальному видео; выбор живёт до смены сцены.
+  const [preferred, setPreferred] = useState<"frame" | "clip" | null>(null);
+  useEffect(() => setPreferred(null), [scene?.id]);
+
+  const showFrame = preferred === "frame" || (preferred === null && !clip);
+  const keyArt = showFrame ? (frame ?? clip) : (clip ?? frame);
 
   const voiceRef = useRef<HTMLTextAreaElement>(null);
 
@@ -83,6 +94,36 @@ export function Stage({
             </div>
 
             <div className="relative flex min-w-0 flex-1 items-center justify-center bg-bg p-4">
+              {frame && clip && (
+                <div
+                  className="absolute left-3 top-3 z-10 flex items-center gap-0.5 rounded-md
+                             border border-border bg-surface/85 p-0.5 backdrop-blur"
+                  role="group"
+                  aria-label="Preview source"
+                >
+                  {(
+                    [
+                      ["frame", "Frame"],
+                      ["clip", "Clip"],
+                    ] as const
+                  ).map(([key, label]) => (
+                    <button
+                      key={key}
+                      onClick={() => setPreferred(key)}
+                      aria-pressed={showFrame === (key === "frame")}
+                      className={cn(
+                        "rounded-sm px-2.5 py-1 text-xs transition-colors",
+                        showFrame === (key === "frame")
+                          ? "bg-accent-soft text-accent"
+                          : "text-secondary hover:text-primary",
+                      )}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <button
                 onClick={() => setShowPrompts((v) => !v)}
                 aria-pressed={showPrompts}

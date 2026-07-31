@@ -57,6 +57,24 @@ const GENERATE_TOOLS: Array<{
 
 const OPEN_TOOLS = new Set<EditorTool>(["frames", "clip", "voice", "music"]);
 
+/**
+ * Ассеты сцены делятся на то, что видно, и то, что слышно: искать кадр
+ * среди звуковых дорожек (и наоборот) незачем.
+ */
+type AssetKind = "visual" | "audio";
+
+const ASSET_KINDS: Record<
+  AssetKind,
+  { label: string; types: readonly AssetType[] }
+> = {
+  visual: { label: "Visuals", types: ["IMAGE", "VIDEO"] },
+  audio: { label: "Audio", types: ["VOICE", "MUSIC"] },
+};
+
+function kindOfTool(tool: EditorTool): AssetKind {
+  return tool === "voice" || tool === "music" ? "audio" : "visual";
+}
+
 const ACCEPT_FOR: Record<AssetType, string> = {
   IMAGE: "image/*",
   VIDEO: "video/*",
@@ -207,13 +225,22 @@ function SceneInspector({
   const [mode, setMode] = useState<"generate" | "upload">("generate");
 
   const activeTool = GENERATE_TOOLS.find((t) => t.tool === tool);
-  const emptyGenerateTool = activeTool ?? GENERATE_TOOLS[0];
   const pendingGenerateType = generate.isPending
     ? generate.variables?.dto.type
     : undefined;
-  const relevantAssets = activeTool
-    ? scene.assets.filter((a) => a.type === activeTool.type)
-    : scene.assets;
+
+  // Фильтр списка ассетов. Инструмент из левого рельса задаёт стартовую
+  // группу, дальше её переключает сам пользователь.
+  const [kind, setKind] = useState<AssetKind>(kindOfTool(tool));
+  useEffect(() => setKind(kindOfTool(tool)), [tool]);
+
+  const relevantAssets = scene.assets.filter((a) =>
+    ASSET_KINDS[kind].types.includes(a.type),
+  );
+  const emptyGenerateTool =
+    activeTool && ASSET_KINDS[kind].types.includes(activeTool.type)
+      ? activeTool
+      : GENERATE_TOOLS.find((t) => t.type === ASSET_KINDS[kind].types[0])!;
 
   function pickFile(type: AssetType) {
     setUploadType(type);
@@ -350,9 +377,34 @@ function SceneInspector({
         </Tabs>
 
         <div>
-          <p className="mb-3 text-xs uppercase tracking-tight text-secondary">
-            Assets
-          </p>
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <p className="text-xs uppercase tracking-tight text-secondary">
+              Assets
+            </p>
+            <div className="flex items-center gap-0.5 rounded-sm border border-border p-0.5">
+              {(Object.keys(ASSET_KINDS) as AssetKind[]).map((key) => {
+                const count = scene.assets.filter((a) =>
+                  ASSET_KINDS[key].types.includes(a.type),
+                ).length;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setKind(key)}
+                    aria-pressed={kind === key}
+                    className={cn(
+                      "rounded-sm px-2 py-0.5 text-xs transition-colors",
+                      kind === key
+                        ? "bg-accent-soft text-accent"
+                        : "text-secondary hover:text-primary",
+                    )}
+                  >
+                    {ASSET_KINDS[key].label}
+                    <span className="ml-1.5 tabular-nums opacity-70">{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           {relevantAssets.length === 0 ? (
             <button
               onClick={() =>
