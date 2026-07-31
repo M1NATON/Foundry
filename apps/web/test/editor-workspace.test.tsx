@@ -55,7 +55,7 @@ function render(qc: QueryClient, step: EditorStep): string {
   return renderToStaticMarkup(
     <QueryClientProvider client={qc}>
       <EditorProvider initialStep={step} initialSelectedSceneId={SCENE_ID}>
-        <EditorWorkspace projectId={PROJECT_ID} onExport={() => {}} />
+        <EditorWorkspace projectId={PROJECT_ID} />
       </EditorProvider>
     </QueryClientProvider>,
   );
@@ -104,7 +104,7 @@ describe("EditorWorkspace", () => {
 
     expect(render(qc, "producing")).toContain("Original voiceover");
 
-    // Правка поля сцены — ровно то, что делает useUpdateSceneField:
+    // Правка поля сцены — ровно то, что делает useSceneField:
     // оптимистичная запись в кеш списка сцен.
     qc.setQueryData<Scene[]>(sceneKeys.list(PROJECT_ID), (old) =>
       old?.map((s) => ({ ...s, voiceText: "Edited on the canvas" })),

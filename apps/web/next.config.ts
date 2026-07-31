@@ -6,6 +6,11 @@ const API_ORIGIN =
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@foundry/shared-types"],
+  // `next build` затирает каталог, из которого раздаёт чанки запущенный
+  // `next dev`, и dev-сервер после этого падает на отсутствующих чанках.
+  // NEXT_DIST_DIR даёт проверочной сборке собственный каталог. Учти, что
+  // такая сборка переписывает ссылку в next-env.d.ts — её надо вернуть.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   images: {
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },

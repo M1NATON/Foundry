@@ -57,7 +57,7 @@ export function StoryboardListView({
       className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-bg"
       aria-label="Storyboard"
     >
-      <div className="mx-auto w-full max-w-2xl px-8 py-10 pb-32">
+      <div className="mx-auto w-full max-w-2xl px-8 py-10">
         <div className="mb-6 flex items-baseline justify-between">
           <h1 className="font-display text-2xl tracking-tight">Storyboard</h1>
           <p className="text-xs tabular-nums text-secondary">

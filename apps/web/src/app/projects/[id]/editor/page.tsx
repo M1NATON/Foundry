@@ -3,16 +3,20 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useProject } from "@/lib/queries/projects";
+import { useScenes } from "@/lib/queries/scenes";
 import { EditorChrome } from "@/components/editor/editor-chrome";
 import { EditorWorkspace } from "@/components/editor/editor-workspace";
 import { LeftRail } from "@/components/editor/left-rail";
+import { ImportStoryboardDialog } from "@/components/scenes/import-storyboard-dialog";
 import { ExportPanel } from "@/components/export/export-panel";
 
 export default function EditorPage() {
   const { id: projectId } = useParams<{ id: string }>();
   const router = useRouter();
   const { data: project, isLoading, isError } = useProject(projectId);
+  const { data: scenes } = useScenes(projectId);
   const [exportOpen, setExportOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
 
   if (isError) {
     return (
@@ -43,16 +47,21 @@ export default function EditorPage() {
       <EditorChrome
         title={project.title}
         status={project.status}
+        onImport={() => setImportOpen(true)}
         onExport={() => setExportOpen(true)}
       />
 
       <div className="flex min-h-0 flex-1">
         <LeftRail />
-        <EditorWorkspace
-          projectId={projectId}
-          onExport={() => setExportOpen(true)}
-        />
+        <EditorWorkspace projectId={projectId} />
       </div>
+
+      <ImportStoryboardDialog
+        projectId={projectId}
+        sceneCount={scenes?.length ?? 0}
+        open={importOpen}
+        onClose={() => setImportOpen(false)}
+      />
 
       <ExportPanel
         projectId={projectId}
