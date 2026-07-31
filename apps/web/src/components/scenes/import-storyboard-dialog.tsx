@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { buildStoryboardPrompt } from "@foundry/shared-types";
 import { ApiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { SPRING } from "@/components/ui/primitives";
+import { Dialog } from "@/components/ui/dialog";
 import { copyToClipboard } from "@/lib/clipboard";
 import { useImportStoryboard } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
@@ -52,15 +51,6 @@ export function ImportStoryboardDialog({
     return () => clearTimeout(timer);
   }, [copyError]);
 
-  useEffect(() => {
-    if (!open) return;
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
-
   async function copyPrompt() {
     if (!hasScript) return;
     const prompt = buildStoryboardPrompt(scriptContent);
@@ -84,97 +74,79 @@ export function ImportStoryboardDialog({
       : null;
 
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            onClick={onClose}
-            className="fixed inset-0 z-50 bg-primary/10"
-          />
-          <motion.div
-            role="dialog"
-            aria-label="Import storyboard"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={SPRING}
-            className="fixed left-1/2 top-1/2 z-50 w-[560px] -translate-x-1/2 -translate-y-1/2
-                       overflow-hidden rounded-xl border border-border bg-surface shadow-subtle"
+    <Dialog
+      id="import-storyboard"
+      open={open}
+      onClose={onClose}
+      ariaLabel="Import storyboard"
+      className="w-[560px]"
+      header={
+        <h2 className="font-display text-lg tracking-tight">
+          Import storyboard
+        </h2>
+      }
+    >
+      <div className="space-y-4 px-5 py-4">
+        <p className="text-xs text-secondary">
+          Copy the prompt, run it in any chat model, then paste the JSON answer
+          back here.
+        </p>
+
+        <div className="flex items-center gap-3">
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={copyPrompt}
+            disabled={!hasScript}
           >
-            <div className="border-b border-border px-5 py-4">
-              <h2 className="font-display text-lg tracking-tight">
-                Import storyboard
-              </h2>
-            </div>
+            {copied ? "Copied!" : "Copy prompt"}
+          </Button>
+          {!hasScript && (
+            <span className="text-xs text-secondary">
+              Write the script first — the prompt is built from it.
+            </span>
+          )}
+          {copyError && (
+            <span className="text-xs text-accent">
+              Could not copy — select and copy the prompt manually.
+            </span>
+          )}
+        </div>
 
-            <div className="space-y-4 px-5 py-4">
-              <p className="text-xs text-secondary">
-                Copy the prompt, run it in any chat model, then paste the JSON
-                answer back here.
-              </p>
-
-              <div className="flex items-center gap-3">
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={copyPrompt}
-                  disabled={!hasScript}
-                >
-                  {copied ? "Copied!" : "Copy prompt"}
-                </Button>
-                {!hasScript && (
-                  <span className="text-xs text-secondary">
-                    Write the script first — the prompt is built from it.
-                  </span>
-                )}
-                {copyError && (
-                  <span className="text-xs text-accent">
-                    Could not copy — select and copy the prompt manually.
-                  </span>
-                )}
-              </div>
-
-              <textarea
-                value={raw}
-                onChange={(e) => setRaw(e.target.value)}
-                placeholder="Paste the model's JSON answer here."
-                spellCheck={false}
-                className="min-h-[220px] w-full resize-none rounded-md border border-border
+        <textarea
+          value={raw}
+          onChange={(e) => setRaw(e.target.value)}
+          placeholder="Paste the model's JSON answer here."
+          spellCheck={false}
+          className="min-h-[220px] w-full resize-none rounded-md border border-border
                            bg-bg px-3 py-2.5 font-mono text-xs leading-relaxed outline-none
                            transition-colors focus:border-secondary/40
                            placeholder:text-secondary/45"
-              />
+        />
 
-              {sceneCount > 0 && (
-                <p className="text-xs text-accent">
-                  Importing replaces {sceneCount} existing scene
-                  {sceneCount === 1 ? "" : "s"} and their assets.
-                </p>
-              )}
+        {sceneCount > 0 && (
+          <p className="text-xs text-accent">
+            Importing replaces {sceneCount} existing scene
+            {sceneCount === 1 ? "" : "s"} and their assets.
+          </p>
+        )}
 
-              {error && <p className="text-xs text-accent">{error}</p>}
+        {error && <p className="text-xs text-accent">{error}</p>}
 
-              <div className="flex items-center justify-end gap-2">
-                <Button size="sm" variant="secondary" onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onClick={submit}
-                  disabled={!raw.trim() || importStoryboard.isPending}
-                >
-                  {importStoryboard.isPending ? "Importing…" : "Import scenes"}
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        <div className="flex items-center justify-end gap-2">
+          <Button size="sm" variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={submit}
+            disabled={!raw.trim() || importStoryboard.isPending}
+          >
+            {importStoryboard.isPending ? "Importing…" : "Import scenes"}
+          </Button>
+        </div>
+      </div>
+    </Dialog>
   );
 }
