@@ -1,12 +1,22 @@
+import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 import {
+  ACTIVE_ASSET_FIELD_BY_TYPE,
   EXPORT_FORMATS,
   countWords,
   estimateSeconds,
   formatDuration,
+  type AssetType,
   type ExportFormat,
 } from "@foundry/shared-types";
+import { UPLOAD_DIR } from "../assets/upload";
 import { ProjectsService } from "../projects/projects.service";
+import {
+  secondsToFrames,
+  toEdl,
+  toFcpxml,
+  type TimelineClip,
+} from "./timeline";
 
 type ProjectPayload = Awaited<ReturnType<ProjectsService["findOne"]>>;
 type ScenePayload = ProjectPayload["scenes"][number];
@@ -43,13 +53,55 @@ export class ExportService {
               ? this.toCsv(project)
               : format === "prompts"
                 ? this.toPrompts(project)
-                : this.toSrt(project);
+                : format === "fcpxml"
+                  ? toFcpxml(project.title, this.toClips(project))
+                  : format === "edl"
+                    ? toEdl(project.title, this.toClips(project))
+                    : this.toSrt(project);
 
     return {
       filename: `${this.slug(project.title)}.${spec.ext}`,
       mime: spec.mime,
       content,
     };
+  }
+
+  /**
+   * Сцены проекта в куски таймлайна. Монтажка ищет медиа на диске, поэтому
+   * в экспорт идут абсолютные пути к файлам в uploads; сгенерированные
+   * заглушки живут в data-URL и файлом не являются — их пропускаем.
+   */
+  private toClips(project: ProjectPayload): TimelineClip[] {
+    let cursor = 0;
+
+    return project.scenes.map((scene) => {
+      const durationFrames = secondsToFrames(this.sceneSeconds(scene));
+      const startFrames = cursor;
+      cursor += durationFrames;
+
+      return {
+        order: scene.order + 1,
+        name: scene.title,
+        startFrames,
+        durationFrames,
+        videoPath:
+          this.activeFilePath(scene, "VIDEO") ??
+          this.activeFilePath(scene, "IMAGE"),
+        audioPath: this.activeFilePath(scene, "VOICE"),
+      };
+    });
+  }
+
+  /** Путь к файлу активного ассета сцены заданного типа, если он на диске. */
+  private activeFilePath(scene: ScenePayload, type: AssetType): string | null {
+    const activeId = scene[ACTIVE_ASSET_FIELD_BY_TYPE[type]];
+    const asset = scene.assets.find((a) => a.id === activeId);
+    if (!asset || asset.status !== "READY" || !asset.url) return null;
+
+    const prefix = `/api/${UPLOAD_DIR}/`;
+    if (!asset.url.startsWith(prefix)) return null;
+
+    return join(process.cwd(), UPLOAD_DIR, asset.url.slice(prefix.length));
   }
 
   private toMarkdown(project: ProjectPayload): string {

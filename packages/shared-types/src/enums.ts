@@ -26,6 +26,8 @@ export const ExportFormat = z.enum([
   "csv",
   "srt",
   "prompts",
+  "fcpxml",
+  "edl",
 ]);
 export type ExportFormat = z.infer<typeof ExportFormat>;
 
