@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import type { Asset, Scene } from "../src";
 import {
   StoryboardImportSchema,
+  buildScriptFromTopicPrompt,
+  buildStoryboardPrompt,
   countWords,
   estimateSeconds,
   estimateSpeechSeconds,
@@ -16,6 +18,8 @@ import {
   sceneDurationSec,
   sceneReadiness,
   sceneSeconds,
+  scriptFromScenes,
+  storyboardPromptMode,
 } from "../src";
 
 function asset(id: string, type: Asset["type"], status: Asset["status"]): Asset {
@@ -154,6 +158,85 @@ describe("storyboard helpers", () => {
       imagePrompt: "",
       videoPrompt: "",
     });
+  });
+
+  it("picks the prompt mode from the script, not from a user toggle", () => {
+    expect(storyboardPromptMode("")).toBe("from-topic");
+    expect(storyboardPromptMode("   \n ")).toBe("from-topic");
+    expect(storyboardPromptMode("The ocean floor.")).toBe("from-script");
+  });
+
+  it("tells the model to split the script it was given", () => {
+    const prompt = buildStoryboardPrompt("The ocean floor is unmapped.");
+
+    expect(prompt).toContain("The ocean floor is unmapped.");
+    expect(prompt).toContain("word-for-word segment of the original script");
+    // Разбивке готового текста fullScript не нужен — он уже есть в проекте.
+    expect(prompt).not.toContain("fullScript");
+  });
+
+  it("holds both templates to one visual world and varied shots", () => {
+    for (const prompt of [
+      buildStoryboardPrompt("The ocean floor is unmapped."),
+      buildScriptFromTopicPrompt("Deep sea", null),
+    ]) {
+      expect(prompt).toContain("ONE consistent visual world");
+      expect(prompt).toContain("Vary shot type across scenes");
+      expect(prompt).toContain("one decimal place allowed");
+    }
+  });
+
+  it("tells the model to write the script when there is none", () => {
+    const prompt = buildScriptFromTopicPrompt("Deep sea", "For curious teens.");
+
+    expect(prompt).toContain("Deep sea");
+    expect(prompt).toContain("For curious teens.");
+    expect(prompt).toContain("Follow a clear narrative arc");
+    expect(prompt).toContain('"fullScript": "string"');
+    // Форма сцен совпадает с режимом разбивки — импорт разбирает обе одинаково.
+    expect(prompt).toContain('"voiceText": "string"');
+  });
+
+  it("pins a hard target length so the model does not write a summary", () => {
+    expect(buildScriptFromTopicPrompt("Deep sea", null, "short")).toContain(
+      "approximately 1-1.5 minutes",
+    );
+    expect(buildScriptFromTopicPrompt("Deep sea", null, "long")).toContain(
+      "approximately 5-6 minutes",
+    );
+    // По умолчанию — стандартная длина, а не выбор модели.
+    expect(buildScriptFromTopicPrompt("Deep sea", null)).toContain(
+      "approximately 2.5-3 minutes",
+    );
+  });
+
+  it("keeps the topic block clean when no brief was written", () => {
+    const prompt = buildScriptFromTopicPrompt("Deep sea", "   ");
+
+    expect(prompt).toContain("TOPIC\nDeep sea\n");
+  });
+
+  it("accepts a storyboard with fullScript and one without", () => {
+    const withScript = StoryboardImportSchema.parse({
+      fullScript: "Whole narration.",
+      scenes: [{ title: "Hook", voiceText: "Whole narration." }],
+    });
+    const without = StoryboardImportSchema.parse({
+      scenes: [{ title: "Hook", voiceText: "Whole narration." }],
+    });
+
+    expect(withScript.fullScript).toBe("Whole narration.");
+    expect(without.fullScript).toBe("");
+  });
+
+  it("rebuilds the script from the scenes the model returned", () => {
+    expect(
+      scriptFromScenes([
+        { voiceText: "First beat." },
+        { voiceText: "  " },
+        { voiceText: " Second beat. " },
+      ]),
+    ).toBe("First beat.\n\nSecond beat.");
   });
 
   it("enforces a minimum readable scene duration", () => {

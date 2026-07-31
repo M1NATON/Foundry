@@ -11,6 +11,9 @@ model Project {
   id        String        @id @default(cuid())
   userId    String
   title     String
+  // Пара фраз о замысле ролика. Нужны, когда сценария ещё нет: одного
+  // названия внешней модели мало, чтобы написать его с нуля.
+  brief     String?       @db.Text
   coverUrl  String?
   status    ProjectStatus @default(DRAFT)
   createdAt DateTime      @default(now())

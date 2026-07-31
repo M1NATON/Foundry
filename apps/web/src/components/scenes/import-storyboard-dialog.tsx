@@ -1,11 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { buildStoryboardPrompt } from "@foundry/shared-types";
+import {
+  DEFAULT_SCRIPT_LENGTH,
+  SCRIPT_LENGTH_PRESETS,
+  buildScriptFromTopicPrompt,
+  buildStoryboardPrompt,
+  hasDefaultTitle,
+  storyboardPromptMode,
+  type ScriptLengthKey,
+} from "@foundry/shared-types";
+import { cn } from "@/lib/utils";
 import { ApiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { copyToClipboard } from "@/lib/clipboard";
+import { useProject, useUpdateProject } from "@/lib/queries/projects";
 import { useImportStoryboard } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
 
@@ -29,14 +39,33 @@ export function ImportStoryboardDialog({
   onClose,
 }: ImportStoryboardDialogProps) {
   const { data: script } = useScript(projectId);
+  const { data: project } = useProject(projectId);
+  const updateProject = useUpdateProject(projectId);
   const importStoryboard = useImportStoryboard(projectId);
 
   const [raw, setRaw] = useState("");
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const [briefDraft, setBriefDraft] = useState<string | null>(null);
+  const [length, setLength] = useState<ScriptLengthKey>(DEFAULT_SCRIPT_LENGTH);
 
   const scriptContent = script?.content ?? "";
-  const hasScript = scriptContent.trim().length > 0;
+  // Режим — не выбор пользователя, а состояние проекта: как только в Script
+  // появился текст, разбивать надо именно его, а не сочинять новый.
+  const mode = storyboardPromptMode(scriptContent);
+
+  const topic = project?.title ?? "";
+  const brief = briefDraft ?? project?.brief ?? "";
+  const thinTopic = !topic.trim() || hasDefaultTitle(topic);
+
+  function saveBrief() {
+    if (briefDraft === null) return;
+    const trimmed = briefDraft.trim();
+    setBriefDraft(null);
+    if (trimmed !== (project?.brief ?? "").trim()) {
+      updateProject.mutate({ brief: trimmed || null });
+    }
+  }
 
   // Подпись «Copied» живёт 2 секунды — таймер гасим, чтобы не писать в размонтированный стейт.
   useEffect(() => {
@@ -52,8 +81,14 @@ export function ImportStoryboardDialog({
   }, [copyError]);
 
   async function copyPrompt() {
-    if (!hasScript) return;
-    const prompt = buildStoryboardPrompt(scriptContent);
+    // Бриф мог остаться неотправленным черновиком — в промпт он нужен сразу.
+    saveBrief();
+
+    const prompt =
+      mode === "from-script"
+        ? buildStoryboardPrompt(scriptContent)
+        : buildScriptFromTopicPrompt(topic, brief, length);
+
     const ok = await copyToClipboard(prompt);
     if (ok) setCopied(true);
     else setCopyError(true);
@@ -92,22 +127,76 @@ export function ImportStoryboardDialog({
           back here.
         </p>
 
+        {/* Тема нужна только когда сценарий пишется с нуля: при заполненном
+            Script модель обязана разбирать его, а не сочинять по брифу. */}
+        {mode === "from-topic" && (
+          <div className="space-y-2 rounded-md border border-border px-3 py-2.5">
+            <div className="flex items-baseline gap-2">
+              <p className="text-xs uppercase tracking-tight text-secondary">
+                Topic
+              </p>
+              <span className="min-w-0 flex-1 truncate text-xs text-primary">
+                {topic || "Untitled project"}
+              </span>
+            </div>
+            <textarea
+              value={brief}
+              onChange={(e) => setBriefDraft(e.target.value)}
+              onBlur={saveBrief}
+              rows={2}
+              maxLength={600}
+              placeholder="What the video is about, who it is for, the tone you want."
+              className="w-full resize-none rounded-sm border border-border bg-bg px-2.5 py-2
+                         text-xs leading-relaxed outline-none transition-colors
+                         focus:border-secondary/40 placeholder:text-secondary/60"
+            />
+            {thinTopic && !brief.trim() && (
+              <p className="text-xs text-secondary">
+                Name the project or add a couple of lines here — the model has
+                nothing else to build the script on.
+              </p>
+            )}
+
+            {/* Без явного таргета модель почти всегда пишет пересказ вместо
+                сценария, поэтому длину выбираем до копирования промпта. */}
+            <div className="flex items-center gap-2 pt-0.5">
+              <span className="text-xs text-secondary">Length</span>
+              <div className="flex items-center gap-0.5 rounded-sm border border-border p-0.5">
+                {SCRIPT_LENGTH_PRESETS.map((preset) => (
+                  <button
+                    key={preset.key}
+                    onClick={() => setLength(preset.key)}
+                    aria-pressed={length === preset.key}
+                    title={preset.hint}
+                    className={cn(
+                      "rounded-sm px-2 py-0.5 text-xs transition-colors",
+                      length === preset.key
+                        ? "bg-accent-soft text-accent"
+                        : "text-secondary hover:text-primary",
+                    )}
+                  >
+                    {preset.label}
+                    <span className="ml-1.5 tabular-nums opacity-70">
+                      {preset.hint}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center gap-3">
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={copyPrompt}
-            disabled={!hasScript}
-          >
+          <Button size="sm" variant="secondary" onClick={copyPrompt}>
             {copied ? "Copied!" : "Copy prompt"}
           </Button>
-          {!hasScript && (
-            <span className="text-xs text-secondary">
-              Write the script first — the prompt is built from it.
-            </span>
-          )}
+          <span className="min-w-0 flex-1 text-xs text-secondary">
+            {mode === "from-script"
+              ? "Splits the script you wrote — the model won't rewrite it."
+              : "Writes the script from the topic, then splits it into scenes."}
+          </span>
           {copyError && (
-            <span className="text-xs text-accent">
+            <span className="shrink-0 text-xs text-accent">
               Could not copy — select and copy the prompt manually.
             </span>
           )}

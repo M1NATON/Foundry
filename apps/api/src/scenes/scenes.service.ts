@@ -8,15 +8,19 @@ import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
   MIN_SCENE_SECONDS,
   StoryboardImportSchema,
+  countWords,
+  estimateSeconds,
   estimateSpeechSeconds,
   extractJson,
   hasDefaultTitle,
   sceneSeconds,
+  scriptFromScenes,
   type CreateSceneDto,
   type ImportStoryboardDto,
   type ReorderScenesDto,
   type SetActiveAssetDto,
   type StoryboardImport,
+  type StoryboardScene,
   type UpdateSceneDto,
 } from "@foundry/shared-types";
 import { join } from "node:path";
@@ -304,6 +308,7 @@ export class ScenesService {
     ]);
 
     await this.applyImportedTitle(projectId, storyboard.projectTitle);
+    await this.applyImportedScript(projectId, storyboard, ordered);
     await this.projects.advanceStatus(projectId, "STORYBOARDING");
 
     return this.prisma.scene.findMany({
@@ -326,6 +331,42 @@ export class ScenesService {
     await this.prisma.project.update({
       where: { id: projectId },
       data: { title },
+    });
+  }
+
+  /**
+   * Сценарий, написанный моделью с нуля, кладём в Script — иначе текст остался
+   * бы только внутри сцен и его нельзя было бы править целиком. Уже написанный
+   * скрипт не трогаем: в том режиме он и был источником для разбивки.
+   */
+  /**
+   * Сценарий, написанный моделью с нуля, кладём в Script — иначе текст остался
+   * бы только внутри сцен и его нельзя было бы править целиком. Уже написанный
+   * скрипт не трогаем: в том режиме он и был источником для разбивки.
+   */
+  private async applyImportedScript(
+    projectId: string,
+    storyboard: StoryboardImport,
+    scenes: StoryboardScene[],
+  ) {
+    const existing = await this.prisma.script.findUnique({
+      where: { projectId },
+      select: { content: true },
+    });
+    if (existing?.content.trim()) return;
+
+    // fullScript приходит от bootstrap-шаблона и сохраняет авторские абзацы;
+    // склейка сцен — запасной путь, если модель это поле опустила.
+    const content = storyboard.fullScript?.trim() || scriptFromScenes(scenes);
+    if (!content) return;
+
+    const wordCount = countWords(content);
+    const estSeconds = estimateSeconds(wordCount);
+
+    await this.prisma.script.upsert({
+      where: { projectId },
+      create: { projectId, content, wordCount, estSeconds },
+      update: { content, wordCount, estSeconds },
     });
   }
 

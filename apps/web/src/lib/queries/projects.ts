@@ -17,6 +17,7 @@ export interface ProjectDetail {
   id: string;
   userId: string;
   title: string;
+  brief: string | null;
   coverUrl: string | null;
   status: ProjectListItem["status"];
   createdAt: string;

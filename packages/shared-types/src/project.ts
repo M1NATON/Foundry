@@ -19,6 +19,8 @@ export type CreateProjectDto = z.infer<typeof CreateProjectSchema>;
 
 export const UpdateProjectSchema = z.object({
   title: z.string().trim().min(1).max(200).optional(),
+  /** Короткий бриф: о чём ролик, для кого и в каком тоне. */
+  brief: z.string().trim().max(600).nullable().optional(),
   coverUrl: z.string().url().nullable().optional(),
   status: ProjectStatus.optional(),
 });
@@ -28,6 +30,7 @@ export const ProjectSchema = z.object({
   id: z.string(),
   userId: z.string(),
   title: z.string(),
+  brief: z.string().nullable(),
   coverUrl: z.string().nullable(),
   status: ProjectStatus,
   createdAt: z.string(),

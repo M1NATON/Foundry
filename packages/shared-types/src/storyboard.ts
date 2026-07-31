@@ -36,7 +36,13 @@ export type StoryboardScene = z.infer<typeof StoryboardSceneSchema>;
 
 const StoryboardObjectSchema = z.object({
   projectTitle: z.string().trim().min(1).max(200).optional(),
-  totalDurationSec: z.number().int().nonnegative().optional(),
+  /**
+   * Цельный текст сценария. Его присылает только bootstrap-шаблон: при
+   * разбивке готового скрипта источник уже лежит в проекте. Поле опционально,
+   * поэтому оба ответа разбираются одним и тем же кодом.
+   */
+  fullScript: optionalText,
+  totalDurationSec: z.number().nonnegative().optional(),
   scenes: z.array(StoryboardSceneSchema).min(1),
 });
 
@@ -85,25 +91,83 @@ export function sceneSeconds(scene: StoryboardScene): number {
 }
 
 /**
- * Промпт для внешнего чата. Собирается из констант проекта, чтобы оценка
- * длительности здесь и в редакторе скрипта не разъезжались.
+ * Два режима промпта — не выбор пользователя, а состояние проекта: пока
+ * сценария нет, разбивать нечего и модель пишет его сама; как только текст
+ * появился, он становится источником правды и переписывать его нельзя.
+ */
+export type StoryboardPromptMode = "from-topic" | "from-script";
+
+export function storyboardPromptMode(script: string): StoryboardPromptMode {
+  return script.trim() ? "from-script" : "from-topic";
+}
+
+/**
+ * Целевая длина ролика. Без явной цифры модель почти всегда выбирает
+ * «покороче» и выдаёт пересказ вместо сценария, поэтому в bootstrap-шаблоне
+ * таргет задаётся жёстко, а не остаётся на её усмотрение.
+ */
+export const SCRIPT_LENGTH_PRESETS = [
+  { key: "short", label: "Short", hint: "1–1.5 min", target: "1-1.5 minutes" },
+  { key: "standard", label: "Standard", hint: "2.5–3 min", target: "2.5-3 minutes" },
+  { key: "long", label: "Long", hint: "5–6 min", target: "5-6 minutes" },
+] as const;
+
+export type ScriptLengthKey = (typeof SCRIPT_LENGTH_PRESETS)[number]["key"];
+
+export const DEFAULT_SCRIPT_LENGTH: ScriptLengthKey = "standard";
+
+export function scriptLengthTarget(key: ScriptLengthKey): string {
+  const preset = SCRIPT_LENGTH_PRESETS.find((p) => p.key === key);
+  return (preset ?? SCRIPT_LENGTH_PRESETS[1]).target;
+}
+
+/**
+ * Общие для обоих шаблонов требования к картинке. Держатся вместе, потому что
+ * расходиться им нельзя: сцены из разных режимов попадают в один ролик.
+ */
+const VISUAL_VARIETY = `- Vary shot type across scenes: mix wide establishing shots, medium shots, and close-ups/macro. Do not use "cinematic close-up" for every single scene.
+- imagePrompt: detailed visual description — composition, subject, mood, lighting, style, consistent with the chosen visual world. No text/logos in the prompt.
+- videoPrompt: same visual as imagePrompt but describe camera motion / subject motion for a short clip (push-in, pan, orbit, subject turns, particles drifting, etc). Vary the motion type across scenes — not every scene should be "slow push-in."`;
+
+/**
+ * Длительность просим оценивать по темпу речи, а не по жёсткой норме слов в
+ * секунду: на числах и терминах диктор притормаживает, и сцена, посчитанная
+ * «по словам», обрезает фразу на монтаже.
+ */
+const DURATION_RULES = `- Estimate duration from actual speaking pace, not a rigid word count: dense/informational sentences read slightly slower, short punchy phrases read faster. Add extra time for scenes with numbers, technical terms, or names, since these are read more carefully.
+- Minimum ${MIN_SCENE_SECONDS} seconds per scene.
+- durationSec: number, one decimal place allowed (e.g. 8.4).`;
+
+/**
+ * Шаблон A: текст уже написан — модель обязана разложить именно его.
+ * Сквозной визуальный мир задаётся до сцен: иначе каждая картинка сочиняется
+ * отдельно и получается набор случайных кадров, а не связный ролик.
  */
 export function buildStoryboardPrompt(script: string): string {
-  return `You are a professional YouTube video storyboard writer.
+  return `You are a professional YouTube video storyboard writer working in Russian-language content production.
 
 TASK
 Take the script below and split it into scenes for video production.
 Return ONLY valid JSON, no markdown code fences, no commentary before or after.
 
-RULES
-- Split narration into natural scene breaks — each scene should be one visual beat / one idea, not more than ~25 seconds of narration.
+VISUAL CONSISTENCY
+Before writing scene prompts, decide on ONE consistent visual world for this entire script (a single metaphor, setting, or art style — e.g. "deep ocean / bioluminescent tech" or "cyberpunk cityscape at night"). Every imagePrompt and videoPrompt must stay inside that same visual world. Do not switch styles between scenes.
+
+SCENE BREAKS
+- Split narration into natural scene breaks — each scene is one visual beat / one idea.
+- Do not make every scene the same length. Vary scene length based on content weight: a simple statement can be a short scene (5-8s), a complex or important idea deserves a longer scene (15-25s) so it isn't rushed.
 - voiceText must be an exact, word-for-word segment of the original script — do not paraphrase or summarize it. Every word of the input script must appear in exactly one scene's voiceText, in order.
-- imagePrompt: a detailed visual description for AI image generation matching this scene — describe composition, subject, mood, lighting, style. No text/logos in the prompt.
-- videoPrompt: same visual as imagePrompt but describe camera motion / subject motion for a short video clip (e.g. slow push-in, pan left, subject turns).
-- durationSec: estimate using ~${WORDS_PER_SECOND.toFixed(1)} words per second, rounded to nearest integer, minimum ${MIN_SCENE_SECONDS}.
+
+VISUAL VARIETY
+${VISUAL_VARIETY}
+
+DURATION
+${DURATION_RULES}
+
+STRUCTURE
 - order starts at 1 and increments per scene.
-- projectTitle: infer a short working title from the script content.
 - totalDurationSec: sum of all scene durations.
+- projectTitle: infer a short working title from the script content.
 
 OUTPUT FORMAT (exact shape, no extra fields, no missing fields):
 {
@@ -125,4 +189,92 @@ SCRIPT:
 """
 ${script.trim()}
 """`;
+}
+
+/**
+ * Шаблон B: сценария нет — модель пишет его по теме и сразу режет на сцены.
+ * Таргет по длительности обязателен: без него ответ съезжает в короткий
+ * пересказ. Готовый текст возвращается отдельным полем fullScript, чтобы
+ * дальше его можно было править целиком, а не только по кускам сцен.
+ */
+export function buildScriptFromTopicPrompt(
+  topic: string,
+  brief: string | null | undefined,
+  length: ScriptLengthKey = DEFAULT_SCRIPT_LENGTH,
+): string {
+  const trimmedBrief = brief?.trim();
+  const topicBlock = trimmedBrief
+    ? `${topic.trim()}\n\n${trimmedBrief}`
+    : topic.trim();
+
+  return `You are a professional YouTube scriptwriter and storyboard artist working in Russian-language content production.
+
+TASK
+Write a complete narration script on the topic below, then split it into scenes for video production.
+Return ONLY valid JSON, no markdown code fences, no commentary before or after.
+
+TOPIC
+${topicBlock}
+
+TARGET LENGTH
+Write a script that results in approximately ${scriptLengthTarget(length)} of narration at natural speaking pace. This is a hard target — do not write a short summary. Cover the topic with real depth: context, the core explanation, at least one concrete example or number, a complication or nuance, and a closing thought. A rushed, surface-level script that skips depth to save time is a failure condition.
+
+SCRIPT STRUCTURE
+Follow a clear narrative arc:
+1. Hook — an opening line that creates curiosity or tension, not a dry definition.
+2. Context — why this topic matters right now.
+3. Core explanation — the main substance, broken into clear steps or points.
+4. Concrete detail — at least one specific example, number, or case that makes it tangible.
+5. Complication or nuance — a limitation, risk, or open question (avoid a flat "everything is great" narrative).
+6. Closing thought — a takeaway or forward-looking line, not just a summary restatement.
+
+VISUAL CONSISTENCY
+Decide on ONE consistent visual world for the entire video (a single metaphor, setting, or art style) before writing scene prompts. Every imagePrompt and videoPrompt must stay inside that same visual world.
+
+SCENE BREAKS
+- Split the script into natural scene breaks — one visual beat / one idea per scene.
+- Vary scene length based on content weight — simple statements can be short (5-8s), complex or important ideas deserve more time (15-25s).
+
+VISUAL VARIETY
+${VISUAL_VARIETY}
+
+DURATION
+${DURATION_RULES}
+
+STRUCTURE
+- order starts at 1 and increments per scene.
+- totalDurationSec: sum of all scene durations — should land close to the target length above.
+- projectTitle: a short working title for the video.
+- fullScript: the complete narration text, as continuous prose (not split), so it can be saved and edited separately from the scene breakdown.
+
+OUTPUT FORMAT (exact shape, no extra fields, no missing fields):
+{
+  "projectTitle": "string",
+  "fullScript": "string",
+  "totalDurationSec": number,
+  "scenes": [
+    {
+      "order": number,
+      "title": "string",
+      "voiceText": "string",
+      "imagePrompt": "string",
+      "videoPrompt": "string",
+      "durationSec": number
+    }
+  ]
+}`;
+}
+
+/**
+ * Запасной путь к сценарию: если модель проигнорировала fullScript, текст
+ * собирается обратно из сцен. Хуже по разбивке на абзацы, но лучше, чем
+ * оставить проект вообще без редактируемого скрипта.
+ */
+export function scriptFromScenes(
+  scenes: Array<Pick<StoryboardScene, "voiceText">>,
+): string {
+  return scenes
+    .map((scene) => scene.voiceText.trim())
+    .filter(Boolean)
+    .join("\n\n");
 }

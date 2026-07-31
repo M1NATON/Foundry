@@ -62,6 +62,7 @@ export class ProjectsService {
       where: { id },
       data: {
         ...(dto.title !== undefined ? { title: dto.title } : {}),
+        ...(dto.brief !== undefined ? { brief: dto.brief } : {}),
         ...(dto.coverUrl !== undefined ? { coverUrl: dto.coverUrl } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
       },
