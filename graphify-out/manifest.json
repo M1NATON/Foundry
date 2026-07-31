@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785540556.72324,
-    "ast_hash": "f1ffa8133196f6594a0f6f873e01820b",
+    "mtime": 1785541078.5833516,
+    "ast_hash": "e82a29e117b9df7a240c2515c6829f53",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785540723.4459977,
-    "ast_hash": "3916715b37d6b975f49643d4e8e91db6",
+    "mtime": 1785541228.586234,
+    "ast_hash": "79c7ffdb1a02423842e2cab8a1a7c647",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -724,9 +724,14 @@
     "ast_hash": "fea0e1b10622602819820dc7c472ce71",
     "semantic_hash": ""
   },
-  "apps/web/src/lib/use-auto-resize.ts": {
-    "mtime": 1785540315.0040412,
-    "ast_hash": "42d922b9661a63156c99e4d69e2b5cb2",
+  "apps/web/src/components/ui/auto-grow-textarea.tsx": {
+    "mtime": 1785541039.1456456,
+    "ast_hash": "6f5cb7d1879a6a328b9f5e14e030917e",
+    "semantic_hash": ""
+  },
+  "apps/web/test/auto-grow-textarea.test.tsx": {
+    "mtime": 1785541284.960814,
+    "ast_hash": "ab071ad91b8131e8fbfc181ed67cb859",
     "semantic_hash": ""
   }
 }

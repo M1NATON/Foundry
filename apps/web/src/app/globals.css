@@ -47,22 +47,45 @@
     @apply tracking-tight;
   }
 
-  /* Тонкий скроллбар — не перебивает hairline-эстетику. */
+  /* Тонкий скроллбар — не перебивает hairline-эстетику. Цвета из токенов,
+     иначе в тёмной теме остаётся светлая полоса от светлой. */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #eae5dd transparent;
+    scrollbar-color: var(--border) transparent;
   }
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #eae5dd;
+    background: var(--border);
     border-radius: 9999px;
-    border: 3px solid #faf8f5;
+    border: 3px solid var(--surface);
   }
   ::-webkit-scrollbar-track {
     background: transparent;
+  }
+
+  /* Полоса таймлайна — единственная, по которой действительно возят мышью:
+     она держит место всегда и не сливается с дорожками. */
+  .scrollbar-track-visible {
+    scrollbar-gutter: stable;
+    scrollbar-color: color-mix(in srgb, var(--secondary) 45%, transparent)
+      var(--bg);
+  }
+  .scrollbar-track-visible::-webkit-scrollbar {
+    height: 12px;
+  }
+  .scrollbar-track-visible::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .scrollbar-track-visible::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--secondary) 45%, transparent);
+    border: 3px solid var(--bg);
+  }
+  .scrollbar-track-visible::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
   }
 
   :focus-visible {

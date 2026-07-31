@@ -158,7 +158,7 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
         </div>
       </div>
 
-      <div ref={scrollRef} className="overflow-x-auto">
+      <div ref={scrollRef} className="scrollbar-track-visible overflow-x-auto">
         <div className="relative h-7 border-b border-border" style={{ width: `${trackWidth}px` }}>
           {Array.from({ length: tickCount + 1 }).map((_, i) => {
             const sec = i * step;

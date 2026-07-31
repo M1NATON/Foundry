@@ -15,10 +15,10 @@ import {
   sceneDuration,
 } from "@foundry/shared-types";
 import { useProjectMusic } from "@/lib/queries/music";
+import { AutoGrowTextarea } from "@/components/ui/auto-grow-textarea";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { MediaPlayer } from "@/components/scenes/media-player";
 import { SPRING } from "@/components/ui/primitives";
-import { useAutoResize } from "@/lib/use-auto-resize";
 import { useSceneField } from "@/lib/use-scene-field";
 import { cn } from "@/lib/utils";
 
@@ -69,12 +69,6 @@ export function Stage({
     ? withUrl(musicForScene(scene, projectTrack))
     : null;
 
-  const voiceRef = useRef<HTMLTextAreaElement>(null);
-
-  // Auto-resize по контенту — без фиксированных rows. Меряем показанное
-  // значение, а не scene.voiceText: у поля есть свой черновик ввода.
-  useAutoResize(voiceRef, voice.fieldProps.value);
-
   const scriptSeconds = script ? estimateSeconds(script.wordCount) : 0;
 
   // Тот же источник истины, что в таймлайне и списке сцен: измеренный голос,
@@ -97,14 +91,13 @@ export function Stage({
               <p className="mb-2 text-xs uppercase tracking-wide text-secondary">
                 Voiceover
               </p>
-              <textarea
-                ref={voiceRef}
+              <AutoGrowTextarea
                 {...voice.fieldProps}
                 placeholder="Write the voiceover for this scene…"
                 spellCheck={false}
-                className="w-full resize-none overflow-hidden bg-transparent
-                           font-display text-lg leading-relaxed tracking-tight
-                           outline-none placeholder:text-secondary/70"
+                className="w-full bg-transparent font-display text-lg
+                           leading-relaxed tracking-tight outline-none
+                           placeholder:text-secondary/70"
               />
 
               {/* Звук сцены слушается рядом с её текстом — раньше ради

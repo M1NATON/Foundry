@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/stage.tsx": {
-    "mtime": 1785528273.502224,
-    "ast_hash": "b63ef207bb9a392d14c7f1a29015ced0",
+    "mtime": 1785540556.72324,
+    "ast_hash": "f1ffa8133196f6594a0f6f873e01820b",
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785528197.13595,
-    "ast_hash": "156e8c0c25c537b60324ca8ff20cbfbc",
+    "mtime": 1785540723.4459977,
+    "ast_hash": "3916715b37d6b975f49643d4e8e91db6",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "apps/web/test/utils.test.ts": {
-    "mtime": 1785258133.2024727,
-    "ast_hash": "5f85056af93fd5ddda0e9bb8c81c03ef",
+    "mtime": 1785540765.261686,
+    "ast_hash": "5756d6bd752980b4a6fa6254515999c0",
     "semantic_hash": ""
   },
   "packages/shared-types/test/helpers.test.ts": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/use-drag-reorder.ts": {
-    "mtime": 1785506236.5083616,
-    "ast_hash": "1fcbd69cd06719d07827a58e8a8da86d",
+    "mtime": 1785540679.5383248,
+    "ast_hash": "491cf2d7e0a54cdb1ea6268c8d2e1b90",
     "semantic_hash": ""
   },
   "apps/web/src/lib/use-scene-field.ts": {
@@ -722,6 +722,11 @@
   "apps/api/prisma/migrations/20260731215717_project_brief/migration.sql": {
     "mtime": 1785535037.8352325,
     "ast_hash": "fea0e1b10622602819820dc7c472ce71",
+    "semantic_hash": ""
+  },
+  "apps/web/src/lib/use-auto-resize.ts": {
+    "mtime": 1785540315.0040412,
+    "ast_hash": "42d922b9661a63156c99e4d69e2b5cb2",
     "semantic_hash": ""
   }
 }
