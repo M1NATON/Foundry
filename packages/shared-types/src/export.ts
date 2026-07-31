@@ -18,4 +18,5 @@ export const EXPORT_FORMATS: Array<{
   { format: "json", label: "JSON", hint: "Full project payload", ext: "json", mime: "application/json" },
   { format: "csv", label: "CSV", hint: "Scene table for spreadsheets", ext: "csv", mime: "text/csv" },
   { format: "srt", label: "SRT", hint: "Subtitles timed per scene", ext: "srt", mime: "application/x-subrip" },
+  { format: "prompts", label: "Prompts", hint: "Image + video prompts per scene", ext: "txt", mime: "text/plain" },
 ];

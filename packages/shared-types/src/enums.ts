@@ -19,7 +19,14 @@ export type AssetType = z.infer<typeof AssetType>;
 export const AssetStatus = z.enum(["QUEUED", "GENERATING", "READY", "FAILED"]);
 export type AssetStatus = z.infer<typeof AssetStatus>;
 
-export const ExportFormat = z.enum(["md", "txt", "json", "csv", "srt"]);
+export const ExportFormat = z.enum([
+  "md",
+  "txt",
+  "json",
+  "csv",
+  "srt",
+  "prompts",
+]);
 export type ExportFormat = z.infer<typeof ExportFormat>;
 
 /** Порядок этапов пайплайна — используется для прогресс-бара в Project Library. */

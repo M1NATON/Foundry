@@ -41,7 +41,9 @@ export class ExportService {
             ? JSON.stringify(project, null, 2)
             : format === "csv"
               ? this.toCsv(project)
-              : this.toSrt(project);
+              : format === "prompts"
+                ? this.toPrompts(project)
+                : this.toSrt(project);
 
     return {
       filename: `${this.slug(project.title)}.${spec.ext}`,
@@ -94,6 +96,24 @@ export class ExportService {
   private toText(project: ProjectPayload): string {
     if (project.scenes.length === 0) return project.script?.content ?? "";
     return project.scenes.map((s) => s.voiceText).join("\n\n");
+  }
+
+  /**
+   * Только промпты, по сцене на блок — чтобы прогнать их пачкой во внешнем
+   * генераторе. Сцена без обоих промптов попадает в файл с пометкой, иначе
+   * нумерация блоков разъедется с нумерацией сцен.
+   */
+  private toPrompts(project: ProjectPayload): string {
+    return project.scenes
+      .map((scene) =>
+        [
+          `# ${scene.order + 1}. ${scene.title}`,
+          `IMAGE: ${scene.imagePrompt?.trim() || "(none)"}`,
+          `VIDEO: ${scene.videoPrompt?.trim() || "(none)"}`,
+          "",
+        ].join("\n"),
+      )
+      .join("\n");
   }
 
   private toCsv(project: ProjectPayload): string {
