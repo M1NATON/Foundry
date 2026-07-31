@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Check, Mic, Music, Trash2 } from "lucide-react";
 import type { Asset } from "@foundry/shared-types";
-import { isAssetPending } from "@foundry/shared-types";
+import { assetDurationDrift, isAssetPending } from "@foundry/shared-types";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { SPRING, StatusDot } from "@/components/ui/primitives";
 import {
@@ -18,6 +18,8 @@ interface AssetPreviewProps {
   projectId: string;
   sceneId: string;
   isActive: boolean;
+  /** Длительность сцены, с которой сверяется длина файла. */
+  sceneDurationSec: number;
 }
 
 /**
@@ -31,6 +33,7 @@ export function AssetPreview({
   projectId,
   sceneId,
   isActive,
+  sceneDurationSec,
 }: AssetPreviewProps) {
   const pending = isAssetPending(asset.status);
   const { data: polled } = useAssetPolling(projectId, asset.id, pending);
@@ -43,6 +46,7 @@ export function AssetPreview({
   const selectable = current.status === "READY" && !isActive;
   const isAudio = current.type === "VOICE" || current.type === "MUSIC";
   const AudioIcon = current.type === "MUSIC" ? Music : Mic;
+  const drift = assetDurationDrift(current, sceneDurationSec);
 
   return (
     <motion.figure
@@ -102,6 +106,8 @@ export function AssetPreview({
             <Check className="h-3 w-3 text-bg" strokeWidth={2} />
           </div>
         )}
+
+        {drift !== null && !isAudio && <DriftBadge drift={drift} floating />}
       </div>
 
       <figcaption className="flex items-center gap-2 border-t border-border bg-surface px-3 py-2">
@@ -119,6 +125,7 @@ export function AssetPreview({
         {isActive && isAudio && (
           <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2} />
         )}
+        {drift !== null && isAudio && <DriftBadge drift={drift} />}
         <span className="text-xs text-secondary">
           {failed
             ? (current.errorMsg ?? "Failed")
@@ -160,5 +167,34 @@ export function AssetPreview({
         </button>
       </figcaption>
     </motion.figure>
+  );
+}
+
+/**
+ * Насколько файл не совпал по длине со сценой. Foundry ничего не подрезает
+ * и не перегенерирует — синхронизация всё равно руками в монтаже, поэтому
+ * задача бейджа только одна: не дать расхождению доехать до сборки незамеченным.
+ */
+function DriftBadge({
+  drift,
+  floating,
+}: {
+  drift: number;
+  floating?: boolean;
+}) {
+  const label = `${drift > 0 ? "+" : "−"}${Math.abs(drift).toFixed(1)}s ${
+    drift > 0 ? "longer" : "shorter"
+  }`;
+
+  return (
+    <span
+      title={`This file is ${label.toLowerCase()} than the scene`}
+      className={cn(
+        "rounded-sm bg-accent-soft px-1.5 py-0.5 text-xs tabular-nums text-accent",
+        floating && "absolute left-2 top-2 backdrop-blur-[2px]",
+      )}
+    >
+      {label}
+    </span>
   );
 }

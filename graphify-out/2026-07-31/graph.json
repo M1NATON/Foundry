@@ -747,8 +747,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_projectassetscontroller",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "projectassetscontroller"
     },
     {
@@ -758,8 +758,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_controller",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "controller"
     },
     {
@@ -769,8 +769,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_useguards",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "useguards"
     },
     {
@@ -780,8 +780,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_post",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "post"
     },
     {
@@ -791,8 +791,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_param",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "param"
     },
     {
@@ -802,8 +802,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_body",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "body"
     },
     {
@@ -813,8 +813,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_projectassetscontroller_constructor",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".constructor()"
     },
     {
@@ -824,8 +824,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_projectassetscontroller_generatemissing",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".generatemissing()"
     },
     {
@@ -835,8 +835,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_sceneassetscontroller",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "sceneassetscontroller"
     },
     {
@@ -846,8 +846,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "useinterceptors",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "useinterceptors"
     },
     {
@@ -857,8 +857,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "uploadedfile",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "uploadedfile"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_sceneassetscontroller_constructor",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".constructor()"
     },
     {
@@ -879,8 +879,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_sceneassetscontroller_create",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".create()"
     },
     {
@@ -890,8 +890,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_sceneassetscontroller_upload",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".upload()"
     },
     {
@@ -901,8 +901,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_assetscontroller",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "assetscontroller"
     },
     {
@@ -912,8 +912,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_get",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "get"
     },
     {
@@ -923,8 +923,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_ts_delete",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "delete"
     },
     {
@@ -934,8 +934,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_assetscontroller_constructor",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".constructor()"
     },
     {
@@ -945,8 +945,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_assetscontroller_findone",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".findone()"
     },
     {
@@ -956,8 +956,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_controller_assetscontroller_remove",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".remove()"
     },
     {
@@ -1132,8 +1132,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "assetsqueue"
     },
     {
@@ -1143,8 +1143,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_ts_injectable",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "injectable"
     },
     {
@@ -1154,7 +1154,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue_enqueue",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".enqueue()"
     },
@@ -1165,8 +1165,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_queue_assetsqueue_onmoduledestroy",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".onmoduledestroy()"
     },
     {
@@ -1176,8 +1176,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "assets.service.ts"
     },
     {
@@ -1187,8 +1187,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "assetsservice"
     },
     {
@@ -1198,8 +1198,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_ts_injectable",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "injectable"
     },
     {
@@ -1220,7 +1220,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_create",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".create()"
     },
@@ -1231,7 +1231,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_generatemissing",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".generatemissing()"
     },
@@ -1242,8 +1242,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_attachupload",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".attachupload()"
     },
     {
@@ -1253,8 +1253,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_settlescene",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".settlescene()"
     },
     {
@@ -1264,8 +1264,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_findone",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".findone()"
     },
     {
@@ -1275,8 +1275,8 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_assetsservice_remove",
-      "community": 61,
-      "community_name": "AssetsService",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": ".remove()"
     },
     {
@@ -1286,8 +1286,8 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_scenesecondsfromvoice",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "scenesecondsfromvoice()"
     },
     {
@@ -1297,7 +1297,7 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "apps_api_src_assets_assets_service_promptfor",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": "promptfor()"
     },
@@ -1308,8 +1308,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_assets_media_duration",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "media-duration.ts"
     },
     {
@@ -1319,8 +1319,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "apps_api_src_assets_media_duration_run",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "run"
     },
     {
@@ -1330,8 +1330,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "apps_api_src_assets_media_duration_logger",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "logger"
     },
     {
@@ -1341,8 +1341,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "apps_api_src_assets_media_duration_probedurationsec",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "probedurationsec()"
     },
     {
@@ -1352,8 +1352,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "apps_api_src_assets_media_duration_parseprobeduration",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "parseprobeduration()"
     },
     {
@@ -2320,8 +2320,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module",
-      "community": 54,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "ProjectsService",
       "norm_label": "prisma.module.ts"
     },
     {
@@ -2331,8 +2331,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module_prismamodule",
-      "community": 54,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "ProjectsService",
       "norm_label": "prismamodule"
     },
     {
@@ -2342,8 +2342,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "global",
-      "community": 54,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "ProjectsService",
       "norm_label": "global"
     },
     {
@@ -2353,8 +2353,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apps_api_src_prisma_prisma_module_ts_module",
-      "community": 54,
-      "community_name": "prisma.module.ts",
+      "community": 42,
+      "community_name": "ProjectsService",
       "norm_label": "module"
     },
     {
@@ -2694,7 +2694,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_update",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".update()"
     },
@@ -2716,7 +2716,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_assertowned",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".assertowned()"
     },
@@ -2727,7 +2727,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "apps_api_src_projects_projects_service_projectsservice_advancestatus",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".advancestatus()"
     },
@@ -2947,7 +2947,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "apps_api_src_research_research_service_researchservice_upsert",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".upsert()"
     },
@@ -3454,7 +3454,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_scriptscontroller",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "scriptscontroller"
     },
     {
@@ -3465,7 +3465,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_controller",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "controller"
     },
     {
@@ -3476,7 +3476,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_useguards",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "useguards"
     },
     {
@@ -3487,7 +3487,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_get",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "get"
     },
     {
@@ -3498,7 +3498,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_param",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "param"
     },
     {
@@ -3509,7 +3509,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_put",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "put"
     },
     {
@@ -3520,7 +3520,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_body",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "body"
     },
     {
@@ -3531,7 +3531,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_ts_post",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "post"
     },
     {
@@ -3542,7 +3542,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_scriptscontroller_constructor",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": ".constructor()"
     },
     {
@@ -3553,7 +3553,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_scriptscontroller_findone",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": ".findone()"
     },
     {
@@ -3564,7 +3564,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_scriptscontroller_upsert",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": ".upsert()"
     },
     {
@@ -3575,7 +3575,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_controller_scriptscontroller_splitintoscenes",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": ".splitintoscenes()"
     },
     {
@@ -3630,7 +3630,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "scriptsservice"
     },
     {
@@ -3641,7 +3641,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_ts_injectable",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": "injectable"
     },
     {
@@ -3663,7 +3663,7 @@
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_findone",
       "community": 17,
-      "community_name": "ScriptsService",
+      "community_name": ".assertOwned",
       "norm_label": ".findone()"
     },
     {
@@ -3673,7 +3673,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_upsert",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".upsert()"
     },
@@ -3684,7 +3684,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "apps_api_src_scripts_scripts_service_scriptsservice_splitintoscenes",
-      "community": 68,
+      "community": 17,
       "community_name": ".assertOwned",
       "norm_label": ".splitintoscenes()"
     },
@@ -3695,8 +3695,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_test_export_service_test",
-      "community": 16,
-      "community_name": "ExportService",
+      "community": 73,
+      "community_name": "export.service.test.ts",
       "norm_label": "export.service.test.ts"
     },
     {
@@ -3706,8 +3706,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "apps_api_test_export_service_test_projectpayload",
-      "community": 16,
-      "community_name": "ExportService",
+      "community": 73,
+      "community_name": "export.service.test.ts",
       "norm_label": "projectpayload"
     },
     {
@@ -3717,8 +3717,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "apps_api_test_export_service_test_scene",
-      "community": 16,
-      "community_name": "ExportService",
+      "community": 73,
+      "community_name": "export.service.test.ts",
       "norm_label": "scene()"
     },
     {
@@ -3728,8 +3728,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_api_test_export_service_test_servicefor",
-      "community": 16,
-      "community_name": "ExportService",
+      "community": 73,
+      "community_name": "export.service.test.ts",
       "norm_label": "servicefor()"
     },
     {
@@ -3750,8 +3750,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_api_test_media_duration_test",
-      "community": 36,
-      "community_name": "assets.service.ts",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "media-duration.test.ts"
     },
     {
@@ -4696,8 +4696,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_app_page",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "app/page.tsx"
     },
     {
@@ -4707,8 +4707,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_app_page_librarypage",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "librarypage()"
     },
     {
@@ -4718,8 +4718,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "apps_web_src_app_page_skeletongrid",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "skeletongrid()"
     },
     {
@@ -4729,8 +4729,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_editor_page",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "editor/page.tsx"
     },
     {
@@ -4740,8 +4740,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_editor_page_editorpage",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "editorpage()"
     },
     {
@@ -4751,8 +4751,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_layout",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "[id]/layout.tsx"
     },
     {
@@ -4762,8 +4762,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "apps_web_src_app_projects_id_layout_projectlayout",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "projectlayout()"
     },
     {
@@ -4872,8 +4872,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_editor_workspace_editorworkspace",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "editorworkspace()"
     },
     {
@@ -5037,8 +5037,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_left_rail",
-      "community": 69,
-      "community_name": "cn",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "left-rail.tsx"
     },
     {
@@ -5048,8 +5048,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_left_rail_leftrail",
-      "community": 69,
-      "community_name": "cn",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "leftrail()"
     },
     {
@@ -5092,8 +5092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "preview-player.tsx"
     },
     {
@@ -5103,8 +5103,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_previewplayerprops",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "previewplayerprops"
     },
     {
@@ -5114,8 +5114,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_plannedscene",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "plannedscene"
     },
     {
@@ -5125,8 +5125,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_plan",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "plan()"
     },
     {
@@ -5136,8 +5136,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_readyurl",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "readyurl()"
     },
     {
@@ -5147,8 +5147,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_previewplayer",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "previewplayer()"
     },
     {
@@ -5158,8 +5158,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_preview_player_startaudio",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 71,
+      "community_name": "preview-player.tsx",
       "norm_label": "startaudio()"
     },
     {
@@ -5202,8 +5202,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_readiness_badge",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "readiness-badge.tsx"
     },
     {
@@ -5213,8 +5213,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_readiness_badge_readinessbadge",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "readinessbadge()"
     },
     {
@@ -5268,8 +5268,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "research-view.tsx"
     },
     {
@@ -5279,8 +5279,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_researchviewprops",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "researchviewprops"
     },
     {
@@ -5290,8 +5290,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_sourcerow",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "sourcerow"
     },
     {
@@ -5301,8 +5301,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_nextkey",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "nextkey()"
     },
     {
@@ -5312,8 +5312,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_torows",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "torows()"
     },
     {
@@ -5323,8 +5323,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_researchview",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "researchview()"
     },
     {
@@ -5334,8 +5334,8 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_sourcerowitemprops",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "sourcerowitemprops"
     },
     {
@@ -5345,8 +5345,8 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_research_view_sourcerowitem",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "sourcerowitem()"
     },
     {
@@ -5510,64 +5510,86 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "timeline.tsx"
     },
     {
       "label": "TimelineProps",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_timelineprops",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "timelineprops"
     },
     {
       "label": "clampZoom()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L35",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_clampzoom",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "clampzoom()"
     },
     {
       "label": "STATUS_TONE",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_status_tone",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "status_tone"
     },
     {
       "label": "tickStep()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_tickstep",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "tickstep()"
     },
     {
       "label": "Timeline()",
       "file_type": "code",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L56",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "apps_web_src_components_editor_timeline_timeline",
-      "community": 69,
-      "community_name": "cn",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "timeline()"
+    },
+    {
+      "label": "SceneCardProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L199",
+      "_origin": "ast",
+      "id": "apps_web_src_components_editor_timeline_scenecardprops",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "scenecardprops"
+    },
+    {
+      "label": "SceneCard",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L214",
+      "_origin": "ast",
+      "id": "apps_web_src_components_editor_timeline_scenecard",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "scenecard"
     },
     {
       "label": "export-panel.tsx",
@@ -5576,8 +5598,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_export_export_panel",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "export-panel.tsx"
     },
     {
@@ -5587,8 +5609,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_web_src_components_export_export_panel_exportpanelprops",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "exportpanelprops"
     },
     {
@@ -5598,8 +5620,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_components_export_export_panel_exportresult",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "exportresult"
     },
     {
@@ -5609,8 +5631,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "apps_web_src_components_export_export_panel_groups",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "groups"
     },
     {
@@ -5620,8 +5642,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "apps_web_src_components_export_export_panel_exportpanel",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "exportpanel()"
     },
     {
@@ -5653,8 +5675,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_components_library_empty_library_emptylibrary",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "emptylibrary()"
     },
     {
@@ -5697,8 +5719,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "project-card.tsx"
     },
     {
@@ -5708,8 +5730,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_projectcardprops",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "projectcardprops"
     },
     {
@@ -5719,8 +5741,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_projectcard",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "projectcard()"
     },
     {
@@ -5730,8 +5752,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_cover",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "cover()"
     },
     {
@@ -5741,8 +5763,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "apps_web_src_components_library_project_card_hashtone",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "hashtone()"
     },
     {
@@ -5785,8 +5807,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_scenes_asset_preview",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "asset-preview.tsx"
     },
     {
@@ -5796,8 +5818,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_components_scenes_asset_preview_assetpreviewprops",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "assetpreviewprops"
     },
     {
@@ -5807,8 +5829,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "apps_web_src_components_scenes_asset_preview_assetpreview",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "assetpreview()"
     },
     {
@@ -6005,8 +6027,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_staggerdelay",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "staggerdelay()"
     },
     {
@@ -6060,8 +6082,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "apps_web_src_components_ui_primitives_statusdot",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "statusdot()"
     },
     {
@@ -6170,8 +6192,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_api",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "api.ts"
     },
     {
@@ -6203,8 +6225,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "apps_web_src_lib_api_request",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "request()"
     },
     {
@@ -6214,8 +6236,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "apps_web_src_lib_api_api",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "api"
     },
     {
@@ -6258,8 +6280,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editor-store.tsx"
     },
     {
@@ -6269,8 +6291,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorstep",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editorstep"
     },
     {
@@ -6291,8 +6313,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_theme",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "theme"
     },
     {
@@ -6302,8 +6324,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_readstoredtheme",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "readstoredtheme()"
     },
     {
@@ -6313,8 +6335,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorstate",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editorstate"
     },
     {
@@ -6324,8 +6346,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorcontext",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editorcontext"
     },
     {
@@ -6335,8 +6357,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "apps_web_src_lib_editor_store_editorprovider",
-      "community": 38,
-      "community_name": "useEditor",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editorprovider()"
     },
     {
@@ -6357,8 +6379,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "projects.ts"
     },
     {
@@ -6368,8 +6390,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_projectdetail",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "projectdetail"
     },
     {
@@ -6379,8 +6401,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_projectkeys",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "projectkeys"
     },
     {
@@ -6390,8 +6412,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_useprojects",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "useprojects()"
     },
     {
@@ -6401,8 +6423,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_useproject",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "useproject()"
     },
     {
@@ -6412,8 +6434,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_usecreateproject",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "usecreateproject()"
     },
     {
@@ -6423,8 +6445,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_useupdateproject",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "useupdateproject()"
     },
     {
@@ -6434,8 +6456,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_projects_usedeleteproject",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 61,
+      "community_name": "projects.ts",
       "norm_label": "usedeleteproject()"
     },
     {
@@ -6445,8 +6467,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_research",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "queries/research.ts"
     },
     {
@@ -6456,8 +6478,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_research_researchkeys",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "researchkeys"
     },
     {
@@ -6467,8 +6489,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_research_useresearch",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "useresearch()"
     },
     {
@@ -6478,8 +6500,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_research_usesaveresearch",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 68,
+      "community_name": "research-view.tsx",
       "norm_label": "usesaveresearch()"
     },
     {
@@ -6500,8 +6522,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_scenekeys",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "scenekeys"
     },
     {
@@ -6511,8 +6533,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usescenes",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 70,
+      "community_name": "editor/page.tsx",
       "norm_label": "usescenes()"
     },
     {
@@ -6544,8 +6566,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usesetactiveasset",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "usesetactiveasset()"
     },
     {
@@ -6643,8 +6665,8 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_useuploadasset",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 36,
+      "community_name": "timeline.tsx",
       "norm_label": "useuploadasset()"
     },
     {
@@ -6654,8 +6676,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_usedeleteasset",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "usedeleteasset()"
     },
     {
@@ -6665,8 +6687,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_scenes_useassetpolling",
-      "community": 13,
-      "community_name": "scenes.ts",
+      "community": 72,
+      "community_name": "asset-preview.tsx",
       "norm_label": "useassetpolling()"
     },
     {
@@ -6698,8 +6720,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_lib_queries_script_scriptkeys",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "scriptkeys"
     },
     {
@@ -6758,14 +6780,58 @@
       "norm_label": "usedragreorder()"
     },
     {
+      "label": "use-scene-drop.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_lib_use_scene_drop",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "use-scene-drop.ts"
+    },
+    {
+      "label": "TYPE_BY_EXT",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "apps_web_src_lib_use_scene_drop_type_by_ext",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "type_by_ext"
+    },
+    {
+      "label": "assetTypeOfFile()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "apps_web_src_lib_use_scene_drop_assettypeoffile",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "assettypeoffile()"
+    },
+    {
+      "label": "useSceneDrop()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "apps_web_src_lib_use_scene_drop_usescenedrop",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "usescenedrop()"
+    },
+    {
       "label": "use-scene-field.ts",
       "file_type": "code",
       "source_file": "apps/web/src/lib/use-scene-field.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "use-scene-field.ts"
     },
     {
@@ -6775,8 +6841,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_scenetextfield",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "scenetextfield"
     },
     {
@@ -6786,8 +6852,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_pendingwrite",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "pendingwrite"
     },
     {
@@ -6797,8 +6863,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_pendingwrites",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "pendingwrites"
     },
     {
@@ -6808,8 +6874,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_undostacks",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "undostacks"
     },
     {
@@ -6819,8 +6885,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_lastundopushat",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "lastundopushat"
     },
     {
@@ -6830,8 +6896,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_keyof",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "keyof()"
     },
     {
@@ -6841,8 +6907,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "apps_web_src_lib_use_scene_field_usescenefield",
-      "community": 55,
-      "community_name": "inspector-panel.tsx",
+      "community": 54,
+      "community_name": "use-scene-field.ts",
       "norm_label": "usescenefield()"
     },
     {
@@ -6874,8 +6940,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_lib_utils_formatrelativedate",
-      "community": 21,
-      "community_name": "primitives.tsx",
+      "community": 69,
+      "community_name": "cn",
       "norm_label": "formatrelativedate()"
     },
     {
@@ -6907,8 +6973,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "editor-workspace.test.tsx"
     },
     {
@@ -6918,8 +6984,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_scene",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "scene()"
     },
     {
@@ -6929,8 +6995,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_script",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "script"
     },
     {
@@ -6940,8 +7006,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_research",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "research"
     },
     {
@@ -6951,8 +7017,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_seed",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "seed()"
     },
     {
@@ -6962,9 +7028,20 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "apps_web_test_editor_workspace_test_render",
-      "community": 20,
-      "community_name": "editor-workspace.tsx",
+      "community": 35,
+      "community_name": "editor-store.tsx",
       "norm_label": "render()"
+    },
+    {
+      "label": "scene-drop.test.ts",
+      "file_type": "code",
+      "source_file": "apps/web/test/scene-drop.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_test_scene_drop_test",
+      "community": 36,
+      "community_name": "timeline.tsx",
+      "norm_label": "scene-drop.test.ts"
     },
     {
       "label": "utils.test.ts",
@@ -7985,8 +8062,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "packages_shared_types_src_enums_assettype",
-      "community": 35,
-      "community_name": ".upload",
+      "community": 17,
+      "community_name": ".assertOwned",
       "norm_label": "assettype"
     },
     {
@@ -9800,8 +9877,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "project_guide_5_2_\u0432\u0435\u0440\u0445\u043d\u044f\u044f_\u043f\u0430\u043d\u0435\u043b\u044c_\u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430",
-      "community": 70,
-      "community_name": "5.2. \u0412\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u0430\u043d\u0435\u043b\u044c \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430",
+      "community": 57,
+      "community_name": "5. \u041a\u0430\u0440\u0442\u0430 \u0432\u0441\u0435\u0445 \u043a\u043d\u043e\u043f\u043e\u043a \u0438 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f",
       "norm_label": "5.2. \u0432\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u0430\u043d\u0435\u043b\u044c \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430"
     },
     {
@@ -9811,8 +9888,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "project_guide_library_\u0441\u0442\u0440\u0435\u043b\u043a\u0430_\u043d\u0430\u0437\u0430\u0434",
-      "community": 70,
-      "community_name": "5.2. \u0412\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u0430\u043d\u0435\u043b\u044c \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430",
+      "community": 57,
+      "community_name": "5. \u041a\u0430\u0440\u0442\u0430 \u0432\u0441\u0435\u0445 \u043a\u043d\u043e\u043f\u043e\u043a \u0438 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f",
       "norm_label": "`library` / \u0441\u0442\u0440\u0435\u043b\u043a\u0430 \u043d\u0430\u0437\u0430\u0434"
     },
     {
@@ -9822,8 +9899,8 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "project_guide_export",
-      "community": 70,
-      "community_name": "5.2. \u0412\u0435\u0440\u0445\u043d\u044f\u044f \u043f\u0430\u043d\u0435\u043b\u044c \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430",
+      "community": 57,
+      "community_name": "5. \u041a\u0430\u0440\u0442\u0430 \u0432\u0441\u0435\u0445 \u043a\u043d\u043e\u043f\u043e\u043a \u0438 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f",
       "norm_label": "`export`"
     },
     {
@@ -23188,7 +23265,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L35",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -23199,7 +23276,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L39",
+      "source_location": "L214",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_components_editor_timeline_scenecard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_components_editor_timeline_scenecardprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -23210,7 +23309,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -23221,7 +23320,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -23232,7 +23331,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
@@ -23380,7 +23479,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
-      "target": "apps_web_src_lib_utils",
+      "target": "apps_web_src_lib_use_scene_drop",
       "confidence_score": 1.0
     },
     {
@@ -23392,6 +23491,30 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_lib_use_scene_drop_usescenedrop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
+      "target": "apps_web_src_lib_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/editor/timeline.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_components_editor_timeline",
       "target": "apps_web_src_lib_utils_cn",
       "confidence_score": 1.0
     },
@@ -23400,7 +23523,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L107",
+      "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -23412,7 +23535,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -23425,7 +23548,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L57",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -23437,7 +23560,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -23449,23 +23572,11 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L62",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
       "target": "apps_web_src_lib_use_drag_reorder_usedragreorder"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L193",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "apps_web_src_components_editor_timeline_timeline",
-      "target": "apps_web_src_lib_utils_cn"
     },
     {
       "relation": "indirect_call",
@@ -23473,7 +23584,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "apps/web/src/components/editor/timeline.tsx",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "apps_web_src_components_editor_timeline_timeline",
@@ -25619,6 +25730,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop",
+      "target": "apps_web_src_lib_queries_scenes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "apps/web/src/lib/use-scene-field.ts",
       "source_location": "L7",
       "weight": 1.0,
@@ -25808,6 +25931,30 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop",
+      "target": "apps_web_src_lib_queries_scenes_useuploadasset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop_usescenedrop",
+      "target": "apps_web_src_lib_queries_scenes_useuploadasset"
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -25908,6 +26055,75 @@
       "_origin": "ast",
       "source": "apps_web_src_lib_use_drag_reorder",
       "target": "apps_web_src_lib_use_drag_reorder_usedragreorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop",
+      "target": "apps_web_src_lib_use_scene_drop_assettypeoffile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop",
+      "target": "apps_web_src_lib_use_scene_drop_type_by_ext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop",
+      "target": "apps_web_src_lib_use_scene_drop_usescenedrop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/test/scene-drop.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_test_scene_drop_test",
+      "target": "apps_web_src_lib_use_scene_drop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/use-scene-drop.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_src_lib_use_scene_drop_usescenedrop",
+      "target": "apps_web_src_lib_use_scene_drop_assettypeoffile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/test/scene-drop.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "apps_web_test_scene_drop_test",
+      "target": "apps_web_src_lib_use_scene_drop_assettypeoffile",
       "confidence_score": 1.0
     },
     {
@@ -30466,5 +30682,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d9e97fc365c69629b1c52e9008ec4c17b60a4ce6"
+  "built_at_commit": "ce083b1aaa7982a091161cb45f2999dae344ffc8"
 }

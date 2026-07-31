@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { AssetType, SceneStatus } from "./enums";
-import { AssetSchema } from "./asset";
+import { AssetSchema, type Asset } from "./asset";
 import { countWords, estimateSeconds } from "./script";
 import { MIN_SCENE_SECONDS } from "./storyboard";
 
@@ -65,6 +65,60 @@ export function sceneDurationSec(
 ): number {
   const fallback = estimateSeconds(countWords(scene.voiceText));
   return Math.max(MIN_SCENE_SECONDS, scene.durationSec ?? fallback);
+}
+
+/**
+ * Допуск при сверке длительностей. Меньше полусекунды расхождения на
+ * стыке не слышно и не видно — предупреждать о нём значит приучить
+ * пользователя не смотреть на предупреждения.
+ */
+export const DURATION_MISMATCH_THRESHOLD_SECONDS = 0.5;
+
+/** Откуда взялась длительность сцены: измерена или посчитана по тексту. */
+export type SceneDurationSource = "voice-asset" | "estimated";
+
+/**
+ * Длительность сцены и её происхождение.
+ *
+ * Приоритет — фактическая длина выбранной озвучки: оценка «150 слов в
+ * минуту» это лишь приближение, пока настоящего аудио нет. Клип и музыка
+ * источником истины не бывают никогда: клип выдаётся внешним API кусками
+ * фиксированной длины (5/8/10с) и под сцену не заказывается, а музыка —
+ * фон, который в монтаже всё равно подрезают.
+ */
+export function sceneDuration(scene: Scene): {
+  seconds: number;
+  source: SceneDurationSource;
+} {
+  const voice = activeAssetOf(scene, "VOICE");
+  if (voice?.status === "READY" && voice.durationSec != null) {
+    return { seconds: voice.durationSec, source: "voice-asset" };
+  }
+  return { seconds: sceneDurationSec(scene), source: "estimated" };
+}
+
+/**
+ * Насколько ассет длиннее (плюс) или короче (минус) сцены, если разница
+ * вообще заметна. null — либо длина файла неизвестна, либо всё сходится.
+ * Для озвучки всегда null: она сама и есть эталон, сверять её не с чем.
+ */
+export function assetDurationDrift(
+  asset: Pick<Asset, "type" | "durationSec">,
+  sceneSeconds: number,
+): number | null {
+  if (asset.type === "VOICE" || asset.type === "IMAGE") return null;
+  if (asset.durationSec == null) return null;
+
+  const drift = asset.durationSec - sceneSeconds;
+  return Math.abs(drift) > DURATION_MISMATCH_THRESHOLD_SECONDS ? drift : null;
+}
+
+/** Есть ли у сцены хоть один ассет, разошедшийся со её длительностью. */
+export function hasDurationMismatch(scene: Scene): boolean {
+  const { seconds } = sceneDuration(scene);
+  return scene.assets.some(
+    (asset) => assetDurationDrift(asset, seconds) !== null,
+  );
 }
 
 /** AssetType -> поле сцены со ссылкой на активный ассет этого типа. */
@@ -170,7 +224,10 @@ export function projectGaps(scenes: Scene[]): ProjectGap[] {
 
     // Голос короче сцены — в монтаже останется тишина в хвосте.
     const sceneSec = sceneDurationSec(scene);
-    if (voice.durationSec != null && voice.durationSec + 1 < sceneSec) {
+    if (
+      voice.durationSec != null &&
+      voice.durationSec + DURATION_MISMATCH_THRESHOLD_SECONDS < sceneSec
+    ) {
       at(
         "voice-shorter-than-scene",
         `${Math.round(voice.durationSec)}s of ${sceneSec}s`,

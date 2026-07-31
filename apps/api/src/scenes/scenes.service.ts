@@ -20,6 +20,9 @@ import {
   type StoryboardImport,
   type UpdateSceneDto,
 } from "@foundry/shared-types";
+import { join } from "node:path";
+import { probeDurationSec } from "../assets/media-duration";
+import { UPLOAD_DIR } from "../assets/upload";
 import { LlmService } from "../llm/llm.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { ProjectsService } from "../projects/projects.service";
@@ -38,11 +41,48 @@ export class ScenesService {
 
   async findAll(userId: string, projectId: string) {
     await this.projects.assertOwned(userId, projectId);
-    return this.prisma.scene.findMany({
+    const scenes = await this.prisma.scene.findMany({
       where: { projectId },
       orderBy: { order: "asc" },
       include: WITH_ASSETS,
     });
+
+    await this.backfillDurations(scenes);
+    return scenes;
+  }
+
+  /**
+   * Длительность мерится при загрузке файла, но файлы, загруженные до
+   * появления этой проверки, её не имеют — а без неё нечего сравнивать и
+   * индикатор рассинхрона молчит. Домеряем один раз: после первого успеха
+   * durationSec заполнен и сюда мы больше не заходим.
+   */
+  private async backfillDurations(
+    scenes: Array<{ assets: Array<{ id: string; type: string; url: string | null; durationSec: number | null }> }>,
+  ) {
+    const prefix = `/api/${UPLOAD_DIR}/`;
+    const pending = scenes
+      .flatMap((scene) => scene.assets)
+      .filter(
+        (asset) =>
+          asset.durationSec == null &&
+          asset.type !== "IMAGE" &&
+          asset.url?.startsWith(prefix),
+      );
+
+    for (const asset of pending) {
+      const filename = asset.url!.slice(prefix.length);
+      const durationSec = await probeDurationSec(
+        join(process.cwd(), UPLOAD_DIR, filename),
+      );
+      if (durationSec == null) continue;
+
+      asset.durationSec = durationSec;
+      await this.prisma.asset.update({
+        where: { id: asset.id },
+        data: { durationSec },
+      });
+    }
   }
 
   async create(userId: string, projectId: string, dto: CreateSceneDto) {

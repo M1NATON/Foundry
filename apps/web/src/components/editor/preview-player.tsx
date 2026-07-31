@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import type { Scene } from "@foundry/shared-types";
-import { activeAssetOf, sceneDurationSec } from "@foundry/shared-types";
+import { activeAssetOf, sceneDuration } from "@foundry/shared-types";
 import { useEditor } from "@/lib/editor-store";
 
 interface PreviewPlayerProps {
@@ -23,7 +23,7 @@ const MUSIC_VOLUME = 0.35;
 function plan(scenes: Scene[]): PlannedScene[] {
   return scenes.map((scene) => ({
     id: scene.id,
-    durationMs: sceneDurationSec(scene) * 1000,
+    durationMs: sceneDuration(scene).seconds * 1000,
     voiceUrl: readyUrl(scene, "VOICE"),
     musicUrl: readyUrl(scene, "MUSIC"),
   }));

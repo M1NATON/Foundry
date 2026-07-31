@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
+  formatDuration,
+  sceneDuration,
   type AssetType,
   type Scene,
 } from "@foundry/shared-types";
@@ -210,6 +212,7 @@ function SceneInspector({
   tool: EditorTool;
   onClose: () => void;
 }) {
+  const duration = sceneDuration(scene);
   const voice = useSceneField(projectId, scene, "voiceText");
   const imagePrompt = useSceneField(projectId, scene, "imagePrompt");
   const videoPrompt = useSceneField(projectId, scene, "videoPrompt");
@@ -268,6 +271,18 @@ function SceneInspector({
           title={scene.title}
           onRename={(title) => updateScene.mutate({ id: scene.id, dto: { title } })}
         />
+        <span
+          className="shrink-0 text-xs tabular-nums text-secondary"
+          title={
+            duration.source === "estimated"
+              ? "Estimated from the voiceover text — no voice file yet"
+              : "Measured from the chosen voice file"
+          }
+        >
+          {/* Тильда как в прогнозах: показывает, что цифра ещё приблизительная. */}
+          {duration.source === "estimated" && "~"}
+          {formatDuration(duration.seconds)}
+        </span>
         <span className="shrink-0 text-xs text-secondary">
           Scene {String(scene.order + 1).padStart(2, "0")}
         </span>
@@ -437,6 +452,7 @@ function SceneInspector({
                   projectId={projectId}
                   sceneId={scene.id}
                   isActive={scene[ACTIVE_ASSET_FIELD_BY_TYPE[asset.type]] === asset.id}
+                  sceneDurationSec={duration.seconds}
                 />
               ))}
             </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { GripVertical, Plus, Trash2, Wand2 } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
-import { formatDuration, sceneDurationSec } from "@foundry/shared-types";
+import { formatDuration, sceneDuration } from "@foundry/shared-types";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
@@ -44,7 +44,10 @@ export function StoryboardListView({
     reorder.mutate(items),
   );
 
-  const totalSec = ordered.reduce((sum, s) => sum + sceneDurationSec(s), 0);
+  const totalSec = ordered.reduce(
+    (sum, s) => sum + sceneDuration(s).seconds,
+    0,
+  );
   const hasScript = Boolean(script?.content.trim());
 
   function openInProducing(sceneId: string) {
@@ -134,6 +137,7 @@ function SceneListItem({
   const updateScene = useUpdateScene(projectId);
   const deleteScene = useDeleteScene(projectId);
   const [draft, setDraft] = useState<string | null>(null);
+  const duration = sceneDuration(scene);
 
   function commitTitle() {
     const trimmed = (draft ?? "").trim();
@@ -193,8 +197,16 @@ function SceneListItem({
 
       <ReadinessBadge scene={scene} />
 
-      <span className="shrink-0 text-xs tabular-nums text-secondary">
-        {formatDuration(sceneDurationSec(scene))}
+      <span
+        className="shrink-0 text-xs tabular-nums text-secondary"
+        title={
+          duration.source === "estimated"
+            ? "Estimated from the voiceover text — no voice file yet"
+            : "Measured from the chosen voice file"
+        }
+      >
+        {duration.source === "estimated" && "~"}
+        {formatDuration(duration.seconds)}
       </span>
 
       <button

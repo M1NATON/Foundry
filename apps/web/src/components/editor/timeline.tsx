@@ -7,9 +7,10 @@ import {
   activeAssetOf,
   estimateSeconds,
   formatDuration,
-  sceneDurationSec,
+  hasDurationMismatch,
+  sceneDuration,
 } from "@foundry/shared-types";
-import { ImageIcon, Minus, Plus, Upload } from "lucide-react";
+import { AlertTriangle, ImageIcon, Minus, Plus, Upload } from "lucide-react";
 import { PreviewPlayer } from "@/components/editor/preview-player";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
@@ -64,7 +65,9 @@ export function Timeline({ projectId, scenes, script }: TimelineProps) {
     reorder.mutate(items),
   );
 
-  const durations = ordered.map(sceneDurationSec);
+  // Ширина блока — по источнику истины: если у сцены есть измеренный голос,
+  // блок должен быть его длины, а не длины оценки по тексту.
+  const durations = ordered.map((s) => sceneDuration(s).seconds);
   const totalSec =
     durations.reduce((a, b) => a + b, 0) ||
     estimateSeconds(script?.wordCount ?? 0) ||
@@ -289,6 +292,17 @@ const SceneCard = forwardRef<HTMLDivElement, SceneCardProps>(function SceneCard(
 
       <div className="flex shrink-0 items-center gap-1.5 border-t border-border px-2 py-1.5">
         <StatusDot tone={STATUS_TONE[scene.status]} />
+        {/* Ассеты видны только при открытой сцене, поэтому расхождение
+            длительностей помечается и здесь — иначе его замечают уже в
+            монтаже. */}
+        {hasDurationMismatch(scene) && (
+          <span
+            title="Duration mismatch between the scene and its video or music"
+            className="shrink-0 text-accent"
+          >
+            <AlertTriangle className="h-3 w-3" strokeWidth={2} />
+          </span>
+        )}
         {width >= NARROW_SCENE_PX && (
           <span
             title={scene.title}

@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/editor/timeline.tsx": {
-    "mtime": 1785514492.3483262,
-    "ast_hash": "c99a6ae7234079ecb463c6681c689701",
+    "mtime": 1785520330.6611977,
+    "ast_hash": "61fc1b0431f14c2a37587feea994b0c4",
     "semantic_hash": ""
   },
   "apps/web/src/components/scenes/import-storyboard-dialog.tsx": {
@@ -662,6 +662,16 @@
   "packages/shared-types/test/gaps.test.ts": {
     "mtime": 1785519685.3424778,
     "ast_hash": "493da8a23516871dbfe100f0eb717a45",
+    "semantic_hash": ""
+  },
+  "apps/web/src/lib/use-scene-drop.ts": {
+    "mtime": 1785520229.0073218,
+    "ast_hash": "e24b6e831bde1908b5d720fd54e6ae04",
+    "semantic_hash": ""
+  },
+  "apps/web/test/scene-drop.test.ts": {
+    "mtime": 1785520372.5272381,
+    "ast_hash": "040cc2d28f0f700d0a503d6b4f53a6d5",
     "semantic_hash": ""
   }
 }
