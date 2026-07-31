@@ -9,6 +9,8 @@ import {
   countWords,
   estimateSeconds,
   formatDuration,
+  formatSceneDuration,
+  sceneDuration,
 } from "@foundry/shared-types";
 import { AssetMedia } from "@/components/scenes/asset-media";
 import { MediaPlayer } from "@/components/scenes/media-player";
@@ -69,6 +71,10 @@ export function Stage({
   }, [scene?.id, scene?.voiceText]);
 
   const scriptSeconds = script ? estimateSeconds(script.wordCount) : 0;
+
+  // Тот же источник истины, что в таймлайне и списке сцен: измеренный голос,
+  // иначе оценка по тексту — а не сырое scene.durationSec.
+  const duration = scene ? sceneDuration(scene) : null;
 
   return (
     <section className="relative flex min-h-0 flex-1 overflow-hidden bg-bg">
@@ -172,9 +178,10 @@ export function Stage({
                   />
                   <figcaption className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-md bg-surface/90 px-3 py-1.5 text-xs text-secondary shadow-subtle backdrop-blur">
                     {scene.title}
-                    {scene.durationSec != null && (
+                    {duration && (
                       <span className="ml-2 tabular-nums">
-                        {formatDuration(scene.durationSec)}
+                        {duration.source === "estimated" && "~"}
+                        {formatSceneDuration(duration.seconds)}
                       </span>
                     )}
                   </figcaption>

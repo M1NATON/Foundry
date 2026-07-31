@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
-  formatDuration,
+  formatSceneDuration,
   sceneDuration,
   type AssetType,
   type Scene,
@@ -281,7 +281,7 @@ function SceneInspector({
         >
           {/* Тильда как в прогнозах: показывает, что цифра ещё приблизительная. */}
           {duration.source === "estimated" && "~"}
-          {formatDuration(duration.seconds)}
+          {formatSceneDuration(duration.seconds)}
         </span>
         <span className="shrink-0 text-xs text-secondary">
           Scene {String(scene.order + 1).padStart(2, "0")}

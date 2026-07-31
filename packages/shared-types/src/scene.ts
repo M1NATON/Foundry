@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { AssetType, SceneStatus } from "./enums";
 import { AssetSchema, type Asset } from "./asset";
-import { countWords, estimateSeconds } from "./script";
+import { estimateSpeechSeconds } from "./script";
 import { MIN_SCENE_SECONDS } from "./storyboard";
 
 export const CreateSceneSchema = z.object({
@@ -9,7 +9,7 @@ export const CreateSceneSchema = z.object({
   voiceText: z.string().default(""),
   imagePrompt: z.string().nullable().optional(),
   videoPrompt: z.string().nullable().optional(),
-  durationSec: z.number().int().nonnegative().nullable().optional(),
+  durationSec: z.number().nonnegative().nullable().optional(),
   order: z.number().int().nonnegative().optional(),
 });
 export type CreateSceneDto = z.infer<typeof CreateSceneSchema>;
@@ -19,7 +19,7 @@ export const UpdateSceneSchema = z.object({
   voiceText: z.string().optional(),
   imagePrompt: z.string().nullable().optional(),
   videoPrompt: z.string().nullable().optional(),
-  durationSec: z.number().int().nonnegative().nullable().optional(),
+  durationSec: z.number().nonnegative().nullable().optional(),
   status: SceneStatus.optional(),
 });
 export type UpdateSceneDto = z.infer<typeof UpdateSceneSchema>;
@@ -63,7 +63,7 @@ export type Scene = z.infer<typeof SceneSchema>;
 export function sceneDurationSec(
   scene: Pick<Scene, "durationSec" | "voiceText">,
 ): number {
-  const fallback = estimateSeconds(countWords(scene.voiceText));
+  const fallback = estimateSpeechSeconds(scene.voiceText);
   return Math.max(MIN_SCENE_SECONDS, scene.durationSec ?? fallback);
 }
 

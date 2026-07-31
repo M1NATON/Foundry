@@ -7,6 +7,7 @@ import {
   activeAssetOf,
   estimateSeconds,
   formatDuration,
+  formatSceneDuration,
   hasDurationMismatch,
   sceneDuration,
 } from "@foundry/shared-types";
@@ -277,7 +278,7 @@ const SceneCard = forwardRef<HTMLDivElement, SceneCardProps>(function SceneCard(
           {String(scene.order + 1).padStart(2, "0")}
         </span>
         <span className="absolute bottom-1.5 right-1.5 rounded-sm bg-surface/85 px-1.5 py-0.5 text-xs leading-none tabular-nums text-secondary backdrop-blur-[2px]">
-          {formatDuration(durationSec)}
+          {formatSceneDuration(durationSec)}
         </span>
 
         {(drop.over || drop.uploading) && (

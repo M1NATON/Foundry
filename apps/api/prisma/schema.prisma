@@ -58,7 +58,9 @@ model Scene {
   voiceText     String      @db.Text
   imagePrompt   String?     @db.Text
   videoPrompt   String?     @db.Text
-  durationSec   Int?
+  // Оценка по тексту дробная: на короткой сцене десятая доля — заметная
+  // часть длины, а округление до целой её съедает.
+  durationSec   Float?
   status        SceneStatus @default(PENDING)
   assets        Asset[]
   activeFrameId String?

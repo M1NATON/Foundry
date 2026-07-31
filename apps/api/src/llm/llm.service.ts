@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { z } from "zod";
-import { countWords, estimateSeconds, extractJson } from "@foundry/shared-types";
+import { estimateSpeechSeconds, extractJson } from "@foundry/shared-types";
 
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
@@ -146,7 +146,7 @@ export class LlmService {
         title,
         voiceText: chunk,
         ...localPrompts(chunk),
-        durationSec: estimateSeconds(countWords(chunk)),
+        durationSec: estimateSpeechSeconds(chunk),
       };
     });
   }

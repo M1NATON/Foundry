@@ -8,8 +8,7 @@ import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
   MIN_SCENE_SECONDS,
   StoryboardImportSchema,
-  countWords,
-  estimateSeconds,
+  estimateSpeechSeconds,
   extractJson,
   hasDefaultTitle,
   sceneSeconds,
@@ -116,7 +115,7 @@ export class ScenesService {
       dto.durationSec !== undefined
         ? dto.durationSec
         : dto.voiceText !== undefined
-          ? Math.max(MIN_SCENE_SECONDS, estimateSeconds(countWords(dto.voiceText)))
+          ? Math.max(MIN_SCENE_SECONDS, estimateSpeechSeconds(dto.voiceText))
           : undefined;
 
     return this.prisma.scene.update({

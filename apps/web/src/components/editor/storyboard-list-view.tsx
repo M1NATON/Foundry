@@ -4,7 +4,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { GripVertical, Plus, Trash2, Wand2 } from "lucide-react";
 import type { Scene, Script } from "@foundry/shared-types";
-import { formatDuration, sceneDuration } from "@foundry/shared-types";
+import {
+  formatDuration,
+  formatSceneDuration,
+  sceneDuration,
+} from "@foundry/shared-types";
 import { ReadinessBadge } from "@/components/editor/readiness-badge";
 import { Button } from "@/components/ui/button";
 import { SPRING } from "@/components/ui/primitives";
@@ -206,7 +210,7 @@ function SceneListItem({
         }
       >
         {duration.source === "estimated" && "~"}
-        {formatDuration(duration.seconds)}
+        {formatSceneDuration(duration.seconds)}
       </span>
 
       <button

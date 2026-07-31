@@ -3,8 +3,7 @@ import { Injectable } from "@nestjs/common";
 import {
   ACTIVE_ASSET_FIELD_BY_TYPE,
   EXPORT_FORMATS,
-  countWords,
-  estimateSeconds,
+  estimateSpeechSeconds,
   formatDuration,
   type AssetType,
   type ExportFormat,
@@ -218,7 +217,7 @@ export class ExportService {
   /** Явная длительность сцены, иначе оценка по темпу начитки. */
   private sceneSeconds(scene: ScenePayload): number {
     const raw =
-      scene.durationSec ?? estimateSeconds(countWords(scene.voiceText));
+      scene.durationSec ?? estimateSpeechSeconds(scene.voiceText);
     return Math.max(MIN_SCENE_SECONDS, raw);
   }
 

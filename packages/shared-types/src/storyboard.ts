@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { WORDS_PER_MINUTE, countWords, estimateSeconds } from "./script";
+import { WORDS_PER_MINUTE, estimateSpeechSeconds } from "./script";
 
 /**
  * Импорт раскадровки, собранной во внешнем чате (ChatGPT/Claude/Gemini).
@@ -30,7 +30,7 @@ export const StoryboardSceneSchema = z.object({
   voiceText: z.string().trim().min(1),
   imagePrompt: optionalText,
   videoPrompt: optionalText,
-  durationSec: z.number().int().positive().optional(),
+  durationSec: z.number().positive().optional(),
 });
 export type StoryboardScene = z.infer<typeof StoryboardSceneSchema>;
 
@@ -80,7 +80,7 @@ export function extractJson(text: string): string {
 
 /** Длительность сцены: из ответа модели, иначе считаем по её же тексту. */
 export function sceneSeconds(scene: StoryboardScene): number {
-  const fallback = estimateSeconds(countWords(scene.voiceText));
+  const fallback = estimateSpeechSeconds(scene.voiceText);
   return Math.max(MIN_SCENE_SECONDS, scene.durationSec ?? fallback);
 }
 

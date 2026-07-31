@@ -4,8 +4,10 @@ import {
   StoryboardImportSchema,
   countWords,
   estimateSeconds,
+  estimateSpeechSeconds,
   extractJson,
   formatDuration,
+  formatSceneDuration,
   hasDefaultTitle,
   isAssetPending,
   projectProgress,
@@ -64,6 +66,51 @@ describe("script helpers", () => {
   it("formats and clamps durations", () => {
     expect(formatDuration(65.4)).toBe("1:05");
     expect(formatDuration(-10)).toBe("0:00");
+  });
+});
+
+describe("estimateSpeechSeconds", () => {
+  // 4 слова при 150 словах в минуту — 1.6 секунды чистой начитки.
+  it("counts words at the narration pace when there is no punctuation", () => {
+    expect(estimateSpeechSeconds("one two three four")).toBe(1.6);
+    expect(estimateSpeechSeconds("   ")).toBe(0);
+  });
+
+  it("adds a pause for every punctuation mark", () => {
+    // 1.6 начитки + 0.2 на запятую + 0.45 на точку.
+    expect(estimateSpeechSeconds("one two, three four.")).toBe(2.3);
+  });
+
+  it("separates scenes with the same word count but different phrasing", () => {
+    const flat = estimateSpeechSeconds("stop look listen now");
+    const punctuated = estimateSpeechSeconds("stop. look. listen. now.");
+
+    expect(punctuated).toBeGreaterThan(flat);
+  });
+
+  it("treats a run of marks as one pause", () => {
+    // «...» и «!» — две остановки, а не четыре.
+    expect(estimateSpeechSeconds("Wait... Look!")).toBe(1.7);
+  });
+
+  it("does not mistake a hyphen inside a word for a pause", () => {
+    expect(estimateSpeechSeconds("well-known fact")).toBe(0.8);
+    // Тире отдельным словом — настоящая пауза.
+    expect(estimateSpeechSeconds("да — вот так")).toBe(1.4);
+  });
+});
+
+describe("formatSceneDuration", () => {
+  it("keeps the tenth of a second under a minute", () => {
+    expect(formatSceneDuration(8.44)).toBe("0:08.4");
+    expect(formatSceneDuration(3)).toBe("0:03.0");
+    expect(formatSceneDuration(-5)).toBe("0:00.0");
+  });
+
+  it("falls back to the shared format once the tenth stops mattering", () => {
+    expect(formatSceneDuration(65.4)).toBe("1:05");
+    // Округление десятых не должно давать «0:60.0».
+    expect(formatSceneDuration(59.97)).toBe("1:00");
   });
 });
 
