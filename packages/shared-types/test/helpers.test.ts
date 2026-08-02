@@ -178,12 +178,16 @@ describe("storyboard helpers", () => {
     expect(prompt).not.toContain("fullScript");
   });
 
-  it("holds both templates to one visual world and varied shots", () => {
+  it("holds both templates to one visual style and varied shots", () => {
     for (const prompt of [
       buildStoryboardPrompt("The ocean floor is unmapped."),
       buildScriptFromTopicPrompt("Deep sea", null),
     ]) {
-      expect(prompt).toContain("ONE consistent visual world");
+      // Стиль задан человеком, но требование не переключать его между
+      // сценами осталось тем же, что и когда его выбирала модель.
+      expect(prompt).toContain("Use this exact visual style for every scene");
+      expect(prompt).toContain("do not switch styles between scenes");
+      expect(prompt).not.toContain("decide on ONE consistent visual world");
       expect(prompt).toContain("Vary shot type across scenes");
       expect(prompt).toContain("one decimal place allowed");
     }

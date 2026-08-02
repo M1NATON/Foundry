@@ -9,6 +9,7 @@ import type {
   CreateProjectDto,
   ProjectListItem,
   UpdateProjectDto,
+  VisualStyleKey,
 } from "@foundry/shared-types";
 import { api } from "@/lib/api";
 
@@ -18,6 +19,8 @@ export interface ProjectDetail {
   userId: string;
   title: string;
   brief: string | null;
+  visualStyle: VisualStyleKey | null;
+  visualStyleCustom: string | null;
   coverUrl: string | null;
   status: ProjectListItem["status"];
   createdAt: string;

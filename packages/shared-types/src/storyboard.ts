@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { WORDS_PER_MINUTE, estimateSpeechSeconds } from "./script";
+import { visualStyleBlock, type VisualStyleChoice } from "./visual-style";
 
 /**
  * Импорт раскадровки, собранной во внешнем чате (ChatGPT/Claude/Gemini).
@@ -194,12 +195,13 @@ const DURATION_RULES = `- Estimate duration from actual speaking pace, not a rig
 
 /**
  * Шаблон A: текст уже написан — модель обязана разложить именно его.
- * Сквозной визуальный мир задаётся до сцен: иначе каждая картинка сочиняется
+ * Визуальный стиль задаётся до сцен: иначе каждая картинка сочиняется
  * отдельно и получается набор случайных кадров, а не связный ролик.
  */
 export function buildStoryboardPrompt(
   script: string,
   language: ScriptLanguageKey = DEFAULT_SCRIPT_LANGUAGE,
+  style?: VisualStyleChoice | null,
 ): string {
   return `You are a professional YouTube video storyboard writer.
 
@@ -210,8 +212,7 @@ Return ONLY valid JSON, no markdown code fences, no commentary before or after.
 ${outputLanguage(language, "each scene's title")}
 - voiceText is copied from the script verbatim and therefore keeps the language of the source — do not translate it.
 
-VISUAL CONSISTENCY
-Before writing scene prompts, decide on ONE consistent visual world for this entire script (a single metaphor, setting, or art style — e.g. "deep ocean / bioluminescent tech" or "cyberpunk cityscape at night"). Every imagePrompt and videoPrompt must stay inside that same visual world. Do not switch styles between scenes.
+${visualStyleBlock(style)}
 
 SCENE BREAKS
 - Split narration into natural scene breaks — each scene is one visual beat / one idea.
@@ -262,6 +263,7 @@ export function buildScriptFromTopicPrompt(
   brief: string | null | undefined,
   length: ScriptLengthKey = DEFAULT_SCRIPT_LENGTH,
   language: ScriptLanguageKey = DEFAULT_SCRIPT_LANGUAGE,
+  style?: VisualStyleChoice | null,
 ): string {
   const trimmedBrief = brief?.trim();
   const topicBlock = trimmedBrief
@@ -291,8 +293,7 @@ Follow a clear narrative arc:
 5. Complication or nuance — a limitation, risk, or open question (avoid a flat "everything is great" narrative).
 6. Closing thought — a takeaway or forward-looking line, not just a summary restatement.
 
-VISUAL CONSISTENCY
-Decide on ONE consistent visual world for the entire video (a single metaphor, setting, or art style) before writing scene prompts. Every imagePrompt and videoPrompt must stay inside that same visual world.
+${visualStyleBlock(style)}
 
 SCENE BREAKS
 - Split the script into natural scene breaks — one visual beat / one idea per scene.

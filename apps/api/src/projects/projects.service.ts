@@ -1,13 +1,19 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import type {
-  CreateProjectDto,
-  UpdateProjectDto,
+import {
+  effectiveVisualStyle,
+  type CreateProjectDto,
+  type UpdateProjectDto,
+  type VisualStyleChoice,
 } from "@foundry/shared-types";
 import { PrismaService } from "../prisma/prisma.service";
+import { SettingsService } from "../settings/settings.service";
 
 @Injectable()
 export class ProjectsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly settings: SettingsService,
+  ) {}
 
   async create(userId: string, dto: CreateProjectDto) {
     return this.prisma.project.create({
@@ -63,6 +69,12 @@ export class ProjectsService {
       data: {
         ...(dto.title !== undefined ? { title: dto.title } : {}),
         ...(dto.brief !== undefined ? { brief: dto.brief } : {}),
+        ...(dto.visualStyle !== undefined
+          ? { visualStyle: dto.visualStyle }
+          : {}),
+        ...(dto.visualStyleCustom !== undefined
+          ? { visualStyleCustom: dto.visualStyleCustom }
+          : {}),
         ...(dto.coverUrl !== undefined ? { coverUrl: dto.coverUrl } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
       },
@@ -86,6 +98,33 @@ export class ProjectsService {
     });
     if (!project) throw new NotFoundException("Project not found");
     return project;
+  }
+
+  /**
+   * Стиль, с которым уходят промпты этого проекта: выбранный на нём, иначе
+   * дефолт пользователя. Резолвится на сервере, потому что только он видит
+   * обе строки; сам выбор между ними делает shared-types.
+   */
+  async visualStyleFor(
+    userId: string,
+    project: {
+      visualStyle: string | null;
+      visualStyleCustom: string | null;
+    },
+  ): Promise<VisualStyleChoice> {
+    const settings = await this.settings.findOne(userId);
+    return effectiveVisualStyle(
+      project.visualStyle
+        ? {
+            key: project.visualStyle as VisualStyleChoice["key"],
+            custom: project.visualStyleCustom,
+          }
+        : null,
+      {
+        key: settings.defaultVisualStyle,
+        custom: settings.defaultVisualStyleCustom,
+      },
+    );
   }
 
   /**

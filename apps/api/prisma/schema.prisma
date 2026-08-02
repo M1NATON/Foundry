@@ -14,6 +14,11 @@ model Project {
   // Пара фраз о замысле ролика. Нужны, когда сценария ещё нет: одного
   // названия внешней модели мало, чтобы написать его с нуля.
   brief     String?       @db.Text
+  // Визуальный стиль ролика. null — на проекте не выбран, берётся дефолт
+  // пользователя: так уже собранные проекты подхватывают его вкус, а не
+  // застревают на стиле, который когда-то выбрала за них модель.
+  visualStyle       String?
+  visualStyleCustom String? @db.Text
   coverUrl  String?
   status    ProjectStatus @default(DRAFT)
   createdAt DateTime      @default(now())
@@ -27,6 +32,14 @@ model Project {
   activeMusicId String?
 
   @@index([userId, updatedAt])
+}
+
+/// Настройки пользователя. FK нет: модели User в приложении не существует —
+/// userId это строка, которую отдаёт AuthGuard. `@id` даёт атомарный upsert.
+model UserSettings {
+  userId                   String  @id
+  defaultVisualStyle       String
+  defaultVisualStyleCustom String? @db.Text
 }
 
 enum ProjectStatus {

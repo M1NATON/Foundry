@@ -7,6 +7,7 @@ import { ScriptsModule } from "./scripts/scripts.module";
 import { ScenesModule } from "./scenes/scenes.module";
 import { AssetsModule } from "./assets/assets.module";
 import { ExportModule } from "./export/export.module";
+import { SettingsModule } from "./settings/settings.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ExportModule } from "./export/export.module";
     ScenesModule,
     AssetsModule,
     ExportModule,
+    SettingsModule,
   ],
 })
 export class AppModule {}

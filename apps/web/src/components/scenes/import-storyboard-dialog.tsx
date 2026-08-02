@@ -8,17 +8,21 @@ import {
   buildScriptFromTopicPrompt,
   buildStoryboardPrompt,
   detectScriptLanguage,
+  effectiveVisualStyle,
   hasDefaultTitle,
   storyboardPromptMode,
   type ScriptLanguageKey,
   type ScriptLengthKey,
+  type VisualStyleKey,
 } from "@foundry/shared-types";
 import { cn } from "@/lib/utils";
 import { ApiError } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
+import { VisualStyleField } from "@/components/scenes/visual-style-field";
 import { copyToClipboard } from "@/lib/clipboard";
 import { useProject, useUpdateProject } from "@/lib/queries/projects";
+import { useSettings } from "@/lib/queries/settings";
 import { useImportStoryboard } from "@/lib/queries/scenes";
 import { useScript } from "@/lib/queries/script";
 
@@ -43,6 +47,7 @@ export function ImportStoryboardDialog({
 }: ImportStoryboardDialogProps) {
   const { data: script } = useScript(projectId);
   const { data: project } = useProject(projectId);
+  const { data: settings } = useSettings();
   const updateProject = useUpdateProject(projectId);
   const importStoryboard = useImportStoryboard(projectId);
 
@@ -50,6 +55,7 @@ export function ImportStoryboardDialog({
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const [briefDraft, setBriefDraft] = useState<string | null>(null);
+  const [styleCustomDraft, setStyleCustomDraft] = useState<string | null>(null);
   const [length, setLength] = useState<ScriptLengthKey>(DEFAULT_SCRIPT_LENGTH);
   const [languageChoice, setLanguageChoice] = useState<ScriptLanguageKey | null>(
     null,
@@ -67,6 +73,39 @@ export function ImportStoryboardDialog({
   // По умолчанию — язык того, что уже написано; ручной выбор его перебивает.
   const sourceLanguage = detectScriptLanguage(scriptContent || brief);
   const language = languageChoice ?? sourceLanguage;
+
+  // Пока на проекте стиль не выбран, показываем дефолт пользователя — тот же,
+  // с которым уйдёт промпт, если ничего не трогать.
+  const style = effectiveVisualStyle(
+    project?.visualStyle ? { key: project.visualStyle } : null,
+    settings ? { key: settings.defaultVisualStyle } : null,
+  );
+  const styleCustom =
+    styleCustomDraft ??
+    (project?.visualStyle
+      ? (project.visualStyleCustom ?? "")
+      : (settings?.defaultVisualStyleCustom ?? ""));
+
+  function setStyleKey(key: VisualStyleKey) {
+    setStyleCustomDraft(null);
+    updateProject.mutate({
+      visualStyle: key,
+      // Пресет не носит с собой чужой текст: он осмыслен только для custom.
+      visualStyleCustom: key === "custom" ? styleCustom.trim() || null : null,
+    });
+  }
+
+  function saveStyleCustom() {
+    if (styleCustomDraft === null) return;
+    const trimmed = styleCustomDraft.trim();
+    setStyleCustomDraft(null);
+    if (trimmed !== (project?.visualStyleCustom ?? "").trim()) {
+      updateProject.mutate({
+        visualStyle: "custom",
+        visualStyleCustom: trimmed || null,
+      });
+    }
+  }
 
   function saveBrief() {
     if (briefDraft === null) return;
@@ -91,13 +130,22 @@ export function ImportStoryboardDialog({
   }, [copyError]);
 
   async function copyPrompt() {
-    // Бриф мог остаться неотправленным черновиком — в промпт он нужен сразу.
+    // Бриф и стиль могли остаться неотправленными черновиками — в промпт они
+    // нужны сразу, поэтому дописываются перед сборкой.
     saveBrief();
+    saveStyleCustom();
 
+    const styleForPrompt = { key: style.key, custom: styleCustom };
     const prompt =
       mode === "from-script"
-        ? buildStoryboardPrompt(scriptContent, language)
-        : buildScriptFromTopicPrompt(topic, brief, length, language);
+        ? buildStoryboardPrompt(scriptContent, language, styleForPrompt)
+        : buildScriptFromTopicPrompt(
+            topic,
+            brief,
+            length,
+            language,
+            styleForPrompt,
+          );
 
     const ok = await copyToClipboard(prompt);
     if (ok) setCopied(true);
@@ -195,6 +243,16 @@ export function ImportStoryboardDialog({
             </div>
           </div>
         )}
+
+        {/* Стиль виден в обоих режимах: и разбивка, и bootstrap пишут промпты
+            картинок, а ролик должен быть выдержан в одном визуальном языке. */}
+        <VisualStyleField
+          value={style.key}
+          custom={styleCustom}
+          onChange={setStyleKey}
+          onCustomChange={setStyleCustomDraft}
+          onCustomCommit={saveStyleCustom}
+        />
 
         {/* Язык виден в обоих режимах: инструкции промпта остаются
             английскими, меняется только язык самого текста ролика. */}

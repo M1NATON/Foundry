@@ -5,12 +5,16 @@ import { ArrowRight } from "lucide-react";
 import {
   buildStoryboardPrompt,
   countWords,
+  detectScriptLanguage,
+  effectiveVisualStyle,
   estimateSeconds,
   formatDuration,
 } from "@foundry/shared-types";
 import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/clipboard";
 import { useEditor } from "@/lib/editor-store";
+import { useProject } from "@/lib/queries/projects";
+import { useSettings } from "@/lib/queries/settings";
 import { useScenes, useSplitIntoScenes } from "@/lib/queries/scenes";
 import { useSaveScript, useScript } from "@/lib/queries/script";
 
@@ -30,6 +34,8 @@ const COPIED_MS = 2000;
 export function ScriptView({ projectId }: ScriptViewProps) {
   const { data: script } = useScript(projectId);
   const { data: scenes } = useScenes(projectId);
+  const { data: project } = useProject(projectId);
+  const { data: settings } = useSettings();
   const saveScript = useSaveScript(projectId);
   const split = useSplitIntoScenes(projectId);
   const { setStep } = useEditor();
@@ -142,7 +148,27 @@ export function ScriptView({ projectId }: ScriptViewProps) {
           <div className="mt-6 flex shrink-0 flex-wrap items-center gap-3">
             <button
               onClick={async () => {
-                const prompt = buildStoryboardPrompt(content);
+                // Тот же промпт, что и в модалке импорта: стиль проекта и
+                // язык написанного текста, иначе две кнопки дают разное.
+                const style = effectiveVisualStyle(
+                  project?.visualStyle
+                    ? {
+                        key: project.visualStyle,
+                        custom: project.visualStyleCustom,
+                      }
+                    : null,
+                  settings
+                    ? {
+                        key: settings.defaultVisualStyle,
+                        custom: settings.defaultVisualStyleCustom,
+                      }
+                    : null,
+                );
+                const prompt = buildStoryboardPrompt(
+                  content,
+                  detectScriptLanguage(content),
+                  style,
+                );
                 const ok = await copyToClipboard(prompt);
                 if (ok) setCopied(true);
                 else setCopyError(true);

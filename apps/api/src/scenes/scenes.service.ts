@@ -175,14 +175,20 @@ export class ScenesService {
 
     const scene = await this.prisma.scene.findUnique({
       where: { id: sceneId },
-      select: { voiceText: true },
+      select: {
+        voiceText: true,
+        project: {
+          select: { visualStyle: true, visualStyleCustom: true },
+        },
+      },
     });
     if (!scene) throw new NotFoundException("Scene not found");
     if (!scene.voiceText.trim()) {
       throw new BadRequestException("Scene has no voiceover to work from");
     }
 
-    const prompts = await this.llm.promptsFor(scene.voiceText);
+    const style = await this.projects.visualStyleFor(userId, scene.project);
+    const prompts = await this.llm.promptsFor(scene.voiceText, style);
 
     return this.prisma.scene.update({
       where: { id: sceneId },

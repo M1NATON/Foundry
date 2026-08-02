@@ -2,6 +2,10 @@ import { z } from "zod";
 import { ProjectStatus } from "./enums";
 import { AssetSchema, type Asset } from "./asset";
 import { DURATION_MISMATCH_THRESHOLD_SECONDS } from "./scene";
+import {
+  VISUAL_STYLE_CUSTOM_MAX,
+  VisualStyleKeySchema,
+} from "./visual-style";
 
 /** Заголовок нового проекта. Импорт раскадровки перезаписывает только его. */
 export const DEFAULT_PROJECT_TITLE = "Untitled project";
@@ -21,6 +25,14 @@ export const UpdateProjectSchema = z.object({
   title: z.string().trim().min(1).max(200).optional(),
   /** Короткий бриф: о чём ролик, для кого и в каком тоне. */
   brief: z.string().trim().max(600).nullable().optional(),
+  /** null — стиль не выбран на проекте, берётся дефолт пользователя. */
+  visualStyle: VisualStyleKeySchema.nullable().optional(),
+  visualStyleCustom: z
+    .string()
+    .trim()
+    .max(VISUAL_STYLE_CUSTOM_MAX)
+    .nullable()
+    .optional(),
   coverUrl: z.string().url().nullable().optional(),
   status: ProjectStatus.optional(),
 });
@@ -31,6 +43,8 @@ export const ProjectSchema = z.object({
   userId: z.string(),
   title: z.string(),
   brief: z.string().nullable(),
+  visualStyle: VisualStyleKeySchema.nullable(),
+  visualStyleCustom: z.string().nullable(),
   coverUrl: z.string().nullable(),
   status: ProjectStatus,
   createdAt: z.string(),

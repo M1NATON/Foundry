@@ -50,15 +50,21 @@ export class ScriptsService {
   async splitIntoScenes(userId: string, projectId: string) {
     await this.projects.assertOwned(userId, projectId);
 
-    const script = await this.prisma.script.findUnique({
-      where: { projectId },
-      select: { content: true },
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      select: {
+        visualStyle: true,
+        visualStyleCustom: true,
+        script: { select: { content: true } },
+      },
     });
+    const script = project?.script;
     if (!script || !script.content.trim()) {
       throw new BadRequestException("Script is empty");
     }
 
-    const scenes = await this.llm.splitIntoScenes(script.content);
+    const style = await this.projects.visualStyleFor(userId, project);
+    const scenes = await this.llm.splitIntoScenes(script.content, style);
 
     // Раскадровка пересобирается целиком: старые сцены (и их ассеты по каскаду)
     // удаляются в той же транзакции, что и вставка новых.
