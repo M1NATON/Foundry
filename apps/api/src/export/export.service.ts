@@ -131,61 +131,56 @@ export class ExportService {
   }
 
   /**
-   * Resolve pack — самодостаточный архив для монтажки: project.fcpxml,
-   * subtitles.srt и папка media/ со всеми файлами под читаемыми именами.
-   * Пути в FCPXML относительные (file://./media/...): архив можно
-   * распаковать куда угодно. Если монтажка не подхватит относительные
-   * пути, хватит одной перелинковки на папку media/ — имена уникальные.
+   * Resolve pack — архив для монтажки: project.fcpxml, subtitles.srt и папка
+   * media/ со всеми файлами под читаемыми именами. FCPXML ссылается на
+   * исходные абсолютные пути: Resolve не разворачивает относительные, поэтому
+   * на машине, где крутится Foundry, импорт работает сразу. Папка media/
+   * нужна для переноса: на другом компьютере хватает одной перелинковки на
+   * неё — имена файлов уникальные и понятные.
    */
   private async toResolvePack(
     project: ProjectPayload,
     spec: (typeof EXPORT_FORMATS)[number],
   ): Promise<ExportResult> {
     const entries: ZipEntry[] = [];
-    const packedBySource = new Map<string, string>();
+    const stashed = new Set<string>();
 
-    const pack = async (
+    // Копия в media/ под читаемым именем; путь в FCPXML не меняем — см. выше.
+    const stash = async (
       sourcePath: string,
       desired: string,
-    ): Promise<string> => {
-      const existing = packedBySource.get(sourcePath);
-      if (existing) return `./media/${existing}`;
+    ): Promise<void> => {
+      if (stashed.has(sourcePath)) return;
       try {
-        const data = await readFile(sourcePath);
-        entries.push({ name: `media/${desired}`, data });
-        packedBySource.set(sourcePath, desired);
-        return `./media/${desired}`;
+        entries.push({
+          name: `media/${desired}`,
+          data: await readFile(sourcePath),
+        });
+        stashed.add(sourcePath);
       } catch {
-        // Файл недоступен на диске — оставляем исходный путь как есть.
-        return sourcePath;
+        // Файл недоступен на диске — просто не кладём его в архив.
       }
     };
 
-    const clips: TimelineClip[] = [];
-    for (const clip of this.toClips(project)) {
-      clips.push({
-        ...clip,
-        videoPath: clip.videoPath
-          ? await pack(
-              clip.videoPath,
-              packMediaName(clip.order, "frame", clip.name, clip.videoPath),
-            )
-          : null,
-        audioPath: clip.audioPath
-          ? await pack(
-              clip.audioPath,
-              packMediaName(clip.order, "voice", clip.name, clip.audioPath),
-            )
-          : null,
-      });
+    const clips = this.toClips(project);
+    for (const clip of clips) {
+      if (clip.videoPath) {
+        await stash(
+          clip.videoPath,
+          packMediaName(clip.order, "frame", clip.name, clip.videoPath),
+        );
+      }
+      if (clip.audioPath) {
+        await stash(
+          clip.audioPath,
+          packMediaName(clip.order, "voice", clip.name, clip.audioPath),
+        );
+      }
     }
 
-    const music: MusicSegment[] = [];
-    for (const segment of this.toMusicSegments(project)) {
-      music.push({
-        ...segment,
-        path: await pack(segment.path, `music-${baseName(segment.path)}`),
-      });
+    const music = this.toMusicSegments(project);
+    for (const segment of music) {
+      await stash(segment.path, `music-${baseName(segment.path)}`);
     }
 
     const fcpxml = toFcpxml(
