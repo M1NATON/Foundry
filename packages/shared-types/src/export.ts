@@ -15,6 +15,7 @@ export const EXPORT_FORMATS: Array<{
   /** Таймлайн для монтажки против текстового документа — разные полки в UI. */
   group: "timeline" | "document";
 }> = [
+  { format: "resolve-pack", label: "Resolve pack", hint: "ZIP: FCPXML + media + SRT, nothing to relink", ext: "zip", mime: "application/zip", group: "timeline" },
   { format: "fcpxml", label: "FCPXML", hint: "Timeline for Resolve, Premiere, Final Cut", ext: "fcpxml", mime: "application/xml", group: "timeline" },
   { format: "edl", label: "EDL", hint: "Cuts only — read by every editor", ext: "edl", mime: "text/plain", group: "timeline" },
   { format: "md", label: "Markdown", hint: "Script + scene breakdown", ext: "md", mime: "text/markdown", group: "document" },

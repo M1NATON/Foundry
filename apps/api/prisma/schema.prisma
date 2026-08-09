@@ -21,6 +21,8 @@ model Project {
   visualStyleCustom String? @db.Text
   coverUrl  String?
   status    ProjectStatus @default(DRAFT)
+  // Формат кадра таймлайна при экспорте в монтажку: шортсы — PORTRAIT.
+  frameFormat FrameFormat @default(LANDSCAPE)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   research  Research?
@@ -49,6 +51,11 @@ enum ProjectStatus {
   STORYBOARDING
   PRODUCING
   READY
+}
+
+enum FrameFormat {
+  LANDSCAPE
+  PORTRAIT
 }
 
 model Research {

@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 import {
@@ -14,9 +15,11 @@ import {
   secondsToFrames,
   toEdl,
   toFcpxml,
+  type FcpxmlOptions,
   type MusicSegment,
   type TimelineClip,
 } from "./timeline";
+import { createZip, type ZipEntry } from "./zip";
 
 type ProjectPayload = Awaited<ReturnType<ProjectsService["findOne"]>>;
 type ScenePayload = ProjectPayload["scenes"][number];
@@ -25,10 +28,51 @@ export interface ExportResult {
   filename: string;
   mime: string;
   content: string;
+  /** "base64" — бинарный формат (Resolve pack); по умолчанию utf8-текст. */
+  encoding?: "utf8" | "base64";
 }
 
 /** Минимальная длительность субтитра — иначе короткие сцены мелькают. */
 const MIN_SCENE_SECONDS = 2;
+
+/** slug для имён файлов и архивов: только a-z0-9 и дефисы. */
+function slugify(text: string): string {
+  const slug = text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "project";
+}
+
+/** Расширение файла с точкой; сепаратором может быть и Windows-слеш. */
+function extOf(path: string): string {
+  const lastSep = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+  const dot = path.lastIndexOf(".");
+  return dot > lastSep ? path.slice(dot) : "";
+}
+
+/** Имя файла без каталога; сепаратором может быть и Windows-слеш. */
+function baseName(path: string): string {
+  const lastSep = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+  return path.slice(lastSep + 1);
+}
+
+/**
+ * Читаемое имя медиафайла в Resolve pack: scene-01-hook.png вместо
+ * 1786311356831-1.jpg. По таким именам монтажка перелинковывает всю папку
+ * одним действием, а человек понимает, что где лежит.
+ */
+export function packMediaName(
+  order: number,
+  kind: "frame" | "voice",
+  sceneName: string,
+  sourcePath: string,
+): string {
+  const base = `scene-${String(order).padStart(2, "0")}-${slugify(sceneName)}`;
+  return kind === "voice"
+    ? `${base}-voice${extOf(sourcePath)}`
+    : `${base}${extOf(sourcePath)}`;
+}
 
 @Injectable()
 export class ExportService {
@@ -41,6 +85,10 @@ export class ExportService {
   ): Promise<ExportResult> {
     const project = await this.projects.findOne(userId, projectId);
     const spec = EXPORT_FORMATS.find((f) => f.format === format)!;
+
+    if (format === "resolve-pack") {
+      return this.toResolvePack(project, spec);
+    }
 
     const content =
       format === "md"
@@ -58,6 +106,7 @@ export class ExportService {
                       project.title,
                       this.toClips(project),
                       this.toMusicSegments(project),
+                      this.frameOptions(project),
                     )
                   : format === "edl"
                     ? toEdl(
@@ -71,6 +120,94 @@ export class ExportService {
       filename: `${this.slug(project.title)}.${spec.ext}`,
       mime: spec.mime,
       content,
+    };
+  }
+
+  /** Размер кадра таймлайна из настройки проекта: шортсы — вертикаль. */
+  private frameOptions(project: ProjectPayload): FcpxmlOptions {
+    return project.frameFormat === "PORTRAIT"
+      ? { width: 1080, height: 1920 }
+      : { width: 1920, height: 1080 };
+  }
+
+  /**
+   * Resolve pack — самодостаточный архив для монтажки: project.fcpxml,
+   * subtitles.srt и папка media/ со всеми файлами под читаемыми именами.
+   * Пути в FCPXML относительные (file://./media/...): архив можно
+   * распаковать куда угодно. Если монтажка не подхватит относительные
+   * пути, хватит одной перелинковки на папку media/ — имена уникальные.
+   */
+  private async toResolvePack(
+    project: ProjectPayload,
+    spec: (typeof EXPORT_FORMATS)[number],
+  ): Promise<ExportResult> {
+    const entries: ZipEntry[] = [];
+    const packedBySource = new Map<string, string>();
+
+    const pack = async (
+      sourcePath: string,
+      desired: string,
+    ): Promise<string> => {
+      const existing = packedBySource.get(sourcePath);
+      if (existing) return `./media/${existing}`;
+      try {
+        const data = await readFile(sourcePath);
+        entries.push({ name: `media/${desired}`, data });
+        packedBySource.set(sourcePath, desired);
+        return `./media/${desired}`;
+      } catch {
+        // Файл недоступен на диске — оставляем исходный путь как есть.
+        return sourcePath;
+      }
+    };
+
+    const clips: TimelineClip[] = [];
+    for (const clip of this.toClips(project)) {
+      clips.push({
+        ...clip,
+        videoPath: clip.videoPath
+          ? await pack(
+              clip.videoPath,
+              packMediaName(clip.order, "frame", clip.name, clip.videoPath),
+            )
+          : null,
+        audioPath: clip.audioPath
+          ? await pack(
+              clip.audioPath,
+              packMediaName(clip.order, "voice", clip.name, clip.audioPath),
+            )
+          : null,
+      });
+    }
+
+    const music: MusicSegment[] = [];
+    for (const segment of this.toMusicSegments(project)) {
+      music.push({
+        ...segment,
+        path: await pack(segment.path, `music-${baseName(segment.path)}`),
+      });
+    }
+
+    const fcpxml = toFcpxml(
+      project.title,
+      clips,
+      music,
+      this.frameOptions(project),
+    );
+    entries.unshift({
+      name: "project.fcpxml",
+      data: Buffer.from(fcpxml, "utf8"),
+    });
+    entries.push({
+      name: "subtitles.srt",
+      data: Buffer.from(this.toSrt(project), "utf8"),
+    });
+
+    return {
+      filename: `${this.slug(project.title)}.${spec.ext}`,
+      mime: spec.mime,
+      content: createZip(entries).toString("base64"),
+      encoding: "base64",
     };
   }
 
@@ -96,6 +233,8 @@ export class ExportService {
           this.activeFilePath(scene, "VIDEO") ??
           this.activeFilePath(scene, "IMAGE"),
         audioPath: this.activeFilePath(scene, "VOICE"),
+        // Подсказка движения из раскадровки — уедет маркером на клип.
+        note: scene.videoPrompt?.trim() || null,
       };
     });
   }
@@ -299,8 +438,7 @@ export class ExportService {
 
   /** Явная длительность сцены, иначе оценка по темпу начитки. */
   private sceneSeconds(scene: ScenePayload): number {
-    const raw =
-      scene.durationSec ?? estimateSpeechSeconds(scene.voiceText);
+    const raw = scene.durationSec ?? estimateSpeechSeconds(scene.voiceText);
     return Math.max(MIN_SCENE_SECONDS, raw);
   }
 
@@ -316,10 +454,6 @@ export class ExportService {
   }
 
   private slug(title: string): string {
-    const slug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-    return slug || "project";
+    return slugify(title);
   }
 }
