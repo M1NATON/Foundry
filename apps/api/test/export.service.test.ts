@@ -104,6 +104,12 @@ describe("packMediaName", () => {
       "scene-03-core-voice.wav",
     );
   });
+
+  it("transliterates Cyrillic scene names instead of collapsing them", () => {
+    expect(packMediaName(1, "frame", "Хук: Половина", "/u/x/1.jpg")).toBe(
+      "scene-01-huk-polovina.jpg",
+    );
+  });
 });
 
 describe("ExportService resolve pack", () => {

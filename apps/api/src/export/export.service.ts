@@ -39,10 +39,23 @@ const MIN_SCENE_SECONDS = 2;
 /** Собранные экспорты с медиа рядом: exports/<slug>/media/scene-01-.... */
 const EXPORT_DIR = "exports";
 
-/** slug для имён файлов и архивов: только a-z0-9 и дефисы. */
+/** Транслитерация кириллицы — иначе русские названия схлопываются в "project". */
+const CYRILLIC: Record<string, string> = {
+  а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "e", ж: "zh",
+  з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o",
+  п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "h", ц: "c",
+  ч: "ch", ш: "sh", щ: "sch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu",
+  я: "ya",
+};
+
+/** slug для имён файлов и архивов: транслит + только a-z0-9 и дефисы. */
 function slugify(text: string): string {
-  const slug = text
+  const transliterated = text
     .toLowerCase()
+    .split("")
+    .map((ch) => CYRILLIC[ch] ?? ch)
+    .join("");
+  const slug = transliterated
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
   return slug || "project";
