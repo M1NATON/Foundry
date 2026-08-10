@@ -16,6 +16,8 @@ interface ExportResult {
   filename: string;
   mime: string;
   content: string;
+  /** "base64" — бинарные форматы (Resolve pack), остальное utf8-текст. */
+  encoding?: "utf8" | "base64";
 }
 
 const GROUPS: Array<{
@@ -26,9 +28,9 @@ const GROUPS: Array<{
   {
     group: "timeline",
     label: "Timeline",
-    // Путь к медиа в файле абсолютный: монтажка ищет файлы там, где они
-    // лежат сейчас. При переносе на другую машину их надо взять с собой.
-    note: "Media is referenced by its path on this machine.",
+    // Resolve pack везёт медиа с собой; голые FCPXML/EDL ссылаются на файлы
+    // по путям этой машины — при переносе их надо взять с собой.
+    note: "Resolve pack bundles media with the timeline. Plain FCPXML/EDL reference files by path on this machine.",
   },
   { group: "document", label: "Document" },
 ];
@@ -45,7 +47,11 @@ export function ExportPanel({ projectId, open, onClose }: ExportPanelProps) {
         { format },
       );
 
-      const blob = new Blob([result.content], { type: result.mime });
+      const bytes =
+        result.encoding === "base64"
+          ? base64ToBytes(result.content)
+          : new TextEncoder().encode(result.content);
+      const blob = new Blob([bytes], { type: result.mime });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -104,4 +110,14 @@ export function ExportPanel({ projectId, open, onClose }: ExportPanelProps) {
       </div>
     </Dialog>
   );
+}
+
+/** Бинарный экспорт (Resolve pack) приезжает base64-строкой в JSON. */
+function base64ToBytes(base64: string): Uint8Array<ArrayBuffer> {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
 }

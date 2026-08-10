@@ -1,3 +1,4 @@
+import { copyFile, mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 import {
@@ -14,9 +15,12 @@ import {
   secondsToFrames,
   toEdl,
   toFcpxml,
+  type FcpxmlOptions,
   type MusicSegment,
   type TimelineClip,
 } from "./timeline";
+import { toXmeml } from "./xmeml";
+import { createZip, type ZipEntry } from "./zip";
 
 type ProjectPayload = Awaited<ReturnType<ProjectsService["findOne"]>>;
 type ScenePayload = ProjectPayload["scenes"][number];
@@ -25,10 +29,75 @@ export interface ExportResult {
   filename: string;
   mime: string;
   content: string;
+  /** "base64" — бинарный формат (Resolve pack); по умолчанию utf8-текст. */
+  encoding?: "utf8" | "base64";
 }
 
 /** Минимальная длительность субтитра — иначе короткие сцены мелькают. */
 const MIN_SCENE_SECONDS = 2;
+
+/** Собранные экспорты с медиа рядом: exports/<slug>/media/scene-01-.... */
+const EXPORT_DIR = "exports";
+
+/** Транслитерация кириллицы — иначе русские названия схлопываются в "project". */
+const CYRILLIC: Record<string, string> = {
+  а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "e", ж: "zh",
+  з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o",
+  п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "h", ц: "c",
+  ч: "ch", ш: "sh", щ: "sch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu",
+  я: "ya",
+};
+
+/** slug для имён файлов и архивов: транслит + только a-z0-9 и дефисы. */
+function slugify(text: string): string {
+  const transliterated = text
+    .toLowerCase()
+    .split("")
+    .map((ch) => CYRILLIC[ch] ?? ch)
+    .join("");
+  const slug = transliterated
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "project";
+}
+
+/** Расширение файла с точкой; сепаратором может быть и Windows-слеш. */
+function extOf(path: string): string {
+  const lastSep = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+  const dot = path.lastIndexOf(".");
+  return dot > lastSep ? path.slice(dot) : "";
+}
+
+/** Имя файла без каталога; сепаратором может быть и Windows-слеш. */
+function baseName(path: string): string {
+  const lastSep = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
+  return path.slice(lastSep + 1);
+}
+
+/**
+ * Читаемое имя медиафайла в экспорте: scene-01-hook.png вместо
+ * 1786311356831-1.jpg. По таким именам монтажка перелинковывает всю папку
+ * одним действием, а человек понимает, что где лежит.
+ */
+export function packMediaName(
+  order: number,
+  kind: "frame" | "voice",
+  sceneName: string,
+  sourcePath: string,
+): string {
+  const base = `scene-${String(order).padStart(2, "0")}-${slugify(sceneName)}`;
+  return kind === "voice"
+    ? `${base}-voice${extOf(sourcePath)}`
+    : `${base}${extOf(sourcePath)}`;
+}
+
+/** Медиа, подготовленное к экспорту: клипы/музыка со ссылками на копии. */
+interface StagedMedia {
+  clips: TimelineClip[];
+  music: MusicSegment[];
+  /** Скопированные файлы: имя внутри архива и абсолютный путь к копии. */
+  files: Array<{ name: string; path: string }>;
+}
 
 @Injectable()
 export class ExportService {
@@ -42,6 +111,29 @@ export class ExportService {
     const project = await this.projects.findOne(userId, projectId);
     const spec = EXPORT_FORMATS.find((f) => f.format === format)!;
 
+    if (format === "resolve-pack") {
+      return this.toResolvePack(project, spec);
+    }
+
+    // Таймлайны собираются на подготовленных копиях: читаемые имена файлов
+    // и медиа, лежащее рядом с экспортом, а не где-то в недрах uploads.
+    if (format === "fcpxml" || format === "premiere-xml" || format === "edl") {
+      const staged = await this.stageMedia(project);
+      const options = this.frameOptions(project);
+      const content =
+        format === "fcpxml"
+          ? toFcpxml(project.title, staged.clips, staged.music, options)
+          : format === "premiere-xml"
+            ? toXmeml(project.title, staged.clips, staged.music, options)
+            : toEdl(project.title, staged.clips, staged.music);
+
+      return {
+        filename: `${this.slug(project.title)}.${spec.ext}`,
+        mime: spec.mime,
+        content,
+      };
+    }
+
     const content =
       format === "md"
         ? this.toMarkdown(project)
@@ -53,24 +145,133 @@ export class ExportService {
               ? this.toCsv(project)
               : format === "prompts"
                 ? this.toPrompts(project)
-                : format === "fcpxml"
-                  ? toFcpxml(
-                      project.title,
-                      this.toClips(project),
-                      this.toMusicSegments(project),
-                    )
-                  : format === "edl"
-                    ? toEdl(
-                        project.title,
-                        this.toClips(project),
-                        this.toMusicSegments(project),
-                      )
-                    : this.toSrt(project);
+                : this.toSrt(project);
 
     return {
       filename: `${this.slug(project.title)}.${spec.ext}`,
       mime: spec.mime,
       content,
+    };
+  }
+
+  /** Размер кадра таймлайна из настройки проекта: шортсы — вертикаль. */
+  private frameOptions(project: ProjectPayload): FcpxmlOptions {
+    return project.frameFormat === "PORTRAIT"
+      ? { width: 1080, height: 1920 }
+      : { width: 1920, height: 1080 };
+  }
+
+  /**
+   * Копирует медиа проекта в exports/<slug>/media/ под читаемыми именами и
+   * возвращает клипы/музыку, ссылающиеся на эти копии. Таймлайн по ним
+   * импортируется сразу (абсолютные пути), а папку exports/<slug>/ можно
+   * унести на другую машину целиком — там же лежат и сами XML.
+   * Файл, который не удалось скопировать, остаётся с исходным путём.
+   */
+  private async stageMedia(project: ProjectPayload): Promise<StagedMedia> {
+    const mediaDir = join(
+      process.cwd(),
+      EXPORT_DIR,
+      this.slug(project.title),
+      "media",
+    );
+    const staged = new Map<string, string>();
+    const files: StagedMedia["files"] = [];
+
+    const stage = async (
+      sourcePath: string,
+      desired: string,
+    ): Promise<string> => {
+      const existing = staged.get(sourcePath);
+      if (existing) return existing;
+      const target = join(mediaDir, desired);
+      try {
+        await mkdir(mediaDir, { recursive: true });
+        await copyFile(sourcePath, target);
+        staged.set(sourcePath, target);
+        files.push({ name: `media/${desired}`, path: target });
+        return target;
+      } catch {
+        return sourcePath;
+      }
+    };
+
+    const clips: TimelineClip[] = [];
+    for (const clip of this.toClips(project)) {
+      clips.push({
+        ...clip,
+        videoPath: clip.videoPath
+          ? await stage(
+              clip.videoPath,
+              packMediaName(clip.order, "frame", clip.name, clip.videoPath),
+            )
+          : null,
+        audioPath: clip.audioPath
+          ? await stage(
+              clip.audioPath,
+              packMediaName(clip.order, "voice", clip.name, clip.audioPath),
+            )
+          : null,
+      });
+    }
+
+    const music: MusicSegment[] = [];
+    for (const segment of this.toMusicSegments(project)) {
+      music.push({
+        ...segment,
+        path: await stage(segment.path, `music-${baseName(segment.path)}`),
+      });
+    }
+
+    return { clips, music, files };
+  }
+
+  /**
+   * Resolve pack — архив с папкой exports/<slug>/ целиком: project.fcpxml
+   * (Resolve/Final Cut), project-premiere.xml (Premiere понимает только
+   * старый FCP 7 XML), subtitles.srt и media/ со всеми файлами под читаемыми
+   * именами. Таймлайны ссылаются на копии в media/ по абсолютным путям —
+   * на этой машине импорт работает сразу; на другой компьютер архив
+   * распаковывается, и хватает одной перелинковки на папку media/.
+   */
+  private async toResolvePack(
+    project: ProjectPayload,
+    spec: (typeof EXPORT_FORMATS)[number],
+  ): Promise<ExportResult> {
+    const staged = await this.stageMedia(project);
+    const options = this.frameOptions(project);
+
+    const entries: ZipEntry[] = [];
+    for (const file of staged.files) {
+      entries.push({ name: file.name, data: await readFile(file.path) });
+    }
+
+    entries.unshift(
+      {
+        name: "project.fcpxml",
+        data: Buffer.from(
+          toFcpxml(project.title, staged.clips, staged.music, options),
+          "utf8",
+        ),
+      },
+      {
+        name: "project-premiere.xml",
+        data: Buffer.from(
+          toXmeml(project.title, staged.clips, staged.music, options),
+          "utf8",
+        ),
+      },
+    );
+    entries.push({
+      name: "subtitles.srt",
+      data: Buffer.from(this.toSrt(project), "utf8"),
+    });
+
+    return {
+      filename: `${this.slug(project.title)}.${spec.ext}`,
+      mime: spec.mime,
+      content: createZip(entries).toString("base64"),
+      encoding: "base64",
     };
   }
 
@@ -96,6 +297,8 @@ export class ExportService {
           this.activeFilePath(scene, "VIDEO") ??
           this.activeFilePath(scene, "IMAGE"),
         audioPath: this.activeFilePath(scene, "VOICE"),
+        // Подсказка движения из раскадровки — уедет маркером на клип.
+        note: scene.videoPrompt?.trim() || null,
       };
     });
   }
@@ -299,8 +502,7 @@ export class ExportService {
 
   /** Явная длительность сцены, иначе оценка по темпу начитки. */
   private sceneSeconds(scene: ScenePayload): number {
-    const raw =
-      scene.durationSec ?? estimateSpeechSeconds(scene.voiceText);
+    const raw = scene.durationSec ?? estimateSpeechSeconds(scene.voiceText);
     return Math.max(MIN_SCENE_SECONDS, raw);
   }
 
@@ -316,10 +518,6 @@ export class ExportService {
   }
 
   private slug(title: string): string {
-    const slug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-    return slug || "project";
+    return slugify(title);
   }
 }

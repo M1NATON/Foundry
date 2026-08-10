@@ -20,6 +20,11 @@ export interface TimelineClip {
   videoPath: string | null;
   /** Абсолютный путь к файлу озвучки, если он есть. */
   audioPath: string | null;
+  /**
+   * Подсказка движения камеры/объекта (из videoPrompt сцены). Уезжает
+   * маркером на клип, чтобы в монтажке было видно задумку без открытия Foundry.
+   */
+  note: string | null;
 }
 
 /**
@@ -34,6 +39,18 @@ export interface MusicSegment {
   /** Смещение внутри исходного файла — у базового трека равно позиции. */
   sourceStartFrames: number;
   name: string;
+}
+
+export interface FcpxmlOptions {
+  /** Размер кадра таймлайна. По умолчанию Full HD landscape (1920x1080). */
+  width?: number;
+  height?: number;
+  /**
+   * Длительность Cross Dissolve между соседними сценами в кадрах.
+   * 0 — без переходов. По умолчанию 12 кадров (0.4 с при 30 fps): ровно то,
+   * что монтажёр ставит руками через Ctrl+T, только уже в файле.
+   */
+  transitionFrames?: number;
 }
 
 export function secondsToFrames(seconds: number): number {
@@ -56,9 +73,28 @@ function xmlEscape(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** file:// URL для локального пути: монтажка ищет медиа по нему. */
-function fileUrl(absolutePath: string): string {
-  return `file://${absolutePath.split("/").map(encodeURIComponent).join("/")}`;
+/**
+ * file:// URL для пути к медиа: монтажка ищет файлы по нему.
+ *
+ * Путь сначала нормализуется: обратные слеши Windows (`C:\Users\...`)
+ * превращаются в прямые, иначе encodeURIComponent запечатает их как %5C и
+ * Resolve покажет все клипы офлайн. Путь, начинающийся с "./", остаётся
+ * относительным — так Resolve pack ссылается на свою папку media/.
+ */
+export function fileUrl(path: string): string {
+  const normalized = path.replaceAll("\\", "/");
+  const relative = normalized.startsWith("./");
+  const segments = normalized
+    .split("/")
+    .filter((segment) => segment !== "" && segment !== ".")
+    .map((segment, index) =>
+      // Двоеточие в букве диска Windows (C:) — часть пути, а не URL-синтаксис.
+      index === 0 && /^[A-Za-z]:$/.test(segment)
+        ? segment
+        : encodeURIComponent(segment),
+    )
+    .join("/");
+  return relative ? `file://./${segments}` : `file:///${segments}`;
 }
 
 /**
@@ -71,12 +107,19 @@ export function toFcpxml(
   projectTitle: string,
   clips: TimelineClip[],
   music: MusicSegment[] = [],
+  options: FcpxmlOptions = {},
 ): string {
-  const format = `<format id="r0" name="FFVideoFormat1080p${EXPORT_FPS}" frameDuration="${rational(1)}" width="1920" height="1080" colorSpace="1-1-1 (Rec. 709)"/>`;
+  const width = options.width ?? 1920;
+  const height = options.height ?? 1080;
+  const transitionFrames = options.transitionFrames ?? 12;
+  const format = `<format id="r0" name="FFVideoFormat${width}x${height}p${EXPORT_FPS}" frameDuration="${rational(1)}" width="${width}" height="${height}" colorSpace="1-1-1 (Rec. 709)"/>`;
 
   const resources: string[] = [format];
   const spine: string[] = [];
   let nextId = 1;
+  // Последний видеоклип в основной дорожке — переход ставится только на стык
+  // двух картинок, gap и аудио-лейны цепочку разрывают.
+  let prevVideo: { endFrames: number; durationFrames: number } | null = null;
 
   for (const clip of clips) {
     const label = xmlEscape(`${String(clip.order).padStart(2, "0")} ${clip.name}`);
@@ -92,13 +135,43 @@ export function toFcpxml(
           `${isImage ? "" : ` format="r0"`}>` +
           `<media-rep kind="original-media" src="${fileUrl(clip.videoPath)}"/></asset>`,
       );
+
+      // Cross Dissolve на стык с предыдущей картинкой. FCPXML ставит переход
+      // симметрично на границу: offset = стык минус половина длительности.
+      if (
+        transitionFrames > 0 &&
+        prevVideo &&
+        prevVideo.endFrames === clip.startFrames &&
+        prevVideo.durationFrames > transitionFrames &&
+        clip.durationFrames > transitionFrames
+      ) {
+        spine.push(
+          `<transition name="Cross Dissolve" ` +
+            `offset="${rational(clip.startFrames - transitionFrames / 2)}" ` +
+            `duration="${rational(transitionFrames)}"/>`,
+        );
+      }
+
+      // Маркер с подсказкой движения — в Resolve виден прямо на клипе.
+      const marker = clip.note
+        ? `<marker start="0s" duration="${rational(1)}" ` +
+          `value="${xmlEscape(`Motion: ${clip.note}`)}"/>`
+        : null;
+
       spine.push(
-        `<asset-clip ref="${id}" name="${label}" offset="${offset}" duration="${duration}" start="0s"/>`,
+        marker
+          ? `<asset-clip ref="${id}" name="${label}" offset="${offset}" duration="${duration}" start="0s">${marker}</asset-clip>`
+          : `<asset-clip ref="${id}" name="${label}" offset="${offset}" duration="${duration}" start="0s"/>`,
       );
+      prevVideo = {
+        endFrames: clip.startFrames + clip.durationFrames,
+        durationFrames: clip.durationFrames,
+      };
     } else {
       // Сцена без картинки не выпадает из таймлайна — на её месте пустой
       // промежуток, иначе последующие сцены съедут по времени.
       spine.push(`<gap name="${label}" offset="${offset}" duration="${duration}"/>`);
+      prevVideo = null;
     }
 
     if (clip.audioPath) {

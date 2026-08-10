@@ -19,6 +19,10 @@ export type AssetType = z.infer<typeof AssetType>;
 export const AssetStatus = z.enum(["QUEUED", "GENERATING", "READY", "FAILED"]);
 export type AssetStatus = z.infer<typeof AssetStatus>;
 
+/** Формат кадра таймлайна при экспорте в монтажку: шортсы — PORTRAIT. */
+export const FrameFormat = z.enum(["LANDSCAPE", "PORTRAIT"]);
+export type FrameFormat = z.infer<typeof FrameFormat>;
+
 export const ExportFormat = z.enum([
   "md",
   "txt",
@@ -27,7 +31,9 @@ export const ExportFormat = z.enum([
   "srt",
   "prompts",
   "fcpxml",
+  "premiere-xml",
   "edl",
+  "resolve-pack",
 ]);
 export type ExportFormat = z.infer<typeof ExportFormat>;
 

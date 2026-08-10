@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { ExportService } from "../src/export/export.service";
+import {
+  ExportService,
+  packMediaName,
+} from "../src/export/export.service";
 import type { ProjectsService } from "../src/projects/projects.service";
 
 type ProjectPayload = Awaited<ReturnType<ProjectsService["findOne"]>>;
@@ -89,6 +92,40 @@ describe("ExportService prompts format", () => {
 
     expect(result.content).toContain("IMAGE: (none)");
     expect(result.content).toContain("VIDEO: (none)");
+  });
+});
+
+describe("packMediaName", () => {
+  it("renames uploads to readable scene names", () => {
+    expect(
+      packMediaName(1, "frame", "Hook: Half Isn't Human", "/u/x/1786311356831-1.jpg"),
+    ).toBe("scene-01-hook-half-isnt-human.jpg");
+    expect(packMediaName(3, "voice", "Core", "C:\\Users\\ARS\\v.wav")).toBe(
+      "scene-03-core-voice.wav",
+    );
+  });
+
+  it("transliterates Cyrillic scene names instead of collapsing them", () => {
+    expect(packMediaName(1, "frame", "Хук: Половина", "/u/x/1.jpg")).toBe(
+      "scene-01-huk-polovina.jpg",
+    );
+  });
+});
+
+describe("ExportService resolve pack", () => {
+  it("packs both timelines and subtitles into a base64 zip", async () => {
+    const service = serviceFor([scene({ videoPrompt: "Slow push-in" })]);
+
+    const result = await service.export("u1", "p1", "resolve-pack");
+
+    expect(result.filename).toBe("deep-sea.zip");
+    expect(result.encoding).toBe("base64");
+    const zip = Buffer.from(result.content, "base64");
+    expect(zip.subarray(0, 2).toString("latin1")).toBe("PK");
+    // Имена файлов внутри архива лежат открытым текстом в заголовках.
+    for (const name of ["project.fcpxml", "project-premiere.xml", "subtitles.srt"]) {
+      expect(zip.toString("latin1")).toContain(name);
+    }
   });
 });
 

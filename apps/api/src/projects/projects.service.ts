@@ -77,6 +77,9 @@ export class ProjectsService {
           : {}),
         ...(dto.coverUrl !== undefined ? { coverUrl: dto.coverUrl } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
+        ...(dto.frameFormat !== undefined
+          ? { frameFormat: dto.frameFormat }
+          : {}),
       },
     });
   }

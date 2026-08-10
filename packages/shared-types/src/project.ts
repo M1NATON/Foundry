@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ProjectStatus } from "./enums";
+import { FrameFormat, ProjectStatus } from "./enums";
 import { AssetSchema, type Asset } from "./asset";
 import { DURATION_MISMATCH_THRESHOLD_SECONDS } from "./scene";
 import {
@@ -35,6 +35,8 @@ export const UpdateProjectSchema = z.object({
     .optional(),
   coverUrl: z.string().url().nullable().optional(),
   status: ProjectStatus.optional(),
+  /** Формат кадра таймлайна при экспорте в монтажку: шортсы — PORTRAIT. */
+  frameFormat: FrameFormat.optional(),
 });
 export type UpdateProjectDto = z.infer<typeof UpdateProjectSchema>;
 
@@ -47,6 +49,7 @@ export const ProjectSchema = z.object({
   visualStyleCustom: z.string().nullable(),
   coverUrl: z.string().nullable(),
   status: ProjectStatus,
+  frameFormat: FrameFormat,
   createdAt: z.string(),
   updatedAt: z.string(),
 });
