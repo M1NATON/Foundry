@@ -1,7 +1,6 @@
 import { basename } from "node:path";
 import {
   EXPORT_FPS,
-  fileUrl,
   type FcpxmlOptions,
   type MusicSegment,
   type TimelineClip,
@@ -27,6 +26,22 @@ function xmlEscape(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
+/**
+ * pathurl в xmeml — старомодный FCP7-вид: file://localhost/C%3A/Users/...
+ * Premiere понимает только его: современный file:///C:/... он раскодирует
+ * в «\\\C:\Users\...» и помечает клипы офлайн. Двоеточие диска здесь,
+ * наоборот, обязано быть закодировано.
+ */
+export function pathUrl(path: string): string {
+  const normalized = path.replaceAll("\\", "/");
+  const segments = normalized
+    .split("/")
+    .filter((segment) => segment !== "")
+    .map(encodeURIComponent)
+    .join("/");
+  return `file://localhost/${segments}`;
+}
+
 /** Маркер с подсказкой движения — Premiere показывает его как clip marker. */
 function markerXml(note: string | null): string {
   if (!note) return "";
@@ -37,7 +52,7 @@ function markerXml(note: string | null): string {
 function videoFileXml(id: string, path: string, durationFrames: number, width: number, height: number): string {
   return (
     `<file id="${id}"><name>${xmlEscape(basename(path))}</name>` +
-    `<pathurl>${xmlEscape(fileUrl(path))}</pathurl>${rate()}` +
+    `<pathurl>${xmlEscape(pathUrl(path))}</pathurl>${rate()}` +
     `<duration>${durationFrames}</duration>` +
     `<media><video><samplecharacteristics>${rate()}<width>${width}</width><height>${height}</height><pixelaspectratio>square</pixelaspectratio></samplecharacteristics></video></media>` +
     `</file>`
@@ -47,7 +62,7 @@ function videoFileXml(id: string, path: string, durationFrames: number, width: n
 function audioFileXml(id: string, path: string, durationFrames: number): string {
   return (
     `<file id="${id}"><name>${xmlEscape(basename(path))}</name>` +
-    `<pathurl>${xmlEscape(fileUrl(path))}</pathurl>${rate()}` +
+    `<pathurl>${xmlEscape(pathUrl(path))}</pathurl>${rate()}` +
     `<duration>${durationFrames}</duration>` +
     `<media><audio><samplecharacteristics><samplerate>48000</samplerate></samplecharacteristics><channelcount>2</channelcount></audio></media>` +
     `</file>`

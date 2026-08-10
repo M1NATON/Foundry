@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Injectable } from "@nestjs/common";
 import {
@@ -36,6 +36,9 @@ export interface ExportResult {
 /** Минимальная длительность субтитра — иначе короткие сцены мелькают. */
 const MIN_SCENE_SECONDS = 2;
 
+/** Собранные экспорты с медиа рядом: exports/<slug>/media/scene-01-.... */
+const EXPORT_DIR = "exports";
+
 /** slug для имён файлов и архивов: только a-z0-9 и дефисы. */
 function slugify(text: string): string {
   const slug = text
@@ -59,7 +62,7 @@ function baseName(path: string): string {
 }
 
 /**
- * Читаемое имя медиафайла в Resolve pack: scene-01-hook.png вместо
+ * Читаемое имя медиафайла в экспорте: scene-01-hook.png вместо
  * 1786311356831-1.jpg. По таким именам монтажка перелинковывает всю папку
  * одним действием, а человек понимает, что где лежит.
  */
@@ -73,6 +76,14 @@ export function packMediaName(
   return kind === "voice"
     ? `${base}-voice${extOf(sourcePath)}`
     : `${base}${extOf(sourcePath)}`;
+}
+
+/** Медиа, подготовленное к экспорту: клипы/музыка со ссылками на копии. */
+interface StagedMedia {
+  clips: TimelineClip[];
+  music: MusicSegment[];
+  /** Скопированные файлы: имя внутри архива и абсолютный путь к копии. */
+  files: Array<{ name: string; path: string }>;
 }
 
 @Injectable()
@@ -91,6 +102,25 @@ export class ExportService {
       return this.toResolvePack(project, spec);
     }
 
+    // Таймлайны собираются на подготовленных копиях: читаемые имена файлов
+    // и медиа, лежащее рядом с экспортом, а не где-то в недрах uploads.
+    if (format === "fcpxml" || format === "premiere-xml" || format === "edl") {
+      const staged = await this.stageMedia(project);
+      const options = this.frameOptions(project);
+      const content =
+        format === "fcpxml"
+          ? toFcpxml(project.title, staged.clips, staged.music, options)
+          : format === "premiere-xml"
+            ? toXmeml(project.title, staged.clips, staged.music, options)
+            : toEdl(project.title, staged.clips, staged.music);
+
+      return {
+        filename: `${this.slug(project.title)}.${spec.ext}`,
+        mime: spec.mime,
+        content,
+      };
+    }
+
     const content =
       format === "md"
         ? this.toMarkdown(project)
@@ -102,27 +132,7 @@ export class ExportService {
               ? this.toCsv(project)
               : format === "prompts"
                 ? this.toPrompts(project)
-                : format === "premiere-xml"
-                  ? toXmeml(
-                      project.title,
-                      this.toClips(project),
-                      this.toMusicSegments(project),
-                      this.frameOptions(project),
-                    )
-                  : format === "fcpxml"
-                    ? toFcpxml(
-                        project.title,
-                        this.toClips(project),
-                        this.toMusicSegments(project),
-                        this.frameOptions(project),
-                      )
-                    : format === "edl"
-                      ? toEdl(
-                          project.title,
-                          this.toClips(project),
-                          this.toMusicSegments(project),
-                        )
-                      : this.toSrt(project);
+                : this.toSrt(project);
 
     return {
       filename: `${this.slug(project.title)}.${spec.ext}`,
@@ -139,72 +149,102 @@ export class ExportService {
   }
 
   /**
-   * Resolve pack — архив для монтажки: project.fcpxml (Resolve/Final Cut),
-   * project-premiere.xml (Premiere импортирует только старый FCP 7 XML),
-   * subtitles.srt и папка media/ со всеми файлами под читаемыми именами.
-   * Таймлайны ссылаются на исходные абсолютные пути: ни Resolve, ни Premiere
-   * не разворачивают относительные, поэтому на машине, где крутится Foundry,
-   * импорт работает сразу. Папка media/ нужна для переноса: на другом
-   * компьютере хватает одной перелинковки на неё — имена уникальные.
+   * Копирует медиа проекта в exports/<slug>/media/ под читаемыми именами и
+   * возвращает клипы/музыку, ссылающиеся на эти копии. Таймлайн по ним
+   * импортируется сразу (абсолютные пути), а папку exports/<slug>/ можно
+   * унести на другую машину целиком — там же лежат и сами XML.
+   * Файл, который не удалось скопировать, остаётся с исходным путём.
+   */
+  private async stageMedia(project: ProjectPayload): Promise<StagedMedia> {
+    const mediaDir = join(
+      process.cwd(),
+      EXPORT_DIR,
+      this.slug(project.title),
+      "media",
+    );
+    const staged = new Map<string, string>();
+    const files: StagedMedia["files"] = [];
+
+    const stage = async (
+      sourcePath: string,
+      desired: string,
+    ): Promise<string> => {
+      const existing = staged.get(sourcePath);
+      if (existing) return existing;
+      const target = join(mediaDir, desired);
+      try {
+        await mkdir(mediaDir, { recursive: true });
+        await copyFile(sourcePath, target);
+        staged.set(sourcePath, target);
+        files.push({ name: `media/${desired}`, path: target });
+        return target;
+      } catch {
+        return sourcePath;
+      }
+    };
+
+    const clips: TimelineClip[] = [];
+    for (const clip of this.toClips(project)) {
+      clips.push({
+        ...clip,
+        videoPath: clip.videoPath
+          ? await stage(
+              clip.videoPath,
+              packMediaName(clip.order, "frame", clip.name, clip.videoPath),
+            )
+          : null,
+        audioPath: clip.audioPath
+          ? await stage(
+              clip.audioPath,
+              packMediaName(clip.order, "voice", clip.name, clip.audioPath),
+            )
+          : null,
+      });
+    }
+
+    const music: MusicSegment[] = [];
+    for (const segment of this.toMusicSegments(project)) {
+      music.push({
+        ...segment,
+        path: await stage(segment.path, `music-${baseName(segment.path)}`),
+      });
+    }
+
+    return { clips, music, files };
+  }
+
+  /**
+   * Resolve pack — архив с папкой exports/<slug>/ целиком: project.fcpxml
+   * (Resolve/Final Cut), project-premiere.xml (Premiere понимает только
+   * старый FCP 7 XML), subtitles.srt и media/ со всеми файлами под читаемыми
+   * именами. Таймлайны ссылаются на копии в media/ по абсолютным путям —
+   * на этой машине импорт работает сразу; на другой компьютер архив
+   * распаковывается, и хватает одной перелинковки на папку media/.
    */
   private async toResolvePack(
     project: ProjectPayload,
     spec: (typeof EXPORT_FORMATS)[number],
   ): Promise<ExportResult> {
+    const staged = await this.stageMedia(project);
+    const options = this.frameOptions(project);
+
     const entries: ZipEntry[] = [];
-    const stashed = new Set<string>();
-
-    // Копия в media/ под читаемым именем; путь в таймлайнах не меняем.
-    const stash = async (
-      sourcePath: string,
-      desired: string,
-    ): Promise<void> => {
-      if (stashed.has(sourcePath)) return;
-      try {
-        entries.push({
-          name: `media/${desired}`,
-          data: await readFile(sourcePath),
-        });
-        stashed.add(sourcePath);
-      } catch {
-        // Файл недоступен на диске — просто не кладём его в архив.
-      }
-    };
-
-    const clips = this.toClips(project);
-    for (const clip of clips) {
-      if (clip.videoPath) {
-        await stash(
-          clip.videoPath,
-          packMediaName(clip.order, "frame", clip.name, clip.videoPath),
-        );
-      }
-      if (clip.audioPath) {
-        await stash(
-          clip.audioPath,
-          packMediaName(clip.order, "voice", clip.name, clip.audioPath),
-        );
-      }
+    for (const file of staged.files) {
+      entries.push({ name: file.name, data: await readFile(file.path) });
     }
 
-    const music = this.toMusicSegments(project);
-    for (const segment of music) {
-      await stash(segment.path, `music-${baseName(segment.path)}`);
-    }
-
-    const frameOptions = this.frameOptions(project);
     entries.unshift(
       {
         name: "project.fcpxml",
         data: Buffer.from(
-          toFcpxml(project.title, clips, music, frameOptions),
+          toFcpxml(project.title, staged.clips, staged.music, options),
           "utf8",
         ),
       },
       {
         name: "project-premiere.xml",
         data: Buffer.from(
-          toXmeml(project.title, clips, music, frameOptions),
+          toXmeml(project.title, staged.clips, staged.music, options),
           "utf8",
         ),
       },

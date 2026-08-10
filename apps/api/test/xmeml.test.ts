@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { secondsToFrames } from "../src/export/timeline";
-import { toXmeml, } from "../src/export/xmeml";
+import { pathUrl, toXmeml } from "../src/export/xmeml";
 import type { TimelineClip } from "../src/export/timeline";
 
 function clip(patch: Partial<TimelineClip> = {}): TimelineClip {
@@ -16,6 +16,16 @@ function clip(patch: Partial<TimelineClip> = {}): TimelineClip {
   };
 }
 
+describe("pathUrl", () => {
+  it("writes old-school FCP7 pathurls that Premiere understands", () => {
+    // Premiere раскодирует file:///C:/... в битый «\\\C:\...» и роняет клипы
+    // в офлайн; понимает только file://localhost/C%3A/...
+    expect(pathUrl("C:\\Users\\ARS\\up loads\\a b.png")).toBe(
+      "file://localhost/C%3A/Users/ARS/up%20loads/a%20b.png",
+    );
+  });
+});
+
 describe("toXmeml", () => {
   it("emits an xmeml v4 sequence Premiere can import", () => {
     const xml = toXmeml("Deep Sea", [clip()]);
@@ -25,13 +35,13 @@ describe("toXmeml", () => {
     expect(xml).toContain("<name>Deep Sea</name>");
   });
 
-  it("normalizes Windows paths so media resolves on import", () => {
+  it("normalizes Windows paths into FCP7 pathurls", () => {
     const xml = toXmeml("P", [
       clip({ videoPath: "C:\\Users\\ARS\\up loads\\a b.png" }),
     ]);
 
     expect(xml).toContain(
-      "<pathurl>file:///C:/Users/ARS/up%20loads/a%20b.png</pathurl>",
+      "<pathurl>file://localhost/C%3A/Users/ARS/up%20loads/a%20b.png</pathurl>",
     );
   });
 

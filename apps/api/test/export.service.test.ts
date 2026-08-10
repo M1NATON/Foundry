@@ -107,7 +107,7 @@ describe("packMediaName", () => {
 });
 
 describe("ExportService resolve pack", () => {
-  it("packs timeline and subtitles into a base64 zip", async () => {
+  it("packs both timelines and subtitles into a base64 zip", async () => {
     const service = serviceFor([scene({ videoPrompt: "Slow push-in" })]);
 
     const result = await service.export("u1", "p1", "resolve-pack");
@@ -117,8 +117,9 @@ describe("ExportService resolve pack", () => {
     const zip = Buffer.from(result.content, "base64");
     expect(zip.subarray(0, 2).toString("latin1")).toBe("PK");
     // Имена файлов внутри архива лежат открытым текстом в заголовках.
-    expect(zip.toString("latin1")).toContain("project.fcpxml");
-    expect(zip.toString("latin1")).toContain("subtitles.srt");
+    for (const name of ["project.fcpxml", "project-premiere.xml", "subtitles.srt"]) {
+      expect(zip.toString("latin1")).toContain(name);
+    }
   });
 });
 
