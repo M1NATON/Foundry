@@ -19,6 +19,7 @@ import {
   type MusicSegment,
   type TimelineClip,
 } from "./timeline";
+import { toXmeml } from "./xmeml";
 import { createZip, type ZipEntry } from "./zip";
 
 type ProjectPayload = Awaited<ReturnType<ProjectsService["findOne"]>>;
@@ -101,20 +102,27 @@ export class ExportService {
               ? this.toCsv(project)
               : format === "prompts"
                 ? this.toPrompts(project)
-                : format === "fcpxml"
-                  ? toFcpxml(
+                : format === "premiere-xml"
+                  ? toXmeml(
                       project.title,
                       this.toClips(project),
                       this.toMusicSegments(project),
                       this.frameOptions(project),
                     )
-                  : format === "edl"
-                    ? toEdl(
+                  : format === "fcpxml"
+                    ? toFcpxml(
                         project.title,
                         this.toClips(project),
                         this.toMusicSegments(project),
+                        this.frameOptions(project),
                       )
-                    : this.toSrt(project);
+                    : format === "edl"
+                      ? toEdl(
+                          project.title,
+                          this.toClips(project),
+                          this.toMusicSegments(project),
+                        )
+                      : this.toSrt(project);
 
     return {
       filename: `${this.slug(project.title)}.${spec.ext}`,
@@ -131,12 +139,13 @@ export class ExportService {
   }
 
   /**
-   * Resolve pack — архив для монтажки: project.fcpxml, subtitles.srt и папка
-   * media/ со всеми файлами под читаемыми именами. FCPXML ссылается на
-   * исходные абсолютные пути: Resolve не разворачивает относительные, поэтому
-   * на машине, где крутится Foundry, импорт работает сразу. Папка media/
-   * нужна для переноса: на другом компьютере хватает одной перелинковки на
-   * неё — имена файлов уникальные и понятные.
+   * Resolve pack — архив для монтажки: project.fcpxml (Resolve/Final Cut),
+   * project-premiere.xml (Premiere импортирует только старый FCP 7 XML),
+   * subtitles.srt и папка media/ со всеми файлами под читаемыми именами.
+   * Таймлайны ссылаются на исходные абсолютные пути: ни Resolve, ни Premiere
+   * не разворачивают относительные, поэтому на машине, где крутится Foundry,
+   * импорт работает сразу. Папка media/ нужна для переноса: на другом
+   * компьютере хватает одной перелинковки на неё — имена уникальные.
    */
   private async toResolvePack(
     project: ProjectPayload,
@@ -145,7 +154,7 @@ export class ExportService {
     const entries: ZipEntry[] = [];
     const stashed = new Set<string>();
 
-    // Копия в media/ под читаемым именем; путь в FCPXML не меняем — см. выше.
+    // Копия в media/ под читаемым именем; путь в таймлайнах не меняем.
     const stash = async (
       sourcePath: string,
       desired: string,
@@ -183,16 +192,23 @@ export class ExportService {
       await stash(segment.path, `music-${baseName(segment.path)}`);
     }
 
-    const fcpxml = toFcpxml(
-      project.title,
-      clips,
-      music,
-      this.frameOptions(project),
+    const frameOptions = this.frameOptions(project);
+    entries.unshift(
+      {
+        name: "project.fcpxml",
+        data: Buffer.from(
+          toFcpxml(project.title, clips, music, frameOptions),
+          "utf8",
+        ),
+      },
+      {
+        name: "project-premiere.xml",
+        data: Buffer.from(
+          toXmeml(project.title, clips, music, frameOptions),
+          "utf8",
+        ),
+      },
     );
-    entries.unshift({
-      name: "project.fcpxml",
-      data: Buffer.from(fcpxml, "utf8"),
-    });
     entries.push({
       name: "subtitles.srt",
       data: Buffer.from(this.toSrt(project), "utf8"),

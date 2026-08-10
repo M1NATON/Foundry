@@ -31,6 +31,7 @@ export const ExportFormat = z.enum([
   "srt",
   "prompts",
   "fcpxml",
+  "premiere-xml",
   "edl",
   "resolve-pack",
 ]);
